@@ -1,0 +1,53 @@
+
+.ext-textlint-tooltip {
+  position: absolute;
+  border-radius: 5px;
+  background-color: #303030;
+  margin: 0;
+  padding: 0 10px 10px 10px;
+  max-width: 480px;
+  font-size: 12px;
+  font-family: Helvetica, "游ゴシック", "Yu Gothic", sans-serif;
+  font-weight: normal;
+  text-decoration: none;
+  letter-spacing: normal;
+  line-height: 120%;
+  z-index: 99999;
+  -webkit-font-smoothing: antialiased;
+
+  .ext-textlint-tooltip-item {
+    margin-top: 10px;
+  }
+  .ext-textlint-tooltip-text {
+    display: block;
+    color: #FFF;
+  }
+  .ext-textlint-tooltip-rule {
+    display: block;
+    color: #7F7F7F;
+    font-size: 10px;
+    text-align: right;
+  }
+
+  .ext-textlint-info .ext-textlint-tooltip-text:before {
+    content: "ℹ️";
+  }
+  .ext-textlint-warning .ext-textlint-tooltip-text:before {
+    content: "⚠️";
+  }
+  .ext-textlint-error .ext-textlint-tooltip-text:before {
+    content: "🚫";
+  }
+}
+
+.ext-textlint-mark {
+  &.ext-textlint-info {
+    background-color: #A5E7FF;
+  }
+  &.ext-textlint-warning {
+    background-color: #FFF571;
+  }
+  &.ext-textlint-error {
+    background-color: #FF6E8D;
+  }
+}

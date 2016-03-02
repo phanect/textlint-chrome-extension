@@ -1,0 +1,14 @@
+{
+  "appName": {
+    "message": "textlint: Proofreader",
+    "description": "The name of the application"
+  },
+  "appShortName": {
+    "message": "textlint",
+    "description": "The short_name (maximum of 12 characters recommended) is a short version of the app's name."
+  },
+  "appDescription": {
+    "message": "Proofread your texts as you type based on textlint rules!",
+    "description": "The description of the application"
+  }
+}
