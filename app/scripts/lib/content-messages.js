@@ -1,35 +1,42 @@
 "use strict";
 
-let messageHandlers = {};
+import EventEmitter from "events";
+
+const eventEmitter = new EventEmitter();
+const knownEvents = "REQACTIVESTATE REQTOGGLE LINTRESULT";
 
 // Register message receiver
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message.type && messageHandlers[message.type]) {
-    messageHandlers[message.type].call(null, message, sender, sendResponse);
+  if (message.type && knownEvents.indexOf(message.type) >= 0) {
+    eventEmitter.emit(message.type, message, sender, sendResponse);
   } else {
     console.error("Unknown message:", message, ", sender: ", sender);
   }
 });
 
 export default {
-  onToggle(callback) {
-    messageHandlers["TOGGLE"] = callback;
+  onRequestActiveState(callback) {
+    eventEmitter.on("REQACTIVESTATE", callback);
+  },
+
+  onRequestToggle(callback) {
+    eventEmitter.on("REQTOGGLE", callback);
   },
 
   onLintResult(callback) {
-    messageHandlers["LINTRESULT"] = callback;
+    eventEmitter.on("LINTRESULT", callback);
   },
 
-  changeActiveState(active) {
+  notifyActiveState(active) {
     chrome.runtime.sendMessage({
       type: "ACTIVESTATE",
       active: active
     });
   },
 
-  requestLinting(textareaId, text) {
+  requestLint(textareaId, text) {
     chrome.runtime.sendMessage({
-      type: "LINT",
+      type: "REQLINT",
       textareaId: textareaId,
       text: text
     });

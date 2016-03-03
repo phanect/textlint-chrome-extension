@@ -12,12 +12,17 @@ function initTextareaLinter() {
   return textareaLinter;
 }
 
-ContentMessages.onToggle(() => {
+ContentMessages.onRequestActiveState(() => {
+  let active = textareaLinter ? textareaLinter.active : false;
+  ContentMessages.notifyActiveState(active);
+});
+
+ContentMessages.onRequestToggle(() => {
   initTextareaLinter();
   textareaLinter.toggle();
-  ContentMessages.changeActiveState(textareaLinter.active);
+  ContentMessages.notifyActiveState(textareaLinter.active);
 });
 
 ContentMessages.onLintResult(({textareaId, lintMessages}) => {
-  textareaLinter.receiveLintingResult(textareaId, lintMessages);
+  textareaLinter.receiveLintResult(textareaId, lintMessages);
 });

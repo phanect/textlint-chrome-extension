@@ -24,33 +24,14 @@ const DEACTIVE_ICON = {
   "38": "images/icon-black-38.png"
 };
 
-chrome.runtime.onInstalled.addListener(() => {
-  // Show pageAction when textarea exists in loaded page
-  chrome.declarativeContent.onPageChanged.removeRules(undefined, () => {
-    chrome.declarativeContent.onPageChanged.addRules([{
-      conditions: [
-        new chrome.declarativeContent.PageStateMatcher({
-          css: ["textarea"]
-        })
-      ],
-      actions: [new chrome.declarativeContent.ShowPageAction()]
-    }]);
-  });
-});
-
-// Set listener for handling pageAction
-chrome.pageAction.onClicked.addListener((tab) => {
-  BackgroundMessages.requestToggle(tab.id);
-});
-
-BackgroundMessages.onChangeActiveState(({active}, sender) => {
-  chrome.pageAction.setIcon({
+BackgroundMessages.onActiveState(({active}, sender) => {
+  chrome.browserAction.setIcon({
     tabId: sender.tab.id,
     path: active ? ACTIVE_ICON : DEACTIVE_ICON
   });
 });
 
-BackgroundMessages.onLint(({textareaId, text}, sender) => {
+BackgroundMessages.onRequestLint(({textareaId, text}, sender) => {
   getTextlint().lintText(text, ".txt").then(({messages}) => {
     if (sender.tab) {
       let lintMessages = buildLintMessages(text, messages);

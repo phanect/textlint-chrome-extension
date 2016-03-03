@@ -133,10 +133,10 @@ export class TextareaLinter {
     this.lintedTextArea = textarea;
 
     // Send message to background for requesting textlint it.
-    ContentMessages.requestLinting(textareaId, text);
+    ContentMessages.requestLint(textareaId, text);
   }
 
-  receiveLintingResult(textareaId, lintMessages) {
+  receiveLintResult(textareaId, lintMessages) {
     if (this._getTextAreaId(this.lintedTextArea) == textareaId) {
       this.showLintMessages(this.lintedTextArea, lintMessages);
     }

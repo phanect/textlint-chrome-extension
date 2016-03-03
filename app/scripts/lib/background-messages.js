@@ -1,28 +1,37 @@
 "use strict";
 
-let messageHandlers = {};
+import EventEmitter from "events";
+
+const eventEmitter = new EventEmitter();
+const knownEvents = "ACTIVESTATE REQLINT";
 
 // Register message receiver
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message.type && messageHandlers[message.type]) {
-    messageHandlers[message.type].call(null, message, sender, sendResponse);
+  if (message.type && knownEvents.indexOf(message.type) >= 0) {
+    eventEmitter.emit(message.type, message, sender, sendResponse);
   } else {
     console.error("Unknown message:", message, ", sender: ", sender);
   }
 });
 
 export default {
-  onChangeActiveState(callback) {
-    messageHandlers["ACTIVESTATE"] = callback;
+  onActiveState(callback) {
+    eventEmitter.on("ACTIVESTATE", callback);
   },
 
-  onLint(callback) {
-    messageHandlers["LINT"] = callback;
+  onRequestLint(callback) {
+    eventEmitter.on("REQLINT", callback);
+  },
+
+  requestActiveState(tabId) {
+    chrome.tabs.sendMessage(tabId, {
+      type: "REQACTIVESTATE"
+    });
   },
 
   requestToggle(tabId) {
     chrome.tabs.sendMessage(tabId, {
-      type: "TOGGLE"
+      type: "REQTOGGLE"
     });
   },
 
