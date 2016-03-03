@@ -40,11 +40,13 @@ chrome.runtime.onInstalled.addListener(() => {
 
 // Set listener for handling pageAction
 chrome.pageAction.onClicked.addListener((tab) => {
-  BackgroundMessages.requestToggle(tab.id, ({active}) => {
-    chrome.pageAction.setIcon({
-      tabId: tab.id,
-      path: active ? ACTIVE_ICON : DEACTIVE_ICON
-    });
+  BackgroundMessages.requestToggle(tab.id);
+});
+
+BackgroundMessages.onChangeActiveState(({active}, sender) => {
+  chrome.pageAction.setIcon({
+    tabId: sender.tab.id,
+    path: active ? ACTIVE_ICON : DEACTIVE_ICON
   });
 });
 

@@ -12,14 +12,18 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 });
 
 export default {
+  onChangeActiveState(callback) {
+    messageHandlers["ACTIVESTATE"] = callback;
+  },
+
   onLint(callback) {
     messageHandlers["LINT"] = callback;
   },
 
-  requestToggle(tabId, callback) {
+  requestToggle(tabId) {
     chrome.tabs.sendMessage(tabId, {
       type: "TOGGLE"
-    }, callback);
+    });
   },
 
   sendLintResult(tabId, textareaId, lintMessages) {

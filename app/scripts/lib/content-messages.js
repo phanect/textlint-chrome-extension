@@ -20,6 +20,13 @@ export default {
     messageHandlers["LINTRESULT"] = callback;
   },
 
+  changeActiveState(active) {
+    chrome.runtime.sendMessage({
+      type: "ACTIVESTATE",
+      active: active
+    });
+  },
+
   requestLinting(textareaId, text) {
     chrome.runtime.sendMessage({
       type: "LINT",

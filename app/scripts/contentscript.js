@@ -12,10 +12,10 @@ function initTextareaLinter() {
   return textareaLinter;
 }
 
-ContentMessages.onToggle((message, sender, sendResponse) => {
+ContentMessages.onToggle(() => {
   initTextareaLinter();
   textareaLinter.toggle();
-  sendResponse({ active: textareaLinter.active });
+  ContentMessages.changeActiveState(textareaLinter.active);
 });
 
 ContentMessages.onLintResult(({textareaId, lintMessages}) => {
