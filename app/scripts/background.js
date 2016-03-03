@@ -40,8 +40,7 @@ chrome.runtime.onInstalled.addListener(() => {
 
 // Set listener for handling pageAction
 chrome.pageAction.onClicked.addListener((tab) => {
-  BackgroundMessages.requestToggle(tab.id, (response) => {
-    let active = response.active;
+  BackgroundMessages.requestToggle(tab.id, ({active}) => {
     chrome.pageAction.setIcon({
       tabId: tab.id,
       path: active ? ACTIVE_ICON : DEACTIVE_ICON
@@ -49,8 +48,7 @@ chrome.pageAction.onClicked.addListener((tab) => {
   });
 });
 
-BackgroundMessages.onLint((message, sender) => {
-  let {textareaId, text} = message;
+BackgroundMessages.onLint(({textareaId, text}, sender) => {
   getTextlint().lintText(text, ".txt").then(({messages}) => {
     if (sender.tab) {
       let lintMessages = buildLintMessages(text, messages);

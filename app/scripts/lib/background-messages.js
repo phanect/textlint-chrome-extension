@@ -4,9 +4,8 @@ let messageHandlers = {};
 
 // Register message receiver
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  let messageType = message.type;
-  if (messageType && messageHandlers[messageType]) {
-    messageHandlers[messageType].call(null, message, sender, sendResponse);
+  if (message.type && messageHandlers[message.type]) {
+    messageHandlers[message.type].call(null, message, sender, sendResponse);
   } else {
     console.error("Unknown message:", message, ", sender: ", sender);
   }

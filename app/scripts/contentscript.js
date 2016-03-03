@@ -18,7 +18,6 @@ ContentMessages.onToggle((message, sender, sendResponse) => {
   sendResponse({ active: textareaLinter.active });
 });
 
-ContentMessages.onLintResult((message) => {
-  let {textareaId, lintMessages} = message;
+ContentMessages.onLintResult(({textareaId, lintMessages}) => {
   textareaLinter.receiveLintingResult(textareaId, lintMessages);
 });

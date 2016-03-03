@@ -25,6 +25,7 @@ export default class TextCaretScanner {
     this.lineToIndex = this._buildLineToIndex(text);
   }
 
+  // Build {line: index} hash
   _buildLineToIndex(text) {
     const lines = text.split(/\n/);
     let index = 0;
@@ -36,10 +37,10 @@ export default class TextCaretScanner {
     return lineToIndex;
   }
 
-  getWordLengthAtIndex(index) {
+  getWordAtIndex(index) {
     wordRegexp.lastIndex = index;
     let match = wordRegexp.exec(this.text);
-    return match ? match[0].length : 1;
+    return match ? match[0] : "";
   }
 
   getIndexFromLineColumn(line, column) {
@@ -47,7 +48,7 @@ export default class TextCaretScanner {
     column--;  // to 0-origin
 
     if (line < this.lineToIndex.length) {
-      return this.lineToIndex[line] + (column);
+      return this.lineToIndex[line] + column;
     } else {
       return -1;
     }
@@ -56,7 +57,8 @@ export default class TextCaretScanner {
   getWordRangeFromLineColumn(line, column) {
     let index = this.getIndexFromLineColumn(line, column);
     if (index >= 0) {
-      return [index, index + this.getWordLengthAtIndex(index)];
+      let word = this.getWordAtIndex(index) || "?";  // Minimum +1 range
+      return [index, index + word.length];
     } else {
       return [0, 1];
     }

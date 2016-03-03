@@ -30,7 +30,8 @@ const DEFAULT_OPTIONS = {
   hideOnInput: false
 };
 
-const syncedStyles = `
+// List of styles to be synchronized from textarea to background div.
+const SYNCED_STYLES = `
   font-size font-size-adjust font-style font-family font-weight font-kerning
   letter-spacing direction text-align text-indent text-rendering text-transform
   text-justify text-decoration text-orientation text-combine-upright
@@ -184,7 +185,7 @@ export default class TextareaMarker {
 
   _syncStyles() {
     if (!this.$background) return;
-    let styles = this.$textarea.css(syncedStyles);
+    let styles = this.$textarea.css(SYNCED_STYLES);
     this.$background.css(styles);
     if (styles["line-height"]) {
       // Quickfix for relative line-height
@@ -222,6 +223,15 @@ export default class TextareaMarker {
     return _(markers || []).sortBy(["start", "end"]).reject(overlap).value()
   }
 
+  // Mark up text by markers using <mark> elements.
+  //
+  // Example:
+  //   ABCDEFGHIJK
+  //      | Marking up BCDEF and CD and IJ
+  //   A<mark>B<mark>CD</mark>EF</mark>GH<mark>IJ</mark>K
+  //
+  // By nesting nodes, we can detect mark elements under
+  // the mouse pointer by document.elementsFromPoint(x, y)
   _markupTextToNode(text) {
     let currentNode = document.createDocumentFragment();
     let currentIndex = 0;

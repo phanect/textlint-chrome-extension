@@ -13,6 +13,7 @@ const SEVERITY_TO_CLASS = {
   2: `${CLASS_PREFIX}error`,
 };
 
+// Page-global tooltip for showing hints from TextareaLinter.
 class TextareaLinterTooltip {
   constructor() {
     this.$tooltip = null;
@@ -76,6 +77,9 @@ class TextareaLinterTooltip {
   }
 }
 
+// Page-global linter for textarea content.
+// It shows results by highlighting words in textarea,
+// and also shows tooltips on mouseover them.
 export class TextareaLinter {
   constructor() {
     this.active = false;
@@ -95,7 +99,7 @@ export class TextareaLinter {
     if (this.active) return;
     this.active = true;
 
-    // Set global event handler for textarea
+    // Set global event handler for textarea input
     let self = this;
     $(document).on(
       "input.textareaLinter", "textarea",
@@ -130,6 +134,7 @@ export class TextareaLinter {
     }
     this.lintedTextArea = textarea;
 
+    // Send message to background for requesting textlint it.
     ContentMessages.requestLinting(textareaId, text);
   }
 
@@ -140,6 +145,7 @@ export class TextareaLinter {
   }
 
   showLintMessages(textarea, lintMessages) {
+    // Map to hashes for textarea-marker
     let markers = _.map(lintMessages, (msg) => {
       return {
         class: SEVERITY_TO_CLASS[msg.severity] || SEVERITY_TO_CLASS[0],
