@@ -1,7 +1,9 @@
 "use strict";
 
 import _ from "lodash";
+import {textlint} from "textlint";
 import TextCaretScanner from "./text-caret-scanner";
+import TextlintRulePackage from "./textlint-rule-package";
 
 const SEVERITY_NAMES = {
   0: "info",
@@ -9,41 +11,72 @@ const SEVERITY_NAMES = {
   2: "error"
 };
 
-let textlint;
+// TODO: Options to switch loading rules
+let loadingRules = [
+  "general-novel-style-ja",
+];
+
+let ruleOptions = {
+  "general-novel-style-ja": {
+    // 各段落の先頭に許可する文字
+    "chars_leading_paragraph": "　「『【〈《（(“\"‘'［[〔｛{＜<",
+    // 閉じ括弧の手前に句読点(。、)を置かない
+    "no_punctuation_at_closing_quote": true,
+    // 疑問符(？)と感嘆符(！)の直後にスペースを置く
+    "space_after_marks": true,
+    // 連続した三点リーダー(…)の数は偶数にする
+    "even_number_ellipsises": true,
+    // 連続したダッシュ(―)の数は偶数にする
+    "even_number_dashes": true,
+    // 連続した句読点(。、)を許可しない
+    "appropriate_use_of_punctuation": true,
+    // 連続した中黒(・)を許可しない
+    "appropriate_use_of_interpunct": true,
+    // 連続した長音符(ー)を許可しない
+    "appropriate_use_of_choonpu": true,
+    // マイナス記号(−)は数字の前にしか許可しない
+    "appropriate_use_of_minus_sign": true,
+    // アラビア数字の桁数はチェックしない
+    "max_arabic_numeral_digits": true
+  }
+};
+
+let loadingFailed = false;
+let loadingPromise = new Promise((resolve, reject) => {
+  let promises = _.map(loadingRules, (ruleName) => {
+    return (new TextlintRulePackage(ruleName)).loadLatest();
+  });
+  Promise.all(promises).then((rules) => {
+    let nameToRule = _.fromPairs(_.zip(loadingRules, rules));
+    textlint.setupRules(nameToRule, ruleOptions);
+    resolve(textlint);
+  }).catch(reject);
+});
+
+loadingPromise.then(() => {
+  loadingPromise = null;
+  console.log("textlint and rules have been successfully loaded.");
+}).catch((reason) => {
+  loadingFailed = true;
+  loadingPromise = null;
+  console.error("Error occurred while loading textlint and rules: ", reason);
+
+  chrome.browserAction.disable();
+  chrome.browserAction.setBadgeBackgroundColor({ color: "#F00" });
+  chrome.browserAction.setBadgeText({ text: "Err" });
+});
 
 function getTextlint() {
-  if (!textlint) {
-    // Delay load
-    textlint = require("textlint").textlint;
-    let rule = require("textlint-rule-general-novel-style-ja").default;
-
-    // TODO: Options for switching rules
-    textlint.setupRules({
-      "general-novel-style-ja": rule
-    }, {
-      "general-novel-style-ja": {
-        // 各段落の先頭に許可する文字
-        "chars_leading_paragraph": "#/ 　「『【〈《（(“\"‘'［[〔｛{＜<",
-        // 閉じ括弧の手前に句読点(。、)を置かない
-        "no_punctuation_at_closing_quote": true,
-        // 疑問符(？)と感嘆符(！)の直後にスペースを置く
-        "space_after_marks": true,
-        // 連続した三点リーダー(…)の数は偶数にする
-        "even_number_ellipsises": true,
-        // 連続したダッシュ(―)の数は偶数にする
-        "even_number_dashes": true,
-        // 連続した中黒(・)を許可しない
-        "appropriate_use_of_interpunct": true,
-        // 連続した長音符(ー)を許可しない
-        "appropriate_use_of_choonpu": true,
-        // マイナス記号(−)は数字の前にしか許可しない
-        "appropriate_use_of_minus_sign": true,
-        // アラビア数字の桁数はチェックしない
-        "max_arabic_numeral_digits": false
-      }
-    });
+  if (loadingPromise) {
+    return loadingPromise;
   }
-  return textlint;
+  return new Promise((resolve, reject) => {
+    if (loadingFailed) {
+      reject("textlint was not loaded successfully");
+    } else {
+      resolve(textlint);
+    }
+  });
 }
 
 function buildLintMessages(text, messages) {
@@ -63,17 +96,11 @@ function buildLintMessages(text, messages) {
 export default {
   lint(text) {
     return new Promise((resolve, reject) => {
-      getTextlint().lintText(text)
-        .then(({messages}) => {
-          let lintMessages = buildLintMessages(text, messages);
-          let severityCounts = _.mapValues(_.invert(SEVERITY_NAMES), _.constant(0));
-          lintMessages.forEach((m) => { severityCounts[m.severity] += 1 });
-          resolve({
-            lintMessages: lintMessages,
-            severityCounts:  severityCounts
-          });
-        })
-        .catch(reject);
+      getTextlint().then((textlint) => {
+        textlint.lintText(text).then(({messages}) => {
+          resolve(buildLintMessages(text, messages));
+        }).catch(reject);
+      }).catch(reject);
     });
   },
 };

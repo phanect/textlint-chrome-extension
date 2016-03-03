@@ -94,7 +94,7 @@ export class TextareaLinter {
     if (this.active) return;
     this.active = true;
 
-    // Set global event handler for textarea input or focus
+    // Set global event handler for textarea input
     let self = this;
     $(document).on(
       "input.textareaLinter", "textarea",

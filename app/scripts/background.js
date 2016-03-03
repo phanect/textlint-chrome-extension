@@ -39,7 +39,7 @@ messages.onReceiveStatus(({active, marks}, sender) => {
 });
 
 messages.onRequestLint(({textareaId, text}, sender) => {
-  textlint.lint(text).then(({lintMessages, severityCounts}) => {
+  textlint.lint(text).then((lintMessages) => {
     if (!sender.tab) return;
     messages.sendLintResult(sender.tab.id, textareaId, lintMessages);
   }).catch((error) => {

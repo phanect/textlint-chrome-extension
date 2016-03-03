@@ -10,7 +10,8 @@
     "128": "images/icon-128.png"
   },
   "permissions": [
-    "tabs"
+    "tabs",
+    "storage"
   ],
   "background": {
     "scripts": ["scripts/background.js"]
@@ -39,5 +40,6 @@
       "run_at": "document_end",
       "all_frames": false
     }
-  ]
+  ],
+  "content_security_policy": "script-src 'self' https://www.brcdn.org https://brcdn.org; object-src 'self'"
 }
