@@ -3,17 +3,8 @@
 // Enable chromereload by uncommenting this line:
 // import './lib/livereload';
 
+import textlint from "./lib/textlint-wrapper";
 import BackgroundMessages from "./lib/background-messages";
-import TextCaretScanner from "./lib/text-caret-scanner";
-
-let textlint;
-function getTextlint() {
-  if (!textlint) {
-    // Delay load
-    textlint = require("./lib/textlint-wrapper").default.textlint;
-  }
-  return textlint;
-}
 
 const ACTIVE_ICON = {
   "19": "images/icon-19.png",
@@ -25,33 +16,31 @@ const DEACTIVE_ICON = {
 };
 
 BackgroundMessages.onActiveState(({active}, sender) => {
+  if (!sender.tab) return;
   chrome.browserAction.setIcon({
     tabId: sender.tab.id,
     path: active ? ACTIVE_ICON : DEACTIVE_ICON
   });
+  if (!active) {
+    chrome.browserAction.setBadgeText({ tabId: sender.tab.id, text: "" });
+  }
 });
 
 BackgroundMessages.onRequestLint(({textareaId, text}, sender) => {
-  getTextlint().lintText(text, ".txt").then(({messages}) => {
-    if (sender.tab) {
-      let lintMessages = buildLintMessages(text, messages);
-      BackgroundMessages.sendLintResult(sender.tab.id, textareaId, lintMessages);
-    }
+  textlint.lint(text).then(({lintMessages, severityCounts}) => {
+    if (!sender.tab) return;
+    BackgroundMessages.sendLintResult(sender.tab.id, textareaId, lintMessages);
+
+    let gotErrors = (severityCounts["error"] > 0);
+    chrome.browserAction.setBadgeText({
+      tabId: sender.tab.id,
+      text: gotErrors ? severityCounts["error"].toString() : "OK"
+    });
+    chrome.browserAction.setBadgeBackgroundColor({
+      tabId: sender.tab.id,
+      color: gotErrors ? "#EC1A2A" : "#99EC6B"
+    });
   }).catch((error) => {
     console.error(error);
   });
 });
-
-function buildLintMessages(text, messages) {
-  let scanner = new TextCaretScanner(text);
-  return messages.map((m) => {
-    let range = scanner.getWordRangeFromLineColumn(m.line, m.column);
-    return {
-      "start":    range[0],
-      "end":      range[1],
-      "message":  m.message,
-      "ruleId":   m.ruleId,
-      "severity": m.severity
-    };
-  });
-}

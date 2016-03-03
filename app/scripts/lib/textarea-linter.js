@@ -7,11 +7,6 @@ import "./textarea-marker";
 
 const LINT_DELAY        = 1000;
 const CLASS_PREFIX      = "ext-textlint-";
-const SEVERITY_TO_CLASS = {
-  0: `${CLASS_PREFIX}info`,
-  1: `${CLASS_PREFIX}warning`,
-  2: `${CLASS_PREFIX}error`,
-};
 
 // Page-global tooltip for showing hints from TextareaLinter.
 class TextareaLinterTooltip {
@@ -62,8 +57,8 @@ class TextareaLinterTooltip {
 
   _buildItemByMark(mark) {
     return $("<div />")
-      .addClass(`${CLASS_PREFIX}tooltip-item ${CLASS_PREFIX}`)
-      .addClass(SEVERITY_TO_CLASS[mark["severity"] || 0])
+      .addClass(`${CLASS_PREFIX}tooltip-item`)
+      .addClass(`${CLASS_PREFIX}${mark["severity"]}`)
       .append(
         $("<span />")
           .addClass(`${CLASS_PREFIX}tooltip-text`)
@@ -106,8 +101,8 @@ export class TextareaLinter {
       _.debounce(function () { self.lintTextArea(this) }, LINT_DELAY)
     );
 
-    // Lint every textarea that is visible and contains any text
-    _($("textarea:visible:enabled")).filter(_.property("value"))
+    // Lint first textarea that is visible and contains any text
+    _($("textarea:visible:enabled")).filter("value").take(1)
       .each((textarea) => { this.lintTextArea(textarea) })
   }
 
@@ -146,7 +141,7 @@ export class TextareaLinter {
     // Map to hashes for textarea-marker
     let markers = _.map(lintMessages, (msg) => {
       return {
-        class: SEVERITY_TO_CLASS[msg.severity] || SEVERITY_TO_CLASS[0],
+        class: `${CLASS_PREFIX}${msg.severity}`,
         start: msg.start,
         end:   msg.end,
         data:  {
