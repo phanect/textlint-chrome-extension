@@ -1,10 +1,10 @@
 "use strict";
 
 // Enable chromereload by uncommenting this line:
-// import './lib/livereload';
+import './lib/background/livereload';
 
-import textlint from "./lib/textlint-wrapper";
-import BackgroundMessages from "./lib/background-messages";
+import textlint from "./lib/util/textlint-wrapper";
+import messages from "./lib/background/messages";
 
 const ACTIVE_ICON = {
   "19": "images/icon-19.png",
@@ -15,7 +15,7 @@ const DEACTIVE_ICON = {
   "38": "images/icon-black-38.png"
 };
 
-BackgroundMessages.onActiveState(({active}, sender) => {
+messages.onActiveState(({active}, sender) => {
   if (!sender.tab) return;
   chrome.browserAction.setIcon({
     tabId: sender.tab.id,
@@ -26,10 +26,10 @@ BackgroundMessages.onActiveState(({active}, sender) => {
   }
 });
 
-BackgroundMessages.onRequestLint(({textareaId, text}, sender) => {
+messages.onRequestLint(({textareaId, text}, sender) => {
   textlint.lint(text).then(({lintMessages, severityCounts}) => {
     if (!sender.tab) return;
-    BackgroundMessages.sendLintResult(sender.tab.id, textareaId, lintMessages);
+    messages.sendLintResult(sender.tab.id, textareaId, lintMessages);
 
     let gotErrors = (severityCounts["error"] > 0);
     chrome.browserAction.setBadgeText({

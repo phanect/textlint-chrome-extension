@@ -2,7 +2,7 @@
 
 import _ from "lodash";
 import $ from "jquery";
-import ContentMessages from "./content-messages";
+import messages from "./messages";
 import "./textarea-marker";
 
 const LINT_DELAY        = 1000;
@@ -128,7 +128,7 @@ export class TextareaLinter {
     this.lintedTextArea = textarea;
 
     // Send message to background for requesting textlint it.
-    ContentMessages.requestLint(textareaId, text);
+    messages.requestLint(textareaId, text);
   }
 
   receiveLintResult(textareaId, lintMessages) {

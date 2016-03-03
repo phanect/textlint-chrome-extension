@@ -1,28 +1,28 @@
 "use strict";
 
-import ContentMessages from "./lib/content-messages";
+import messages from "./lib/content/messages";
 
 let textareaLinter;
 function initTextareaLinter() {
   if (!textareaLinter) {
     // Delay load to avoid initial impact
-    let TextareaLinter = require("./lib/textarea-linter").TextareaLinter;
+    let TextareaLinter = require("./lib/content/textarea-linter").TextareaLinter;
     textareaLinter = new TextareaLinter();
   }
   return textareaLinter;
 }
 
-ContentMessages.onRequestActiveState(() => {
+messages.onRequestActiveState(() => {
   let active = textareaLinter ? textareaLinter.active : false;
-  ContentMessages.notifyActiveState(active);
+  messages.notifyActiveState(active);
 });
 
-ContentMessages.onRequestToggle(() => {
+messages.onRequestToggle(() => {
   initTextareaLinter();
   textareaLinter.toggle();
-  ContentMessages.notifyActiveState(textareaLinter.active);
+  messages.notifyActiveState(textareaLinter.active);
 });
 
-ContentMessages.onLintResult(({textareaId, lintMessages}) => {
+messages.onLintResult(({textareaId, lintMessages}) => {
   textareaLinter.receiveLintResult(textareaId, lintMessages);
 });
