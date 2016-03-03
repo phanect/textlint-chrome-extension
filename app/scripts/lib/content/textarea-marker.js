@@ -116,6 +116,27 @@ export default class TextareaMarker {
     return this.$background ? this.$background.find("mark") : $([]);
   }
 
+  scrollToMark(selector) {
+    if (!this.$background) return;
+
+    let $mark = this.$background.find(selector).first();
+    if ($mark.length == 0) return;
+
+    let pos = $mark.position();
+    let bgX = this.$background.scrollLeft();
+    let bgY = this.$background.scrollTop();
+    let centerX = (this.$textarea.innerWidth() - $mark.outerWidth()) / 2;
+    let centerY = (this.$textarea.innerHeight() - $mark.outerHeight()) / 2;
+
+    this.$textarea.scrollLeft(Math.max(0, pos.left + bgX - centerX));
+    this.$textarea.scrollTop(Math.max(0, pos.top + bgY - centerY));
+
+    // Blink the mark
+    for (let i = 0; i < 2; i++) {
+      $mark.animate({ "opacity": 0 }, 300).animate({ "opacity": 1 }, 100);
+    }
+  }
+
   _attachBackground() {
     if (!this.$background) {
       this.$background = $("<div/>")
@@ -270,6 +291,7 @@ export default class TextareaMarker {
     const $mark = $("<mark/>");
     $mark
       .css("color", "transparent")
+      .attr("id", marker.id || _.uniqueId(`${this.options.classPrefix}mark`))
       .addClass(`${this.options.classPrefix}mark`);
     if (marker.class) {
       $mark.addClass(marker.class);

@@ -3,7 +3,7 @@
 import EventEmitter from "events";
 
 const eventEmitter = new EventEmitter();
-const knownEvents = "REQACTIVESTATE REQTOGGLE LINTRESULT";
+const knownEvents = "RequestStatus RequestToggle LintResult ShowMark";
 
 // Register message receiver
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
@@ -15,28 +15,33 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 });
 
 export default {
-  onRequestActiveState(callback) {
-    eventEmitter.on("REQACTIVESTATE", callback);
+  onRequestStatus(callback) {
+    eventEmitter.on("RequestStatus", callback);
   },
 
   onRequestToggle(callback) {
-    eventEmitter.on("REQTOGGLE", callback);
+    eventEmitter.on("RequestToggle", callback);
   },
 
-  onLintResult(callback) {
-    eventEmitter.on("LINTRESULT", callback);
+  onReceiveLintResult(callback) {
+    eventEmitter.on("LintResult", callback);
   },
 
-  notifyActiveState(active) {
+  onShowMark(callback) {
+    eventEmitter.on("ShowMark", callback);
+  },
+
+  sendStatus(active, marks) {
     chrome.runtime.sendMessage({
-      type: "ACTIVESTATE",
-      active: active
+      type: "Status",
+      active: active,
+      marks: marks
     });
   },
 
   requestLint(textareaId, text) {
     chrome.runtime.sendMessage({
-      type: "REQLINT",
+      type: "RequestLint",
       textareaId: textareaId,
       text: text
     });

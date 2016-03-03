@@ -140,12 +140,14 @@ export class TextareaLinter {
   showLintMessages(textarea, lintMessages) {
     // Map to hashes for textarea-marker
     let markers = _.map(lintMessages, (msg) => {
+      let markId = _.uniqueId("mark");
       return {
+        id:    `${CLASS_PREFIX}${markId}`,
         class: `${CLASS_PREFIX}${msg.severity}`,
         start: msg.start,
         end:   msg.end,
         data:  {
-          markId:   _.uniqueId("mark"),
+          markId:   markId,
           message:  msg.message,
           ruleId:   msg.ruleId,
           severity: msg.severity
@@ -180,6 +182,24 @@ export class TextareaLinter {
       .off("markmousemove.extTextlint")
       .off("markmouseout.extTextlint");
     this.tooltip.hide();
+  }
+
+  getCurrentLintMarks() {
+    if (!this.lintedTextArea) return [];
+    let $textarea = $(this.lintedTextArea);
+    if ($textarea.textareaMarker("isActive")) {
+      return _.map(
+        $textarea.textareaMarker("markers"),
+        (marker) => $(marker).data()
+      );
+    } else {
+      return [];
+    }
+  }
+
+  showMark(markId) {
+    $(this.lintedTextArea)
+      .textareaMarker("scrollToMark", `#${CLASS_PREFIX}${markId}`);
   }
 
   _getTextAreaId(textarea) {

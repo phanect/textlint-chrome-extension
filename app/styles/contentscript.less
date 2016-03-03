@@ -21,6 +21,7 @@
   .ext-textlint-tooltip-text {
     display: block;
     color: #FFF;
+    text-shadow: 0 1px black;
   }
   .ext-textlint-tooltip-rule {
     display: block;
@@ -42,14 +43,15 @@
 
 .ext-textlint-mark {
   border-radius: 3px;
+  box-shadow: 0 0 5px white;
 
   &.ext-textlint-info {
-    background-color: #A5E7FF;
+    background-color: fade(darken(#A5E7FF, 10%), 60%);
   }
   &.ext-textlint-warning {
-    background-color: #FFF571;
+    background-color: fade(darken(#FFF571, 10%), 60%);
   }
   &.ext-textlint-error {
-    background-color: #FF6E8D;
+    background-color: fade(darken(#FF6E8D, 10%), 60%);
   }
 }

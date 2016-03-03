@@ -12,17 +12,27 @@ function initTextareaLinter() {
   return textareaLinter;
 }
 
-messages.onRequestActiveState(() => {
+function sendStatus() {
   let active = textareaLinter ? textareaLinter.active : false;
-  messages.notifyActiveState(active);
+  let marks = textareaLinter ? textareaLinter.getCurrentLintMarks() : [];
+  messages.sendStatus(active, marks);
+}
+
+messages.onRequestStatus(() => {
+  sendStatus();
 });
 
 messages.onRequestToggle(() => {
   initTextareaLinter();
   textareaLinter.toggle();
-  messages.notifyActiveState(textareaLinter.active);
+  sendStatus();
 });
 
-messages.onLintResult(({textareaId, lintMessages}) => {
+messages.onReceiveLintResult(({textareaId, lintMessages}) => {
   textareaLinter.receiveLintResult(textareaId, lintMessages);
+  sendStatus();
+});
+
+messages.onShowMark(({markId}) => {
+  textareaLinter.showMark(markId);
 });
