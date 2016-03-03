@@ -99,18 +99,16 @@ export class TextareaLinter {
     if (this.active) return;
     this.active = true;
 
-    // Set global event handler for textarea input
+    // Set global event handler for textarea input or focus
     let self = this;
     $(document).on(
       "input.textareaLinter", "textarea",
       _.debounce(function () { self.lintTextArea(this) }, LINT_DELAY)
     );
 
-    // Lint focused textarea
-    let $focus = $("textarea:focus");
-    if ($focus.length > 0) {
-      this.lintTextArea($focus[0]);
-    }
+    // Lint every textarea that is visible and contains any text
+    _($("textarea:visible:enabled")).filter(_.property("value"))
+      .each((textarea) => { this.lintTextArea(textarea) })
   }
 
   deactivate() {
