@@ -1,0 +1,25 @@
+{
+  "name": "textlint-chrome-extension",
+  "description": "textlint Chrome Extension",
+  "main": "",
+  "authors": [
+    "IRIDE Monad <iride.monad@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/io-monad/textlint-chrome-extension",
+  "moduleType": [
+    "es6"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "dist",
+    "packages"
+  ],
+  "dependencies": {
+    "pure": "^0.6.0"
+  }
+}
