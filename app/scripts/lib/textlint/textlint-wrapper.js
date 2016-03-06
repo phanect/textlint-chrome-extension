@@ -2,7 +2,7 @@
 
 import _ from "lodash";
 import {TextLintCore} from "textlint";
-import TextCaretScanner from "./text-caret-scanner";
+import TextCaretScanner from "../util/text-caret-scanner";
 import TextlintRulePackage from "./textlint-rule-package";
 
 const SEVERITY_NAMES = {

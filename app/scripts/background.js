@@ -4,7 +4,7 @@
 import './lib/background/livereload';
 
 import _ from "lodash";
-import TextlintWrapper from "./lib/util/textlint-wrapper";
+import TextlintWrapper from "./lib/textlint/textlint-wrapper";
 import cutil from "./lib/util/chrome-util";
 import messages from "./lib/background/messages";
 

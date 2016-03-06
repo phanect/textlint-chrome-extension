@@ -1,7 +1,8 @@
 "use strict";
 
 import $ from "jquery";
-import requireBundle from "./require-bundle";
+import requireBundle from "../bundle/require-bundle";
+import stripDefault from "../util/strip-default";
 
 const NPM_REGISTRY_URL = "https://registry.npmjs.org/";
 const BROWSERIFY_CDN_URL = "https://www.brcdn.org/";
@@ -72,8 +73,7 @@ export default class TextlintRulePackage {
         dataType: "script",
         cache: true
       }).done(() => {
-        let pkg = window.require(this.packageName);
-        resolve(pkg && pkg.__esModule ? pkg["default"] : pkg);
+        resolve(stripDefault(window.require(this.packageName)));
       }).fail((xhr, status, error) => {
         reject(error);
       });
@@ -90,13 +90,9 @@ export default class TextlintRulePackage {
 
   loadBundled() {
     return new Promise((resolve, reject) => {
-      let loaded;
-      try {
-        loaded = requireBundle(this.packageName);
-      } catch (e) {
-        reject(e);
-      }
-      resolve(loaded && loaded.__esModule ? loaded["default"] : loaded);
+      requireBundle(this.packageName).then((pkg) => {
+        resolve(stripDefault(pkg));
+      }).catch(reject);
     });
   }
 

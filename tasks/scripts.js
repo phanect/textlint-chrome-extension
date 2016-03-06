@@ -7,10 +7,24 @@ import livereload from 'gulp-livereload';
 import args from './lib/args';
 import path from 'path';
 
+const appDir = path.join(__dirname, '../app');
+const scriptsDir = `${appDir}/scripts`;
+
 gulp.task('scripts', (cb) => {
-  return gulp.src('app/scripts/*.js')
-    .pipe(named())
+  return gulp.src(['app/scripts/*.js'])
     .pipe(gulpWebpack({
+      entry: {
+        background: `${scriptsDir}/background.js`,
+        contentscript: `${scriptsDir}/contentscript.js`,
+        options: `${scriptsDir}/options.js`,
+        popup: `${scriptsDir}/popup.js`,
+
+        vendor: ['jquery', 'lodash'],
+      },
+      output: {
+        filename: '[name].js',
+        publicPath: '/scripts/',
+      },
       devtool: args.sourcemaps ? 'source-map': null,
       watch: args.watch,
       plugins: [
@@ -21,6 +35,10 @@ gulp.task('scripts', (cb) => {
         new webpack.IgnorePlugin(
           /package\.json$|\.md$|\.d\.ts$/
         ),
+        new webpack.optimize.CommonsChunkPlugin({
+          name: 'vendor',
+          minChunks: Infinity
+        }),
       ].concat(args.production ? [
         new webpack.optimize.UglifyJsPlugin(),
         new webpack.optimize.DedupePlugin(),
@@ -32,7 +50,7 @@ gulp.task('scripts', (cb) => {
             loader: 'string-replace',
             query: {
               search: './loader/NodeDictionaryLoader.js',
-              replace: path.join(__dirname, '../app/scripts/shim/kuromoji/ChromeDictionaryLoader.js')
+              replace: `${scriptsDir}/shim/kuromoji/ChromeDictionaryLoader.js`
             }
           },
           {
@@ -61,6 +79,7 @@ gulp.task('scripts', (cb) => {
         ]
       },
       node: {
+        process: 'mock',
         fs: 'empty',
         module: 'empty'
       }

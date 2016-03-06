@@ -1,6 +1,6 @@
 "use strict";
 
-import messages from "../util/app-message";
+import messages from "../app/app-message";
 
 export default {
   onError(callback) {

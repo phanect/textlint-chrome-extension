@@ -3,9 +3,9 @@
 import _ from "lodash";
 import $ from "jquery";
 import messages from "./lib/background/messages";
-import storage from "./lib/util/app-storage";
+import storage from "./lib/app/app-storage";
 import cutil from "./lib/util/chrome-util";
-import textlintConfig from "./lib/util/textlint-config";
+import textlintConfig from "./lib/textlint/textlint-config";
 import "./lib/util/i18n-replace";
 
 function updatePresets() {

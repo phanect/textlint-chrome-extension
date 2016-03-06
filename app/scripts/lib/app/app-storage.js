@@ -1,6 +1,6 @@
 "use strict";
 
-import cutil from "./chrome-util";
+import cutil from "../util/chrome-util";
 
 const SELECTED_PRESET = "selectedPreset";
 
