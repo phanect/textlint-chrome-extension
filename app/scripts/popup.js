@@ -3,8 +3,42 @@
 import _ from "lodash";
 import $ from "jquery";
 import messages from "./lib/background/messages";
+import storage from "./lib/util/app-storage";
 import cutil from "./lib/util/chrome-util";
+import textlintPresets from "./lib/util/textlint-presets";
 import "./lib/util/i18n-replace";
+
+function updatePresets() {
+  $("#presets").html(
+    _.map(textlintPresets.presets, (preset) => {
+      return $("<label />")
+        .attr("for", `preset-item-${preset.name}`)
+        .addClass("pure-radio")
+        .append(
+          $("<input />").attr({
+            id: `preset-item-${preset.name}`,
+            type: "radio",
+            name: "preset",
+            value: preset.name
+          })
+        )
+        .append(
+          chrome.i18n.getMessage(`preset${preset.name}`)
+        );
+    })
+  );
+
+  const lang = chrome.i18n.getUILanguage();
+  const checked = textlintPresets.localeDefault[lang] || textlintPresets.localeDefault["en"];
+  $(`#preset-item-${checked}`).attr("checked", true);
+
+  storage.getSelectedPreset().then((selected) => {
+    if (selected) {
+      $(`#preset-item-${checked}`).attr("checked", false);
+      $(`#preset-item-${selected}`).attr("checked", true);
+    }
+  });
+}
 
 function updateMarks(marks, counts) {
   $("#marks").html(
@@ -42,6 +76,7 @@ function updateForTab(tab) {
       showLinterPage();
       $("#activate-button").toggle(!active);
       $("#deactivate-button").toggle(active);
+      $(".presets-area").toggle(!active);
       $(".marks-area").toggle(active);
       $("#loading-marks").toggle(!loaded || linting);
       $("#any-marks").toggle(loaded && !linting && marks.length > 0);
@@ -63,7 +98,16 @@ $("#options-button").on("click", () => {
   cutil.openOptionsPage();
 });
 
-$("#activate-button, #deactivate-button").on("click", () => {
+$("#activate-button").on("click", () => {
+  const selectedPreset = $("#presets input:radio[name=preset]:checked").val();
+  if (selectedPreset) {
+    storage.setSelectedPreset(selectedPreset).then(() => {
+      cutil.withActiveTab((tab) => { messages.toggleLinter(tab.id) });
+    });
+  }
+});
+
+$("#deactivate-button").on("click", () => {
   cutil.withActiveTab((tab) => { messages.toggleLinter(tab.id) });
 });
 
@@ -91,6 +135,7 @@ $("#refresh-button").on("click", function () {
   cutil.withActiveTab((tab) => { chrome.tabs.reload(tab.id) });
 });
 
+updatePresets();
 cutil.withActiveTab(updateForTab);
 
 function showLinterPage() {

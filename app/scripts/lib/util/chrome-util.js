@@ -2,6 +2,18 @@
 
 import _ from "lodash";
 
+function promised(callback) {
+  return new Promise((resolve, reject) => {
+    callback.call(null, (response) => {
+      if (chrome.runtime.lastError) {
+        reject(chrome.runtime.lastError.message);
+      } else {
+        resolve(response);
+      }
+    });
+  });
+}
+
 export default {
 
   withActiveTab(fn) {
@@ -9,6 +21,50 @@ export default {
       { active: true, currentWindow: true },
       (tabs) => { _.each(tabs, fn) }
     );
+  },
+
+  syncGet(keys) {
+    return promised((cb) => chrome.storage.sync.get(keys, cb));
+  },
+
+  syncGetValue(key) {
+    return promised((cb) => {
+      chrome.storage.sync.get(key, (items) => cb(items.hasOwnProperty(key) ? items[key] : undefined));
+    });
+  },
+
+  syncSet(items) {
+    return promised((cb) => chrome.storage.sync.set(items, cb));
+  },
+
+  syncSetValue(key, value) {
+    return promised((cb) => chrome.storage.sync.set({ [key]: value }, cb));
+  },
+
+  syncRemove(keys) {
+    return promised((cb) => chrome.storage.sync.remove(keys, cb));
+  },
+
+  localGet(keys) {
+    return promised((cb) => chrome.storage.local.get(keys, cb));
+  },
+
+  localGetValue(key) {
+    return promised((cb) => {
+      chrome.storage.local.get(key, (items) => cb(items.hasOwnProperty(key) ? items[key] : undefined));
+    });
+  },
+
+  localSet(items) {
+    return promised((cb) => chrome.storage.local.set(items, cb));
+  },
+
+  localSetValue(key, value) {
+    return promised((cb) => chrome.storage.local.set({ [key]: value }, cb));
+  },
+
+  localRemove(keys) {
+    return promised((cb) => chrome.storage.local.remove(keys, cb));
   },
 
   openOptionsPage() {

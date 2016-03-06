@@ -23,6 +23,9 @@
   "deactivate": {
     "message": "文書のチェックを終了"
   },
+  "choosePreset": {
+    "message": "チェックする文書のタイプを指定できます"
+  },
   "filter": {
     "message": "絞り込み"
   },
@@ -49,5 +52,17 @@
   },
   "wentWrong": {
     "message": "申し訳ございません。問題が発生しました。"
+  },
+  "presetEnglish": {
+    "message": "英語の文書"
+  },
+  "presetJapanese": {
+    "message": "日本語の文書"
+  },
+  "presetJapaneseNovel": {
+    "message": "日本の小説の文書"
+  },
+  "presetCustom": {
+    "message": "カスタマイズ (オプションで設定)"
   }
 }
