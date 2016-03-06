@@ -5,6 +5,7 @@ import webpack from 'webpack';
 import gulpWebpack from 'webpack-stream';
 import livereload from 'gulp-livereload';
 import args from './lib/args';
+import path from 'path';
 
 gulp.task('scripts', (cb) => {
   return gulp.src('app/scripts/*.js')
@@ -24,6 +25,24 @@ gulp.task('scripts', (cb) => {
         new webpack.optimize.UglifyJsPlugin()
       ] : []),
       module: {
+        preLoaders: [
+          {
+            test: /node_modules\/kuromoji\/dist\/node\/TokenizerBuilder\.js/,
+            loader: 'string-replace',
+            query: {
+              search: './loader/NodeDictionaryLoader.js',
+              replace: path.join(__dirname, '../app/scripts/shim/kuromoji/RequireDictionaryLoader.js')
+            }
+          },
+          {
+            test: /node_modules\/kuromojin\/lib\/kuromojin\.js/,
+            loader: 'string-replace',
+            query: {
+              search: 'require.resolve("kuromoji")',
+              replace: '""'
+            }
+          }
+        ],
         loaders: [
           {
             test: /\.js$/,
@@ -37,6 +56,10 @@ gulp.task('scripts', (cb) => {
           {
             test: /\.json$/,
             loader: 'json'
+          },
+          {
+            test: /\.dat\.gz/,
+            loader: 'base64'
           }
         ]
       },

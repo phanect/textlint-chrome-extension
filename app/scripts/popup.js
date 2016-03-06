@@ -5,12 +5,12 @@ import $ from "jquery";
 import messages from "./lib/background/messages";
 import storage from "./lib/util/app-storage";
 import cutil from "./lib/util/chrome-util";
-import textlintPresets from "./lib/util/textlint-presets";
+import textlintConfig from "./lib/util/textlint-config";
 import "./lib/util/i18n-replace";
 
 function updatePresets() {
   $("#presets").html(
-    _.map(textlintPresets.presets, (preset) => {
+    _.map(textlintConfig.presets, (preset) => {
       return $("<label />")
         .attr("for", `preset-item-${preset.name}`)
         .addClass("pure-radio")
@@ -28,8 +28,7 @@ function updatePresets() {
     })
   );
 
-  const lang = chrome.i18n.getUILanguage();
-  const checked = textlintPresets.localeDefault[lang] || textlintPresets.localeDefault["en"];
+  const checked = textlintConfig.getDefaultPreset().name;
   $(`#preset-item-${checked}`).attr("checked", true);
 
   storage.getSelectedPreset().then((selected) => {
@@ -66,21 +65,23 @@ function updateMarks(marks, counts) {
 
 function updateForTab(tab) {
   chrome.runtime.getBackgroundPage((background) => {
-    const {loadingFailed, loaded, linting} = background.textlint.getStatus();
-    if (loadingFailed) {
-      showErrorPage("textlint loading failed");
-      return;
-    }
-
     messages.getStatus(tab.id).then(({active, marks, counts}) => {
+      const tl = background.getTextlintForTab(tab.id);
+      const status = tl ? tl.getStatus() : { loaded: false, loadingFailed: false, linting: false };
+
+      if (status.loadingFailed) {
+        showErrorPage("textlint loading failed");
+        return;
+      }
+
       showLinterPage();
       $("#activate-button").toggle(!active);
       $("#deactivate-button").toggle(active);
       $(".presets-area").toggle(!active);
       $(".marks-area").toggle(active);
-      $("#loading-marks").toggle(!loaded || linting);
-      $("#any-marks").toggle(loaded && !linting && marks.length > 0);
-      $("#no-marks").toggle(loaded && !linting && marks.length === 0);
+      $("#loading-marks").toggle(!status.loaded || status.linting);
+      $("#any-marks").toggle(status.loaded && !status.linting && marks.length > 0);
+      $("#no-marks").toggle(status.loaded && !status.linting && marks.length === 0);
       updateMarks(marks, counts);
     });
   });
@@ -99,16 +100,25 @@ $("#options-button").on("click", () => {
 });
 
 $("#activate-button").on("click", () => {
-  const selectedPreset = $("#presets input:radio[name=preset]:checked").val();
-  if (selectedPreset) {
-    storage.setSelectedPreset(selectedPreset).then(() => {
-      cutil.withActiveTab((tab) => { messages.toggleLinter(tab.id) });
+  let selected = $("#presets input:radio[name=preset]:checked").val();
+  let preset = textlintConfig.getPreset(selected) || textlintConfig.getDefaultPreset();
+  storage.setSelectedPreset(preset.name).then(() => {
+    chrome.runtime.getBackgroundPage((background) => {
+      cutil.withActiveTab((tab) => {
+        background.setupTextlintForTab(tab.id, preset);
+        messages.toggleLinter(tab.id);
+      });
     });
-  }
+  });
 });
 
 $("#deactivate-button").on("click", () => {
-  cutil.withActiveTab((tab) => { messages.toggleLinter(tab.id) });
+  chrome.runtime.getBackgroundPage((background) => {
+    cutil.withActiveTab((tab) => {
+      background.removeTextlintForTab(tab.id);
+      messages.toggleLinter(tab.id);
+    });
+  });
 });
 
 $(".marks-filter").on("click", ".marks-filter-item", function () {

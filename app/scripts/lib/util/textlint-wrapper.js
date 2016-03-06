@@ -1,7 +1,7 @@
 "use strict";
 
 import _ from "lodash";
-import {textlint} from "textlint";
+import {TextLintCore} from "textlint";
 import TextCaretScanner from "./text-caret-scanner";
 import TextlintRulePackage from "./textlint-rule-package";
 
@@ -11,90 +11,80 @@ const SEVERITY_NAMES = {
   2: "error"
 };
 
-// TODO: Options to switch loading rules
-let loadingRules = [
-  "general-novel-style-ja",
-];
+const PRESET_PREFIX_RE = /^preset-/;
 
-let ruleOptions = {
-  "general-novel-style-ja": true
-};
+export default class TextlintWrapper {
+  constructor(ruleNames, ruleOptions) {
+    this.ruleNames = ruleNames;
+    this.ruleOptions = ruleOptions;
+    this.textlint = new TextLintCore();
+    this.loadingPromise = null;
+    this.loaded = false;
+    this.loadingFailed = false;
+    this.lintStackCount = 0;
+  }
 
-let loaded = false;
-let loadingFailed = false;
-let loadingPromise;
+  getTextlint() {
+    if (!this.loadingPromise) {
+      this.loadingPromise = new Promise((resolve, reject) => {
+        const promises = _.map(this.ruleNames, (ruleName) => {
+          return (new TextlintRulePackage(ruleName)).loadBundledOrLatest();
+        });
+        Promise.all(promises).then((rules) => {
+          const flattenRules = this._flattenPreset(_.fromPairs(_.zip(this.ruleNames, rules)));
+          this.textlint.setupRules(flattenRules, this.ruleOptions);
+          resolve(this.textlint);
+        }).catch(reject);
+      });
 
-const getTextlint = () => {
-  return loadingPromise || (loadingPromise = new Promise((resolve, reject) => {
-    const promises = _.map(loadingRules, (ruleName) => {
-      return (new TextlintRulePackage(ruleName)).loadLatest();
-    });
-    Promise.all(promises).then((rules) => {
-      const nameToRule = _.fromPairs(_.zip(loadingRules, rules));
-      textlint.setupRules(nameToRule, ruleOptions);
-      resolve(textlint);
-    }).catch(reject);
-  }));
-};
-
-getTextlint().then(() => {
-  loaded = true;
-  console.log("textlint and rules have been successfully loaded.");
-}).catch((reason) => {
-  loadingFailed = true;
-  console.error("Error occurred while loading textlint and rules: ", reason);
-});
-
-function buildLintMessages(text, messages) {
-  let scanner = new TextCaretScanner(text);
-  return _.map(messages, (m) => {
-    let range = scanner.getWordRangeFromLineColumn(m.line, m.column);
-    return {
-      "start":    range[0],
-      "end":      range[1],
-      "message":  m.message,
-      "ruleId":   m.ruleId,
-      "severity": SEVERITY_NAMES[m.severity] || SEVERITY_NAMES[0]
-    };
-  });
-}
-
-let lintStackCount = 0;
-
-export default {
-  onLoad(callback) {
-    getTextlint().then(callback);
-  },
-  onLoadError(callback) {
-    getTextlint().catch(callback);
-  },
+      this.loadingPromise.then(() => {
+        this.loaded = true;
+        console.log("textlint and rules have been successfully loaded.");
+      }).catch((reason) => {
+        this.loadingFailed = true;
+        console.error("Error occurred while loading textlint and rules: ", reason);
+      });
+    }
+    return this.loadingPromise;
+  }
 
   lint(text) {
     return new Promise((resolve, reject) => {
-      lintStackCount++;
+      this.lintStackCount++;
       let rejectCatch = (error) => {
-        lintStackCount--;
+        this.lintStackCount--;
         reject(error);
       };
 
-      getTextlint().then((textlint) => {
+      this.getTextlint().then((textlint) => {
         textlint.lintText(text).then(({messages}) => {
-          lintStackCount--;
-          resolve(buildLintMessages(text, messages));
+          this.lintStackCount--;
+          resolve(this._buildLintMessages(text, messages));
         }).catch(rejectCatch);
       }).catch(rejectCatch);
     });
-  },
+  }
+
+  getSeverities() {
+    return _.values(SEVERITY_NAMES);
+  }
+
+  onLoad(callback) {
+    this.getTextlint().then(callback);
+  }
+  onLoadError(callback) {
+    this.getTextlint().catch(callback);
+  }
 
   isLoaded() {
-    return loaded;
-  },
+    return this.loaded;
+  }
   isLoadingFailed() {
-    return loadingFailed;
-  },
+    return this.loadingFailed;
+  }
   isLinting() {
-    return lintStackCount > 0;
-  },
+    return this.lintStackCount > 0;
+  }
 
   getStatus() {
     return {
@@ -102,5 +92,30 @@ export default {
       loadingFailed: this.isLoadingFailed(),
       linting: this.isLinting(),
     };
-  },
-};
+  }
+
+  _flattenPreset(rules) {
+    return _.reduce(rules, (accum, value, key) => {
+      if (PRESET_PREFIX_RE.test(key)) {
+        _.each(value.rules, (rule, name) => { accum[`${key}/${name}`] = rule });
+      } else {
+        accum[key] = value;
+      }
+      return accum;
+    }, {});
+  }
+
+  _buildLintMessages(text, messages) {
+    let scanner = new TextCaretScanner(text);
+    return _.map(messages, (m) => {
+      let range = scanner.getWordRangeFromLineColumn(m.line, m.column);
+      return {
+        "start":    range[0],
+        "end":      range[1],
+        "message":  m.message,
+        "ruleId":   m.ruleId,
+        "severity": SEVERITY_NAMES[m.severity] || SEVERITY_NAMES[0]
+      };
+    });
+  }
+}

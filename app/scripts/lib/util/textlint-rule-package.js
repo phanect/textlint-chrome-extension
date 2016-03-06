@@ -1,6 +1,7 @@
 "use strict";
 
 import $ from "jquery";
+import requireBundle from "./require-bundle";
 
 const NPM_REGISTRY_URL = "https://registry.npmjs.org/";
 const BROWSERIFY_CDN_URL = "https://www.brcdn.org/";
@@ -69,6 +70,30 @@ export default class TextlintRulePackage {
       this.getLatestVersion().then((version) => {
         this.load(version).then(resolve).catch(reject);
       })
+    });
+  }
+
+  loadBundled() {
+    return new Promise((resolve, reject) => {
+      let loaded;
+      try {
+        loaded = requireBundle(this.packageName);
+      } catch (e) {
+        reject(e);
+      }
+      resolve(loaded);
+    });
+  }
+
+  loadBundledOrLatest() {
+    return new Promise((resolve, reject) => {
+      this.loadBundled().then((bundled) => {
+        if (bundled) {
+          resolve(bundled);
+        } else {
+          this.loadLatest().then(resolve, reject);
+        }
+      });
     });
   }
 
