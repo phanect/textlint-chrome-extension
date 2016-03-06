@@ -1,7 +1,5 @@
 "use strict";
 
-import zlib from "zlib";
-
 const DictionaryLoader = require("kuromoji/dist/node/loader/DictionaryLoader");
 
 function ChromeDictionaryLoader() {
@@ -14,24 +12,24 @@ function getExtensionFile(path) {
     chrome.runtime.getPackageDirectoryEntry((root) => {
       root.getFile(path, { create: false }, (entry) => {
         entry.file(resolve, reject);
-      });
+      }, reject);
     });
   });
 }
 
 ChromeDictionaryLoader.prototype.loadArrayBuffer = function (path, callback) {
+  // Strip ".gz" since they are decompressed in dist directory
+  path = path.replace(/\.gz$/, "");
+
   getExtensionFile(path).then((file) => {
     const reader = new FileReader();
     reader.onload = () => {
-      const buffer = new Buffer(reader.result);
-      zlib.gunzip(buffer, (err, decompressed) => {
-        if (err) return callback(err);
-        callback(null, new Uint8Array(decompressed));
-      });
+      callback(null, new Uint8Array(reader.result));
     };
     reader.onerror = () => { callback(reader.error) };
     reader.readAsArrayBuffer(file);
-  });
+  })
+  .catch(callback);
 }
 
 module.exports = ChromeDictionaryLoader;

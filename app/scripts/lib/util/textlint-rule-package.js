@@ -65,38 +65,6 @@ export default class TextlintRulePackage {
     });
   }
 
-  loadLatest() {
-    return new Promise((resolve, reject) => {
-      this.getLatestVersion().then((version) => {
-        this.load(version).then(resolve).catch(reject);
-      })
-    });
-  }
-
-  loadBundled() {
-    return new Promise((resolve, reject) => {
-      let loaded;
-      try {
-        loaded = requireBundle(this.packageName);
-      } catch (e) {
-        reject(e);
-      }
-      resolve(loaded);
-    });
-  }
-
-  loadBundledOrLatest() {
-    return new Promise((resolve, reject) => {
-      this.loadBundled().then((bundled) => {
-        if (bundled) {
-          resolve(bundled);
-        } else {
-          this.loadLatest().then(resolve, reject);
-        }
-      });
-    });
-  }
-
   load(version) {
     return new Promise((resolve, reject) => {
       $.ajax({
@@ -109,6 +77,38 @@ export default class TextlintRulePackage {
       }).fail((xhr, status, error) => {
         reject(error);
       });
+    });
+  }
+
+  loadLatest() {
+    return new Promise((resolve, reject) => {
+      this.getLatestVersion().then((version) => {
+        this.load(version).then(resolve, reject);
+      }).catch(reject);
+    });
+  }
+
+  loadBundled() {
+    return new Promise((resolve, reject) => {
+      let loaded;
+      try {
+        loaded = requireBundle(this.packageName);
+      } catch (e) {
+        reject(e);
+      }
+      resolve(loaded && loaded.__esModule ? loaded["default"] : loaded);
+    });
+  }
+
+  loadBundledOrLatest() {
+    return new Promise((resolve, reject) => {
+      this.loadBundled().then((bundled) => {
+        if (bundled) {
+          resolve(bundled);
+        } else {
+          this.loadLatest().then(resolve, reject);
+        }
+      }).catch(reject);
     });
   }
 }
