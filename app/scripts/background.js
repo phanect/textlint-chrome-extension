@@ -76,6 +76,10 @@ function updateForActiveTab() {
 }
 
 messages.onError((reason) => {
+  if (reason === "Could not establish connection. Receiving end does not exist.") {
+    // Suppress error because this error occurs everytime when reloaded extension
+    return;
+  }
   console.error("Error on sending message:", reason);
 });
 
