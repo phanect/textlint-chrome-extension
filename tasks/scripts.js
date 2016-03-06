@@ -22,7 +22,8 @@ gulp.task('scripts', (cb) => {
           /package\.json$|\.md$|\.d\.ts$/
         ),
       ].concat(args.production ? [
-        new webpack.optimize.UglifyJsPlugin()
+        new webpack.optimize.UglifyJsPlugin(),
+        new webpack.optimize.DedupePlugin(),
       ] : []),
       module: {
         preLoaders: [
