@@ -6,16 +6,8 @@ import './lib/background/livereload';
 import _ from "lodash";
 import TextlintWrapper from "./lib/textlint/textlint-wrapper";
 import cutil from "./lib/util/chrome-util";
+import appConfig from "./lib/app/app-config";
 import messages from "./lib/background/messages";
-
-const ACTIVE_ICON = {
-  "19": "images/icon-19.png",
-  "38": "images/icon-38.png"
-};
-const DEACTIVE_ICON = {
-  "19": "images/icon-black-19.png",
-  "38": "images/icon-black-38.png"
-};
 
 let tabTextlints = {};
 
@@ -46,7 +38,7 @@ function updateForTab(tab) {
 
   const tl = getTextlintForTab(tab.id);
   if (tl && tl.isLoadingFailed()) {
-    chrome.browserAction.setIcon({ tabId: tab.id, path: DEACTIVE_ICON });
+    chrome.browserAction.setIcon({ tabId: tab.id, path: appConfig.deactiveIcon });
     chrome.browserAction.setBadgeBackgroundColor({ tabId: tab.id, color: "#F00" });
     chrome.browserAction.setBadgeText({ tabId: tab.id, text: "Err" });
     return;
@@ -55,7 +47,7 @@ function updateForTab(tab) {
   messages.getStatus(tab.id).then(({active, marks, counts}) => {
     chrome.browserAction.setIcon({
       tabId: tab.id,
-      path: active ? ACTIVE_ICON : DEACTIVE_ICON
+      path: active ? appConfig.activeIcon : appConfig.deactiveIcon
     });
     if (active && tl && !tl.isLinting()) {
       chrome.browserAction.setBadgeText({
