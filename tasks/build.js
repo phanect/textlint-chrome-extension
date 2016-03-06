@@ -9,6 +9,7 @@ gulp.task('build', gulpSequence(
     'pages',
     'locales',
     'images',
+    'fonts',
     'bower',
     'livereload'
   ]

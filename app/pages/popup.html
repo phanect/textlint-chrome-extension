@@ -3,16 +3,83 @@
 <head>
   <meta charset="utf-8" />
   <title>textlint</title>
+  <link rel="stylesheet" type="text/css" href="../bower/pure/pure.css">
   <link rel="stylesheet" type="text/css" href="../styles/popup.css">
 </head>
 <body>
-  <div class="toggle-area">
-    <button id="activate-button">Activate</button>
-    <button id="deactivate-button">Deactivate</button>
+  <div class="page page-notice notice" id="loading-page">
+    <i class="fa fa-circle-o-notch fa-spin notice-mark"></i>
+    <p data-i18n="loading">Loading...</p>
   </div>
 
-  <div class="marks-area">
-    <div id="marks"></div>
+  <div class="page page-main hide" id="linter-page">
+    <div class="pure-g">
+      <div class="pure-u-1-2">
+        <a href="#options" class="pure-button" id="options-button">
+          <i class="fa fa-cog"></i>
+          <span data-i18n="options">Options</span>
+        </a>
+      </div>
+
+      <div class="pure-u-1-2 toggle-area">
+        <button class="pure-button pure-button-primary" id="activate-button">
+          <i class="fa fa-flash"></i>
+          <span data-i18n="activate">Activate textlint</span>
+        </button>
+        <button class="pure-button pure-button-primary pure-button-active hide" id="deactivate-button">
+          <i class="fa fa-flash"></i>
+          <span data-i18n="deactivate">Deactivate textlint</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="marks-area hide">
+      <div id="loading-marks" class="hide notice">
+        <i class="fa fa-circle-o-notch fa-spin notice-mark"></i>
+        <p data-i18n="linting">Checking your text...</p>
+      </div>
+      <div id="any-marks" class="hide">
+        <div class="marks-filter">
+          <i class="fa fa-filter"></i>
+          <span data-i18n="filter">Filter</span>
+          <button class="marks-filter-item pure-button" id="marks-filter-error" data-severity="error">
+            <i class="icon-error"></i>
+            <span class="stat-count" id="marks-count-error"></span>
+            <span data-i18n="error">Error</span>
+          </button>
+          <button class="marks-filter-item pure-button" id="marks-filter-warning" data-severity="warning">
+            <i class="icon-warning"></i>
+            <span class="stat-count" id="marks-count-warning"></span>
+            <span data-i18n="warning">Warning</span>
+          </button>
+          <button class="marks-filter-item pure-button" id="marks-filter-info" data-severity="info">
+            <i class="icon-info"></i>
+            <span class="stat-count" id="marks-count-info"></span>
+            <span data-i18n="info">Info</span>
+          </button>
+        </div>
+        <div id="marks"></div>
+      </div>
+      <div id="no-marks" class="hide notice">
+        <i class="fa fa-check-circle notice-mark"></i>
+        <p data-i18n="noMarks">Your text has passed all tests.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="page page-notice notice hide" id="refresh-page">
+    <i class="fa fa-refresh notice-mark"></i>
+    <p data-i18n="requireRefresh">Please refresh the page to use this extension.</p>
+    <button class="pure-button pure-button-primary" id="refresh-button">
+      <i class="fa fa-refresh"></i>
+      <span data-i18n="refresh">Refresh</span>
+    </button>
+  </div>
+
+  <div class="page page-notice notice hide" id="error-page">
+    <i class="fa fa-exclamation-triangle notice-mark"></i>
+    <p data-i18n="wentWrong">Sorry, something went wrong...</p>
+    <p class="hide" class="notice-details" id="error-details"></p>
   </div>
 
   <script src="../scripts/popup.js"></script>

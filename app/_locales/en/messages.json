@@ -10,5 +10,44 @@
   "appDescription": {
     "message": "Proofread your texts as you type based on textlint rules!",
     "description": "The description of the application"
+  },
+  "loading": {
+    "message": "Loading..."
+  },
+  "options": {
+    "message": "Options"
+  },
+  "activate": {
+    "message": "Activate textlint"
+  },
+  "deactivate": {
+    "message": "Deactivate textlint"
+  },
+  "filter": {
+    "message": "Filter"
+  },
+  "error": {
+    "message": "Error"
+  },
+  "warning": {
+    "message": "Warning"
+  },
+  "info": {
+    "message": "Info"
+  },
+  "linting": {
+    "message": "Checking your text..."
+  },
+  "noMarks": {
+    "message": "Your text has passed all tests."
+  },
+  "requireRefresh": {
+    "message": "Please refresh the page to use this extension."
+  },
+  "refresh": {
+    "message": "Refresh"
+  },
+  "wentWrong": {
+    "message": "Sorry, something went wrong..."
   }
 }

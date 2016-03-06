@@ -1,49 +1,29 @@
 "use strict";
 
-import EventEmitter from "events";
-
-const eventEmitter = new EventEmitter();
-const knownEvents = "RequestStatus RequestToggle LintResult ShowMark";
-
-// Register message receiver
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message.type && knownEvents.indexOf(message.type) >= 0) {
-    eventEmitter.emit(message.type, message, sender, sendResponse);
-  } else {
-    console.error("Unknown message:", message, ", sender: ", sender);
-  }
-});
+import messages from "../util/app-message";
 
 export default {
-  onRequestStatus(callback) {
-    eventEmitter.on("RequestStatus", callback);
+  onError(callback) {
+    messages.onError(callback);
   },
 
-  onRequestToggle(callback) {
-    eventEmitter.on("RequestToggle", callback);
+  onGetStatus(callback) {
+    messages.on(messages.GET_STATUS, callback);
   },
 
-  onReceiveLintResult(callback) {
-    eventEmitter.on("LintResult", callback);
+  onToggleLinter(callback) {
+    messages.on(messages.TOGGLE_LINTER, callback);
   },
 
   onShowMark(callback) {
-    eventEmitter.on("ShowMark", callback);
+    messages.on(messages.SHOW_MARK, callback);
   },
 
-  sendStatus(active, marks) {
-    chrome.runtime.sendMessage({
-      type: "Status",
-      active: active,
-      marks: marks
-    });
+  lintText(text) {
+    return messages.send(messages.LINT_TEXT, { text: text });
   },
 
-  requestLint(textareaId, text) {
-    chrome.runtime.sendMessage({
-      type: "RequestLint",
-      textareaId: textareaId,
-      text: text
-    });
+  updateStatus() {
+    return messages.send(messages.UPDATE_STATUS);
   },
 }

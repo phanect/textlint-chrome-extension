@@ -5,6 +5,7 @@ import './lib/background/livereload';
 
 import _ from "lodash";
 import textlint from "./lib/util/textlint-wrapper";
+import cutil from "./lib/util/chrome-util";
 import messages from "./lib/background/messages";
 
 const ACTIVE_ICON = {
@@ -16,33 +17,72 @@ const DEACTIVE_ICON = {
   "38": "images/icon-black-38.png"
 };
 
-messages.onReceiveStatus(({active, marks}, sender) => {
-  if (!sender.tab) return;
-  chrome.browserAction.setIcon({
-    tabId: sender.tab.id,
-    path: active ? ACTIVE_ICON : DEACTIVE_ICON
-  });
-
-  if (active) {
-    let errorCount = _.reduce(marks, (c, m) => c + (m.severity == "error" ? 1 : 0), 0);
-    chrome.browserAction.setBadgeText({
-      tabId: sender.tab.id,
-      text: errorCount > 0 ? errorCount.toString() : "OK"
-    });
-    chrome.browserAction.setBadgeBackgroundColor({
-      tabId: sender.tab.id,
-      color: errorCount > 0 ? "#EC1A2A" : "#99EC6B"
-    });
+function updateForTab(tab) {
+  if (tab.url && /^https?:/.test(tab.url)) {
+    chrome.browserAction.enable(tab.id);
   } else {
-    chrome.browserAction.setBadgeText({ tabId: sender.tab.id, text: "" });
+    chrome.browserAction.disable(tab.id);
+    chrome.browserAction.setBadgeText({ tabId: tab.id, text: "" });
+    return;
   }
+
+  messages.getStatus(tab.id).then(({active, marks, counts}) => {
+    chrome.browserAction.setIcon({
+      tabId: tab.id,
+      path: active ? ACTIVE_ICON : DEACTIVE_ICON
+    });
+
+    if (active && !textlint.isLinting()) {
+      chrome.browserAction.setBadgeText({
+        tabId: tab.id,
+        text: counts.error > 0 ? counts.error.toString() : "OK"
+      });
+      chrome.browserAction.setBadgeBackgroundColor({
+        tabId: tab.id,
+        color: counts.error > 0 ? "#EC1A2A" : "#99EC6B"
+      });
+    } else {
+      chrome.browserAction.setBadgeText({ tabId: tab.id, text: "" });
+    }
+  });
+}
+function updateForActiveTab() {
+  cutil.withActiveTab(updateForTab);
+}
+
+messages.onError((reason) => {
+  console.error("Error on sending message:", reason);
 });
 
-messages.onRequestLint(({textareaId, text}, sender) => {
+messages.onLintText(({text}, sender, sendResponse) => {
   textlint.lint(text).then((lintMessages) => {
-    if (!sender.tab) return;
-    messages.sendLintResult(sender.tab.id, textareaId, lintMessages);
+    sendResponse({ lintMessages: lintMessages });
   }).catch((error) => {
-    console.error(error);
+    sendResponse({ error: error });
+    console.error("Error on linting text:", error, text);
   });
+  return true;
 });
+
+messages.onUpdateStatus((msg, sender, sendResponse) => {
+  if (sender.tab) updateForTab(sender.tab);
+});
+
+chrome.tabs.onActivated.addListener((activeInfo) => {
+  chrome.tabs.get(activeInfo.tabId, (tab) => { updateForTab(tab) });
+});
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+  updateForTab(tab);
+});
+chrome.runtime.onStartup.addListener(updateForActiveTab);
+chrome.runtime.onInstalled.addListener(updateForActiveTab);
+
+textlint.onLoad(updateForActiveTab);
+textlint.onLoadError(() => {
+  chrome.browserAction.setBadgeBackgroundColor({ color: "#F00" });
+  chrome.browserAction.setBadgeText({ text: "Err" });
+  updateForActiveTab();
+});
+
+// Export for popup
+window.textlint = textlint;

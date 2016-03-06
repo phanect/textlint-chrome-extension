@@ -1,0 +1,53 @@
+{
+  "appName": {
+    "message": "textlint: Proofreader",
+    "description": "The name of the application"
+  },
+  "appShortName": {
+    "message": "textlint",
+    "description": "The short_name (maximum of 12 characters recommended) is a short version of the app's name."
+  },
+  "appDescription": {
+    "message": "入力している文書をその場で即座にチェックします。",
+    "description": "The description of the application"
+  },
+  "loading": {
+    "message": "読み込み中…"
+  },
+  "options": {
+    "message": "オプション"
+  },
+  "activate": {
+    "message": "文書のチェックを開始"
+  },
+  "deactivate": {
+    "message": "文書のチェックを終了"
+  },
+  "filter": {
+    "message": "絞り込み"
+  },
+  "error": {
+    "message": "エラー"
+  },
+  "warning": {
+    "message": "警告"
+  },
+  "info": {
+    "message": "情報"
+  },
+  "linting": {
+    "message": "文書をチェックしています…"
+  },
+  "noMarks": {
+    "message": "文書に問題は見つかりませんでした"
+  },
+  "requireRefresh": {
+    "message": "この拡張機能をご利用になるには、ページを再読み込みしてください。"
+  },
+  "refresh": {
+    "message": "再読み込み"
+  },
+  "wentWrong": {
+    "message": "申し訳ございません。問題が発生しました。"
+  }
+}

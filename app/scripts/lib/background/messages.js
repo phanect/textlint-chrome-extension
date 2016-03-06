@@ -1,52 +1,29 @@
 "use strict";
 
-import EventEmitter from "events";
-
-const eventEmitter = new EventEmitter();
-const knownEvents = "Status RequestLint";
-
-// Register message receiver
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message.type && knownEvents.indexOf(message.type) >= 0) {
-    eventEmitter.emit(message.type, message, sender, sendResponse);
-  } else {
-    console.error("Unknown message:", message, ", sender: ", sender);
-  }
-});
+import messages from "../util/app-message";
 
 export default {
-  onReceiveStatus(callback) {
-    eventEmitter.on("Status", callback);
+  onError(callback) {
+    messages.onError(callback);
   },
 
-  onRequestLint(callback) {
-    eventEmitter.on("RequestLint", callback);
+  onLintText(callback) {
+    messages.on(messages.LINT_TEXT, callback);
   },
 
-  requestStatus(tabId) {
-    chrome.tabs.sendMessage(tabId, {
-      type: "RequestStatus"
-    });
+  onUpdateStatus(callback) {
+    messages.on(messages.UPDATE_STATUS, callback);
   },
 
-  requestToggle(tabId) {
-    chrome.tabs.sendMessage(tabId, {
-      type: "RequestToggle"
-    });
+  getStatus(tabId) {
+    return messages.tabSend(tabId, messages.GET_STATUS);
   },
 
-  sendLintResult(tabId, textareaId, lintMessages) {
-    chrome.tabs.sendMessage(tabId, {
-      type: "LintResult",
-      textareaId: textareaId,
-      lintMessages: lintMessages
-    });
+  toggleLinter(tabId) {
+    return messages.tabSend(tabId, messages.TOGGLE_LINTER);
   },
 
   showMark(tabId, markId) {
-    chrome.tabs.sendMessage(tabId, {
-      type: "ShowMark",
-      markId: markId
-    });
+    return messages.tabSend(tabId, messages.SHOW_MARK, { markId: markId });
   },
 }

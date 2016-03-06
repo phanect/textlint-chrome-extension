@@ -2,7 +2,6 @@
 
 import _ from "lodash";
 import $ from "jquery";
-import messages from "./messages";
 import "./textarea-marker";
 
 const LINT_DELAY        = 1000;
@@ -72,11 +71,22 @@ class TextareaLinterTooltip {
   }
 }
 
+const DEFAULT_OPTIONS = {
+  // Actual linting text method
+  // It should be a function that is called with a text string and
+  // returns a Promise resolving to lint messages.
+  lintText: (text) => Promise.resolve([]),
+
+  // Event handler called when lint marks is changed.
+  onMarksChanged: null
+};
+
 // Page-global linter for textarea content.
 // It shows results by highlighting words in textarea,
 // and also shows tooltips on mouseover them.
 export class TextareaLinter {
-  constructor() {
+  constructor(options) {
+    this.options = _.extend({}, DEFAULT_OPTIONS, options);
     this.active = false;
     this.lintedTextArea = null;
     this.tooltip = new TextareaLinterTooltip();
@@ -94,11 +104,15 @@ export class TextareaLinter {
     if (this.active) return;
     this.active = true;
 
-    // Set global event handler for textarea input
+    // Set global event handlers for textarea
     let self = this;
     $(document).on(
       "input.textareaLinter", "textarea",
       _.debounce(function () { self.lintTextArea(this) }, LINT_DELAY)
+    );
+    $(document).on(
+      "focusin.textareaLinter", "textarea",
+      function () { self.lintTextArea(this) }
     );
 
     // Lint first textarea that is visible and contains any text
@@ -127,14 +141,11 @@ export class TextareaLinter {
     }
     this.lintedTextArea = textarea;
 
-    // Send message to background for requesting textlint it.
-    messages.requestLint(textareaId, text);
-  }
-
-  receiveLintResult(textareaId, lintMessages) {
-    if (this._getTextAreaId(this.lintedTextArea) == textareaId) {
-      this.showLintMessages(this.lintedTextArea, lintMessages);
-    }
+    this.options.lintText(text).then((lintMessages) => {
+      if (this._getTextAreaId(this.lintedTextArea) == textareaId) {
+        this.showLintMessages(this.lintedTextArea, lintMessages);
+      }
+    });
   }
 
   showLintMessages(textarea, lintMessages) {
@@ -159,12 +170,12 @@ export class TextareaLinter {
     if ($textarea.textareaMarker("isActive")) {
       $textarea.textareaMarker("setMarkers", markers);
     } else {
-      $textarea.textareaMarker({
-        markers: markers,
-        hideOnInput: true,
-        classPrefix: CLASS_PREFIX
-      });
       $textarea
+        .textareaMarker({
+          markers: markers,
+          hideOnInput: true,
+          classPrefix: CLASS_PREFIX
+        })
         .on("markmousemove.extTextlint", (event, $marks) => {
           this.tooltip.update(_.map($marks, (el) => $(el).data()));
           this.tooltip.show(event.pageX, event.pageY);
@@ -173,15 +184,26 @@ export class TextareaLinter {
           this.tooltip.hide();
         })
     }
+
+    const cls = `${CLASS_PREFIX}textarea`;
+    $textarea
+      .addClass(cls)
+      .removeClass(this._prefixedClass(`${cls}-`))
+      .addClass(_.uniq(_.map(lintMessages, (m) => `${cls}-${m.severity}`)).join(" "))
+      .toggleClass(`${cls}-none`, lintMessages.length === 0);
+
     this.tooltip.hide();
+    this.options.onMarksChanged && this.options.onMarksChanged.call(textarea);
   }
 
   hideLintMessages(textarea) {
     $(textarea)
       .textareaMarker("destroy")
       .off("markmousemove.extTextlint")
-      .off("markmouseout.extTextlint");
+      .off("markmouseout.extTextlint")
+      .removeClass(this._prefixedClass(CLASS_PREFIX));
     this.tooltip.hide();
+    this.options.onMarksChanged && this.options.onMarksChanged.call(textarea);
   }
 
   getCurrentLintMarks() {
@@ -210,5 +232,12 @@ export class TextareaLinter {
       $textarea.data("textarea-id", textareaId);
     }
     return textareaId;
+  }
+
+  _prefixedClass(prefix) {
+    return (index, classes) => {
+      const re = new RegExp(`(^|\\s)${prefix}\\S+`, "g");
+      return (classes.match(re) || []).join(" ");
+    };
   }
 }

@@ -41,43 +41,30 @@ let ruleOptions = {
   }
 };
 
+let loaded = false;
 let loadingFailed = false;
-let loadingPromise = new Promise((resolve, reject) => {
-  let promises = _.map(loadingRules, (ruleName) => {
-    return (new TextlintRulePackage(ruleName)).loadLatest();
-  });
-  Promise.all(promises).then((rules) => {
-    let nameToRule = _.fromPairs(_.zip(loadingRules, rules));
-    textlint.setupRules(nameToRule, ruleOptions);
-    resolve(textlint);
-  }).catch(reject);
-});
+let loadingPromise;
 
-loadingPromise.then(() => {
-  loadingPromise = null;
+const getTextlint = () => {
+  return loadingPromise || (loadingPromise = new Promise((resolve, reject) => {
+    const promises = _.map(loadingRules, (ruleName) => {
+      return (new TextlintRulePackage(ruleName)).loadLatest();
+    });
+    Promise.all(promises).then((rules) => {
+      const nameToRule = _.fromPairs(_.zip(loadingRules, rules));
+      textlint.setupRules(nameToRule, ruleOptions);
+      resolve(textlint);
+    }).catch(reject);
+  }));
+};
+
+getTextlint().then(() => {
+  loaded = true;
   console.log("textlint and rules have been successfully loaded.");
 }).catch((reason) => {
   loadingFailed = true;
-  loadingPromise = null;
   console.error("Error occurred while loading textlint and rules: ", reason);
-
-  chrome.browserAction.disable();
-  chrome.browserAction.setBadgeBackgroundColor({ color: "#F00" });
-  chrome.browserAction.setBadgeText({ text: "Err" });
 });
-
-function getTextlint() {
-  if (loadingPromise) {
-    return loadingPromise;
-  }
-  return new Promise((resolve, reject) => {
-    if (loadingFailed) {
-      reject("textlint was not loaded successfully");
-    } else {
-      resolve(textlint);
-    }
-  });
-}
 
 function buildLintMessages(text, messages) {
   let scanner = new TextCaretScanner(text);
@@ -93,14 +80,48 @@ function buildLintMessages(text, messages) {
   });
 }
 
+let lintStackCount = 0;
+
 export default {
+  onLoad(callback) {
+    getTextlint().then(callback);
+  },
+  onLoadError(callback) {
+    getTextlint().catch(callback);
+  },
+
   lint(text) {
     return new Promise((resolve, reject) => {
+      lintStackCount++;
+      let rejectCatch = (error) => {
+        lintStackCount--;
+        reject(error);
+      };
+
       getTextlint().then((textlint) => {
         textlint.lintText(text).then(({messages}) => {
+          lintStackCount--;
           resolve(buildLintMessages(text, messages));
-        }).catch(reject);
-      }).catch(reject);
+        }).catch(rejectCatch);
+      }).catch(rejectCatch);
     });
+  },
+
+  isLoaded() {
+    return loaded;
+  },
+  isLoadingFailed() {
+    return loadingFailed;
+  },
+  isLinting() {
+    return lintStackCount > 0;
+  },
+
+  getStatus() {
+    return {
+      loaded: this.isLoaded(),
+      loadingFailed: this.isLoadingFailed(),
+      linting: this.isLinting(),
+    };
   },
 };

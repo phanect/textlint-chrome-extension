@@ -15,7 +15,18 @@ if (__ENV__ === 'development') {
       if (e.data) {
         var data = JSON.parse(e.data);
         if (data && data.command === 'reload') {
-          window.location.reload();
+          // chrome.runtime.reload();
+          // window.location.reload();
+
+          // Using Extensions Reloader
+          // https://chrome.google.com/webstore/detail/extensions-reloader/fimgfedafeadlieiabdeeaodndnlbhid
+          const reloadUrl = "http://reload.extensions/";
+          chrome.tabs.query({ url: reloadUrl }, (tabs) => {
+            if (tabs.length === 0) {
+              chrome.tabs.create({ url: reloadUrl, active: false });
+            }
+          });
+
         }
       }
     };

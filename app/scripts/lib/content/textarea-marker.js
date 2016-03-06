@@ -183,7 +183,10 @@ export default class TextareaMarker {
       ))
       .on(`focus.${PLUGIN_NAME} blur.${PLUGIN_NAME}`, () => this._syncAll())
 
-    this.positionTimer = setInterval(() => this._syncSizeAndPosition(), 500);
+    this.positionTimer = setInterval(() => {
+      this._syncSizeAndPosition();
+      this._syncScrollPositions();
+    }, 300);
   }
 
   _unbindEvents() {

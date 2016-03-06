@@ -1,0 +1,60 @@
+@import "../../bower_components/font-awesome/less/font-awesome.less";
+@fa-font-path: "../fonts/font-awesome";
+
+@app-font-family: Helvetica, "游ゴシック", "Yu Gothic", sans-serif;
+
+.icon-info {
+  .fa;
+  &:before {
+    content: @fa-var-info-circle;
+    color: #C2F3F4;
+  }
+}
+.icon-warning {
+  .fa;
+  &:before {
+    content: @fa-var-exclamation-circle;
+    color: #FFF53B;
+  }
+}
+.icon-error {
+  .fa;
+  &:before {
+    content: @fa-var-times-circle;
+    color: #F47D7C;
+  }
+}
+
+.mark-item {
+  border-radius: 5px;
+  background-color: #303030;
+  padding: 6px 10px;
+  line-height: 120%;
+
+  .mark-item-text {
+    float: left;
+    color: #FFF;
+    font-size: 12px;
+    text-shadow: 0 1px black;
+    i {
+      margin-right: 5px;
+    }
+  }
+
+  .mark-item-rule {
+    color: #7F7F7F;
+    font-size: 10px;
+    text-align: right;
+    margin-left: 10px;
+  }
+
+  &:after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+}
+
+.hide {
+  display: none;
+}
