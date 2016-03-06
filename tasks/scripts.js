@@ -31,7 +31,7 @@ gulp.task('scripts', (cb) => {
             loader: 'string-replace',
             query: {
               search: './loader/NodeDictionaryLoader.js',
-              replace: path.join(__dirname, '../app/scripts/shim/kuromoji/RequireDictionaryLoader.js')
+              replace: path.join(__dirname, '../app/scripts/shim/kuromoji/ChromeDictionaryLoader.js')
             }
           },
           {
@@ -56,10 +56,6 @@ gulp.task('scripts', (cb) => {
           {
             test: /\.json$/,
             loader: 'json'
-          },
-          {
-            test: /\.dat\.gz/,
-            loader: 'base64'
           }
         ]
       },
