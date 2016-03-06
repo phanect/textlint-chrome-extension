@@ -16,7 +16,10 @@ gulp.task('scripts', (cb) => {
         new webpack.DefinePlugin({
           '__ENV__': JSON.stringify(args.production ? 'production' : 'development'),
           '__VENDOR__': JSON.stringify(args.vendor)
-        })
+        }),
+        new webpack.IgnorePlugin(
+          /package\.json$|\.md$|\.d\.ts$/
+        ),
       ].concat(args.production ? [
         new webpack.optimize.UglifyJsPlugin()
       ] : []),
@@ -26,6 +29,10 @@ gulp.task('scripts', (cb) => {
             test: /\.js$/,
             exclude: /node_modules/,
             loader: 'babel'
+          },
+          {
+            test: /interop-require|try-resolve|require-like|textlint-formatter/,
+            loader: 'null'
           },
           {
             test: /\.json$/,

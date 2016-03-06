@@ -41,6 +41,7 @@
     "json-loader": "^0.5.4",
     "lodash": "^4.5.1",
     "main-bower-files": "^2.11.1",
+    "null-loader": "^0.1.1",
     "require-dir": "^0.3.0",
     "textlint": "^5.4.0",
     "textlint-registry": "^1.0.1",
