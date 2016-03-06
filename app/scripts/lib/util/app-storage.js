@@ -9,6 +9,6 @@ export default {
     return cutil.syncGetValue(SELECTED_PRESET);
   },
   setSelectedPreset(presetName) {
-    return cutil.syncSetValue({ [SELECTED_PRESET]: presetName });
+    return cutil.syncSetValue(SELECTED_PRESET, presetName);
   },
 };
