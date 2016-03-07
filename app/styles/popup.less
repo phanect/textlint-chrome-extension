@@ -1,7 +1,10 @@
-@import "../../bower_components/font-awesome/less/font-awesome.less";
-@fa-font-path: "../fonts/font-awesome";
-
 @import "common.less";
+@import "@{fontawesome-path}/font-awesome.less";
+@fa-font-path: @fontawesome-font-path;
+
+.icon-info { .fa-icon-info(); }
+.icon-warning { .fa-icon-warning(); }
+.icon-error { .fa-icon-error(); }
 
 body {
   width: 40em;
@@ -107,4 +110,38 @@ body .pure-g [class *= "pure-u"] {
     font-size: 90%;
     color: #999999;
   }
+}
+
+.mark-item {
+  border-radius: 5px;
+  background-color: #303030;
+  padding: 6px 10px;
+  line-height: 120%;
+
+  .mark-item-text {
+    float: left;
+    color: #FFF;
+    font-size: 12px;
+    text-shadow: 0 1px black;
+    i {
+      margin-right: 5px;
+    }
+  }
+
+  .mark-item-rule {
+    color: #7F7F7F;
+    font-size: 10px;
+    text-align: right;
+    margin-left: 10px;
+  }
+
+  &:after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+}
+
+.hide {
+  display: none;
 }

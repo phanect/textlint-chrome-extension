@@ -61,6 +61,10 @@ function updateForTab(tab) {
     } else {
       chrome.browserAction.setBadgeText({ tabId: tab.id, text: "" });
     }
+
+    if (!active && tl) {
+      removeTextlintForTab(tab.id);
+    }
   });
 }
 function updateForActiveTab() {

@@ -1,18 +1,31 @@
+@import "common.less";
+@app-prefix: "ext-textlint-";
+@fa-font-path: "chrome-extension://__MSG_@@extension_id__/fonts/font-awesome";
+
+@font-face {
+  font-family: 'ExtTextlintFontAwesome';
+  src: url('@{fa-font-path}/fontawesome-webfont.woff2') format('woff2'),
+    url('@{fa-font-path}/fontawesome-webfont.woff') format('woff'),
+    url('@{fa-font-path}/fontawesome-webfont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 .ext-textlint-textarea {
   outline-width: 5px;
   outline-style: solid;
 
   &.ext-textlint-textarea-none {
-    outline-color: fade(darken(#74D94F, 10%), 60%);
+    outline-color: fade(darken(@lint-passed-color, 10%), 60%);
   }
   &.ext-textlint-textarea-info {
-    outline-color: fade(darken(#A5E7FF, 10%), 60%);
+    outline-color: fade(darken(@lint-info-color, 10%), 60%);
   }
   &.ext-textlint-textarea-warning {
-    outline-color: fade(darken(#FFF571, 10%), 60%);
+    outline-color: fade(darken(@lint-warning-color, 10%), 60%);
   }
   &.ext-textlint-textarea-error {
-    outline-color: fade(darken(#FF6E8D, 10%), 60%);
+    outline-color: fade(darken(@lint-error-color, 10%), 60%);
   }
 }
 
@@ -24,8 +37,9 @@
   padding: 0 10px 10px 10px;
   max-width: 480px;
   font-size: 12px;
-  font-family: Helvetica, "游ゴシック", "Yu Gothic", sans-serif;
+  font-family: @app-font-family;
   font-weight: normal;
+  text-shadow: 0 1px black;
   text-decoration: none;
   letter-spacing: normal;
   line-height: 120%;
@@ -39,6 +53,7 @@
     display: block;
     color: #FFF;
     text-shadow: 0 1px black;
+    span { margin-right: 5px; }
   }
   .ext-textlint-tooltip-rule {
     display: block;
@@ -46,16 +61,19 @@
     font-size: 10px;
     text-align: right;
   }
+}
 
-  .ext-textlint-info .ext-textlint-tooltip-text:before {
-    content: "ℹ️";
-  }
-  .ext-textlint-warning .ext-textlint-tooltip-text:before {
-    content: "⚠️";
-  }
-  .ext-textlint-error .ext-textlint-tooltip-text:before {
-    content: "🚫";
-  }
+.ext-textlint-icon-info {
+  .fa-icon-info();
+  font-family: ExtTextlintFontAwesome;
+}
+.ext-textlint-icon-warning {
+  .fa-icon-warning();
+  font-family: ExtTextlintFontAwesome;
+}
+.ext-textlint-icon-error {
+  .fa-icon-error();
+  font-family: ExtTextlintFontAwesome;
 }
 
 .ext-textlint-mark {
@@ -63,12 +81,12 @@
   box-shadow: 0 0 5px white;
 
   &.ext-textlint-info {
-    background-color: fade(darken(#A5E7FF, 10%), 60%);
+    background-color: fade(darken(@lint-info-color, 10%), 60%);
   }
   &.ext-textlint-warning {
-    background-color: fade(darken(#FFF571, 10%), 60%);
+    background-color: fade(darken(@lint-warning-color, 10%), 60%);
   }
   &.ext-textlint-error {
-    background-color: fade(darken(#FF6E8D, 10%), 60%);
+    background-color: fade(darken(@lint-error-color, 10%), 60%);
   }
 }

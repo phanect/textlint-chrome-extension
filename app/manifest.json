@@ -49,5 +49,8 @@
       "all_frames": false
     }
   ],
+  "web_accessible_resources": [
+    "fonts/font-awesome/*"
+  ],
   "content_security_policy": "script-src 'self' https://www.brcdn.org https://brcdn.org; object-src 'self'"
 }

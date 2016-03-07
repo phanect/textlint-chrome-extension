@@ -62,6 +62,10 @@ class TextareaLinterTooltip {
         $("<span />")
           .addClass(`${CLASS_PREFIX}tooltip-text`)
           .text(mark["message"])
+          .prepend(
+            $("<span />")
+              .addClass(`${CLASS_PREFIX}icon-${mark["severity"]}`)
+          )
       )
       .append(
         $("<span />")

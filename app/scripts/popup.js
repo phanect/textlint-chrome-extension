@@ -9,33 +9,28 @@ import textlintConfig from "./lib/textlint/textlint-config";
 import "./lib/util/i18n-replace";
 
 function updatePresets() {
-  $("#presets").html(
-    _.map(textlintConfig.presets, (preset) => {
-      return $("<label />")
-        .attr("for", `preset-item-${preset.name}`)
-        .addClass("pure-radio")
-        .append(
-          $("<input />").attr({
-            id: `preset-item-${preset.name}`,
-            type: "radio",
-            name: "preset",
-            value: preset.name
-          })
-        )
-        .append(
-          chrome.i18n.getMessage(`preset${preset.name}`)
-        );
-    })
-  );
-
-  const checked = textlintConfig.getDefaultPreset().name;
-  $(`#preset-item-${checked}`).attr("checked", true);
-
+  let checkedName = textlintConfig.getDefaultPreset().name;
   storage.getSelectedPreset().then((selected) => {
-    if (selected) {
-      $(`#preset-item-${checked}`).attr("checked", false);
-      $(`#preset-item-${selected}`).attr("checked", true);
-    }
+    checkedName = selected || checkedName;
+    $("#presets").html(
+      _.map(textlintConfig.presets, (preset) => {
+        return $("<label />")
+          .attr("for", `preset-item-${preset.name}`)
+          .addClass("pure-radio")
+          .append(
+            $("<input />").attr({
+              id: `preset-item-${preset.name}`,
+              type: "radio",
+              name: "preset",
+              value: preset.name,
+              checked: checkedName === preset.name
+            })
+          )
+          .append(
+            chrome.i18n.getMessage(`preset${preset.name}`)
+          );
+      })
+    );
   });
 }
 
