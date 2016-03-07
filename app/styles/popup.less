@@ -9,14 +9,10 @@
 body {
   width: 40em;
   min-height: 20em;
-  padding: 10px;
+  padding: 10px 0;
   overflow-y: auto;
-  color: #333333;
   font-family: @app-font-family;
   -webkit-font-smoothing: antialiased;
-}
-body .pure-g [class *= "pure-u"] {
-  font-family: @app-font-family;
 }
 
 .toggle-area {
@@ -25,10 +21,6 @@ body .pure-g [class *= "pure-u"] {
   button {
     width: 16em;
   }
-  #deactivate-button {
-    background-color: darken(rgb(0, 120, 231), 10%);
-    text-shadow: 0 1px rgba(0, 0, 0, 0.8);
-  }
 }
 
 .presets-area {
@@ -36,17 +28,13 @@ body .pure-g [class *= "pure-u"] {
 
   form {
     margin-left: 20px;
-
-    input {
-      margin-right: 5px;
-    }
   }
 }
 
 .marks-area {
   margin-top: 10px;
 
-  .marks-filter {
+  #marks-filter {
     text-align: right;
 
     .stat-count {
@@ -54,17 +42,12 @@ body .pure-g [class *= "pure-u"] {
       font-weight: bold;
     }
 
-    button {
-      font-size: 85%;
-      margin-left: 5px;
-      background-color: #666666;
-      color: #FFF;
-      text-shadow: 0 1px black;
-      border-radius: 20px;
-      min-width: 8em;
+    .btn {
+      min-width: 6em;
+      color: #CCCCCC;
 
       &.active {
-        background-color: #333333;
+        color: #666666;
       }
     }
   }
@@ -79,12 +62,9 @@ body .pure-g [class *= "pure-u"] {
       }
     }
 
-    &.filtering {
-      .mark-item { display: none; }
-      &.filter-error .mark-item-error { display: block; }
-      &.filter-warning .mark-item-warning { display: block; }
-      &.filter-info .mark-item-info { display: block; }
-    }
+    &.filter-error .mark-item-error { display: none; }
+    &.filter-warning .mark-item-warning { display: none; }
+    &.filter-info .mark-item-info { display: none; }
   }
 
   #no-marks {
@@ -114,13 +94,13 @@ body .pure-g [class *= "pure-u"] {
 
 .mark-item {
   border-radius: 5px;
-  background-color: #303030;
-  padding: 6px 10px;
+  background-color: #505050;
+  padding: 8px 12px;
   line-height: 120%;
 
   .mark-item-text {
     float: left;
-    color: #FFF;
+    color: white;
     font-size: 12px;
     text-shadow: 0 1px black;
     i {
@@ -129,7 +109,7 @@ body .pure-g [class *= "pure-u"] {
   }
 
   .mark-item-rule {
-    color: #7F7F7F;
+    color: #999999;
     font-size: 10px;
     text-align: right;
     margin-left: 10px;
@@ -142,6 +122,6 @@ body .pure-g [class *= "pure-u"] {
   }
 }
 
-.hide {
+.default-hidden {
   display: none;
 }

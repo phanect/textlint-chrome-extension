@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <title>textlint</title>
-  <link rel="stylesheet" type="text/css" href="../bower/pure/pure.css">
+  <link rel="stylesheet" type="text/css" href="../bower/bootswatch-dist/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="../styles/popup.css">
 </head>
 <body>
@@ -12,21 +12,21 @@
     <p data-i18n="loading">Loading...</p>
   </div>
 
-  <div class="page page-main hide" id="linter-page">
-    <div class="pure-g">
-      <div class="pure-u-1-2">
-        <a href="#options" class="pure-button" id="options-button">
+  <div class="page page-main container-fluid default-hidden" id="linter-page">
+    <div class="row">
+      <div class="col-xs-6">
+        <a href="#options" class="btn btn-default" id="options-button">
           <i class="fa fa-cog"></i>
           <span data-i18n="options">Options</span>
         </a>
       </div>
 
-      <div class="pure-u-1-2 toggle-area">
-        <button class="pure-button pure-button-primary" id="activate-button">
+      <div class="col-xs-6 toggle-area">
+        <button class="btn btn-primary" id="activate-button">
           <i class="fa fa-flash"></i>
           <span data-i18n="activate">Activate textlint</span>
         </button>
-        <button class="pure-button pure-button-primary pure-button-active hide" id="deactivate-button">
+        <button class="btn btn-primary active default-hidden" id="deactivate-button">
           <i class="fa fa-flash"></i>
           <span data-i18n="deactivate">Deactivate textlint</span>
         </button>
@@ -35,59 +35,64 @@
 
     <div class="presets-area">
       <p data-i18n="choosePreset">Choose what type of text you write:</p>
-      <form class="pure-form" id="presets"></form>
+      <form id="presets"></form>
     </div>
 
-    <div class="marks-area hide">
-      <div id="loading-marks" class="hide notice">
+    <div class="marks-area default-hidden">
+      <div id="loading-marks" class="default-hidden notice">
         <i class="fa fa-circle-o-notch fa-spin notice-mark"></i>
         <p data-i18n="linting">Checking your text...</p>
       </div>
-      <div id="any-marks" class="hide">
-        <div class="marks-filter">
-          <i class="fa fa-filter"></i>
-          <span data-i18n="filter">Filter</span>
-          <button class="marks-filter-item pure-button" id="marks-filter-error" data-severity="error">
-            <i class="icon-error"></i>
-            <span class="stat-count" id="marks-count-error"></span>
-            <span data-i18n="error">Error</span>
-          </button>
-          <button class="marks-filter-item pure-button" id="marks-filter-warning" data-severity="warning">
-            <i class="icon-warning"></i>
-            <span class="stat-count" id="marks-count-warning"></span>
-            <span data-i18n="warning">Warning</span>
-          </button>
-          <button class="marks-filter-item pure-button" id="marks-filter-info" data-severity="info">
-            <i class="icon-info"></i>
-            <span class="stat-count" id="marks-count-info"></span>
-            <span data-i18n="info">Info</span>
-          </button>
+      <div id="any-marks" class="default-hidden">
+        <div id="marks-filter">
+          <div class="btn-group" data-toggle="buttons">
+            <label class="marks-filter-item btn btn-link btn-sm active" id="marks-filter-error">
+              <input type="checkbox" autocomplete="off" name="filter[]" value="error" checked>
+              <i class="icon-error"></i>
+              <span class="stat-count" id="marks-count-error"></span>
+              <span data-i18n="error">Error</span>
+            </label>
+            <label class="marks-filter-item btn btn-link btn-sm active" id="marks-filter-warning">
+              <input type="checkbox" autocomplete="off" name="filter[]" value="warning" checked>
+              <i class="icon-warning"></i>
+              <span class="stat-count" id="marks-count-warning"></span>
+              <span data-i18n="warning">Warning</span>
+            </label>
+            <label class="marks-filter-item btn btn-link btn-sm active" id="marks-filter-info">
+              <input type="checkbox" autocomplete="off" name="filter[]" value="info" checked>
+              <i class="icon-info"></i>
+              <span class="stat-count" id="marks-count-info"></span>
+              <span data-i18n="info">Info</span>
+            </label>
+          </div>
         </div>
         <div id="marks"></div>
       </div>
-      <div id="no-marks" class="hide notice">
+      <div id="no-marks" class="default-hidden notice">
         <i class="fa fa-check-circle notice-mark"></i>
         <p data-i18n="noMarks">Your text has passed all tests.</p>
       </div>
     </div>
   </div>
 
-  <div class="page page-notice notice hide" id="refresh-page">
+  <div class="page page-notice notice default-hidden" id="refresh-page">
     <i class="fa fa-refresh notice-mark"></i>
     <p data-i18n="requireRefresh">Please refresh the page to use this extension.</p>
-    <button class="pure-button pure-button-primary" id="refresh-button">
+    <button class="btn btn-primary" id="refresh-button">
       <i class="fa fa-refresh"></i>
       <span data-i18n="refresh">Refresh</span>
     </button>
   </div>
 
-  <div class="page page-notice notice hide" id="error-page">
+  <div class="page page-notice notice default-hidden" id="error-page">
     <i class="fa fa-exclamation-triangle notice-mark"></i>
     <p data-i18n="wentWrong">Sorry, something went wrong...</p>
-    <p class="hide" class="notice-details" id="error-details"></p>
+    <p class="default-hidden" class="notice-details" id="error-details"></p>
   </div>
 
   <script src="../scripts/vendor.js"></script>
+  <script src="../scripts/jquery.js"></script>
+  <script src="../bower/bootswatch-dist/js/bootstrap.min.js"></script>
   <script src="../scripts/popup.js"></script>
 </body>
 </html>

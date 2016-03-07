@@ -20,6 +20,7 @@ gulp.task('scripts', (cb) => {
         popup: `${scriptsDir}/popup.js`,
 
         vendor: ['jquery', 'lodash'],
+        jquery: `${scriptsDir}/exporter/jquery.js`,
       },
       output: {
         filename: '[name].js',

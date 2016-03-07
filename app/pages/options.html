@@ -3,16 +3,19 @@
 <head>
   <meta charset="utf-8" />
   <title>Options</title>
+  <link rel="stylesheet" type="text/css" href="../bower/bootswatch-dist/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="../styles/options.css">
 </head>
 <body>
-
-  <label>
-    <input type="checkbox" name="examplOption" checked>
-    Example Option
-  </label>
+  <h1 data-i18n="customizeRules">Customize textlink rules</h1>
+  <div class="rules" id="rule-editor">
+  </div>
+  <button class="btn btn-primary" data-i18n="Save">Save</button>
 
   <script src="../scripts/vendor.js"></script>
+  <script src="../scripts/jquery.js"></script>
+  <script src="../bower/bootswatch-dist/js/bootstrap.min.js"></script>
+  <script src="../bower/json-editor/dist/jsoneditor.js"></script>
   <script src="../scripts/options.js"></script>
 </body>
 </html>

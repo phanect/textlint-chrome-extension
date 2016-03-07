@@ -63,6 +63,9 @@
     "message": "日本語の小説の文書"
   },
   "presetCustom": {
-    "message": "カスタマイズ (オプションで設定)"
+    "message": "カスタム設定 (オプションで設定)"
+  },
+  "customizeRules": {
+    "message": "文書チェックのルールをカスタム設定"
   }
 }

@@ -14,20 +14,22 @@ function updatePresets() {
     checkedName = selected || checkedName;
     $("#presets").html(
       _.map(textlintConfig.presets, (preset) => {
-        return $("<label />")
-          .attr("for", `preset-item-${preset.name}`)
-          .addClass("pure-radio")
+        return $("<div />")
+          .addClass("radio")
           .append(
-            $("<input />").attr({
-              id: `preset-item-${preset.name}`,
-              type: "radio",
-              name: "preset",
-              value: preset.name,
-              checked: checkedName === preset.name
-            })
-          )
-          .append(
-            chrome.i18n.getMessage(`preset${preset.name}`)
+            $("<label />")
+            .append(
+              $("<input />").attr({
+                id: `preset-item-${preset.name}`,
+                type: "radio",
+                name: "preset",
+                value: preset.name,
+                checked: checkedName === preset.name
+              })
+            )
+            .append(
+              chrome.i18n.getMessage(`preset${preset.name}`)
+            )
           );
       })
     );
@@ -39,17 +41,13 @@ function updateMarks(marks, counts) {
     _.map(marks, (mark) => {
       return $("<div />")
         .data("markId", mark.markId)
+        .attr("title", `[${mark.severity}] ${mark.message} (${mark.ruleId})`)
         .addClass(`mark-item mark-item-${mark.severity}`)
         .append(
           $("<div />")
             .addClass("mark-item-text")
             .text(mark.message)
             .prepend($("<i />").addClass(`icon-${mark.severity}`))
-        )
-        .append(
-          $("<div />")
-            .addClass("mark-item-rule")
-            .text(mark.ruleId)
         )
     })
   );
@@ -116,17 +114,10 @@ $("#deactivate-button").on("click", () => {
   });
 });
 
-$(".marks-filter").on("click", ".marks-filter-item", function () {
-  $(this).toggleClass("active");
-
+$("#marks-filter input[type=checkbox]").on("change", function () {
   let $marks = $("#marks");
-  $marks.removeClass("filtering");
-  $(".marks-filter .marks-filter-item").each(function () {
-    let $this = $(this);
-    let severity = $this.data("severity");
-    let active = $this.hasClass("active");
-    $marks.toggleClass(`filter-${severity}`, active);
-    if (active) $marks.addClass("filtering");
+  $("#marks-filter input[type=checkbox]").each(function () {
+    $marks.toggleClass(`filter-${this.value}`, !this.checked);
   });
 });
 
@@ -136,7 +127,7 @@ $("#marks").on("click", ".mark-item", function () {
 });
 
 $("#refresh-button").on("click", function () {
-  $(this).attr("disabled", true).addClass("pure-button-disabled");
+  $(this).attr("disabled", true).addClass("disabled");
   cutil.withActiveTab((tab) => { chrome.tabs.reload(tab.id) });
 });
 
@@ -151,7 +142,7 @@ function showLinterPage() {
 function showRequireRefreshPage() {
   $(".page").hide();
   $("#refresh-page").show();
-  $("#refresh-button").attr("disabled", false).removeClass("pure-button-disabled");
+  $("#refresh-button").attr("disabled", false).removeClass("disabled");
 }
 
 function showErrorPage(reason) {
