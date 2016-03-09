@@ -4,6 +4,8 @@ import named from 'vinyl-named';
 import webpack from 'webpack';
 import gulpWebpack from 'webpack-stream';
 import livereload from 'gulp-livereload';
+import plumber from 'gulp-plumber';
+import notify from 'gulp-notify';
 import args from './lib/args';
 import path from 'path';
 
@@ -12,6 +14,9 @@ const scriptsDir = `${appDir}/scripts`;
 
 gulp.task('scripts', ['bundle'], (cb) => {
   return gulp.src(['app/scripts/*.js'])
+    .pipe(plumber({
+      errorHandler: notify.onError("Error: <%= error.message %>")
+    }))
     .pipe(gulpWebpack({
       entry: {
         background: `${scriptsDir}/background.js`,
