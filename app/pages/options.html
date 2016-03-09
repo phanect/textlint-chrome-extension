@@ -32,12 +32,13 @@
       <div class="main-pane">
         <div class="tab-content">
           <div role="tabpanel" class="tab-pane fade in active" id="rules">
-            <form>
-              <h1>
-                <i class="fa fa-pencil"></i>
-                <span data-i18n="customizeRules">Customize textlink rules</span>
-              </h1>
-              <div class="rules-area" id="rule-editor">
+            <h1>
+              <i class="fa fa-pencil"></i>
+              <span data-i18n="customizeRules">Customize textlink rules</span>
+            </h1>
+
+            <div class="bundled-rules">
+              <form class="rules-area" id="rule-editor">
                 <fieldset class="rule-item template">
                   <div class="rule-header clearfix">
                     <div class="rule-switch">
@@ -47,6 +48,7 @@
                       <a class="rule-name rule-homepage" href="#" target="_blank"></a>
                       <span class="rule-version"></span>
                       <span class="rule-author"></span>
+                      <a class="rule-homepage" href="#" target="_blank"><i class="fa fa-home"></i></a>
                     </div>
                   </div>
                   <div class="rule-body">
@@ -56,18 +58,16 @@
                     </div>
                   </div>
                 </fieldset>
-              </div>
-            </form>
+              </form>
+            </div>
           </div>
 
           <div role="tabpanel" class="tab-pane fade" id="visual">
-            <form>
-              <h1>
-                <i class="fa fa-eye"></i>
-                <span data-i18n="visualEffects">Visual effects</span>
-              </h1>
-              <div class="visuals-area editor" id="visual-editor">
-              </div>
+            <h1>
+              <i class="fa fa-eye"></i>
+              <span data-i18n="visualEffects">Visual effects</span>
+            </h1>
+            <form class="visuals-area editor" id="visual-editor">
             </form>
           </div>
         </div>
