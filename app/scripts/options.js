@@ -45,15 +45,16 @@ appStorage.getOptions().then((options) => {
   }));
 
   Promise.all(editorPromises).then(() => {
-    $("#save-button").removeClass("disabled").attr("disabled", false);
-    editorPromises.length = 0;
-
     $("label").contents()
       .filter(function () { return this.nodeType === 3 && !/^\s*$/.test(this.nodeValue); })
       .each(function () {
         const key = _.camelCase("label-" + this.nodeValue).replace(/[^a-zA-Z0-9]+/g, "");
         this.nodeValue = cutil.translate(key, this.nodeValue);
       });
+
+    editorPromises.length = 0;
+    $("#save-button").removeClass("disabled").attr("disabled", false);
+    $("a[href='#rules']").tab("show");
   });
 });
 
