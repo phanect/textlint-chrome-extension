@@ -2,19 +2,117 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <title>Options</title>
+  <title>textlint Options</title>
   <link rel="stylesheet" type="text/css" href="../bower/bootswatch-dist/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../bower/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css">
+  <link rel="stylesheet" type="text/css" href="../bower/selectize/dist/css/selectize.bootstrap3.css">
+  <link rel="stylesheet" type="text/css" href="../bower/selectize-bootswatch/css/selectize.paper.css">
   <link rel="stylesheet" type="text/css" href="../styles/options.css">
 </head>
 <body>
-  <h1 data-i18n="customizeRules">Customize textlink rules</h1>
-  <div class="rules" id="rule-editor">
+  <div class="page">
+    <div class="top-pane">
+      <div class="menu-pane">
+        <ul class="nav nav-pills nav-stacked" role="tablist">
+          <li role="presentation" class="active">
+            <a href="#rules" aria-controls="rules" role="tab" data-toggle="tab">
+              <i class="fa fa-pencil"></i>
+              <span data-i18n="menuRules">Rules</span>
+            </a>
+          </li>
+          <li role="presentation">
+            <a href="#visual" aria-controls="visual" role="tab" data-toggle="tab">
+              <i class="fa fa-eye"></i>
+              <span data-i18n="menuVisual">Visual</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="main-pane">
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane fade in active" id="rules">
+            <form>
+              <h1>
+                <i class="fa fa-pencil"></i>
+                <span data-i18n="customizeRules">Customize textlink rules</span>
+              </h1>
+              <div class="rules-area" id="rule-editor">
+                <fieldset class="rule-item template">
+                  <div class="rule-header clearfix">
+                    <div class="rule-switch">
+                      <input type="checkbox" class="rule-enabled toggle-switch" name="enabled" value="true">
+                    </div>
+                    <div class="rule-title">
+                      <a class="rule-name rule-homepage" href="#" target="_blank"></a>
+                      <span class="rule-version"></span>
+                      <span class="rule-author"></span>
+                    </div>
+                  </div>
+                  <div class="rule-body">
+                    <div class="rule-description">
+                    </div>
+                    <div class="rule-options editor">
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+            </form>
+          </div>
+
+          <div role="tabpanel" class="tab-pane fade" id="visual">
+            <form>
+              <h1>
+                <i class="fa fa-eye"></i>
+                <span data-i18n="visualEffects">Visual effects</span>
+              </h1>
+              <div class="visuals-area editor" id="visual-editor">
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-pane">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-xs-9 links-area">
+            <span class="app-brand">
+              ver <span class="app-version"></span>
+            </span>
+            <a href="#" target="_blank" class="store-link btn btn-link btn-sm">
+              <i class="fa fa-star fa-lg"></i>
+              Rate me!
+            </a>
+            <a href="https://twitter.com/io_monad" target="_blank" class="btn btn-link btn-sm">
+              <i class="fa fa-twitter fa-lg"></i>
+              @io_monad
+            </a>
+            <a href="https://github.com/io-monad" target="_blank" class="btn btn-link btn-sm">
+              <i class="fa fa-github fa-lg"></i>
+              @io-monad
+            </a>
+            <a href="https://github.com/io-monad/textlint-chrome-extension" target="_blank" class="btn btn-link btn-sm">
+              <i class="fa fa-code-fork fa-lg"></i>
+              Fork me
+            </a>
+          </div>
+          <div class="col-xs-3 save-area">
+            <button class="btn btn-primary disabled" id="save-button" disabled>
+              <span data-i18n="save">Save</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <button class="btn btn-primary" data-i18n="Save">Save</button>
 
   <script src="../scripts/vendor.js"></script>
   <script src="../scripts/jquery.js"></script>
   <script src="../bower/bootswatch-dist/js/bootstrap.min.js"></script>
+  <script src="../bower/bootstrap-switch/dist/js/bootstrap-switch.js"></script>
+  <script src="../bower/selectize/dist/js/standalone/selectize.min.js"></script>
   <script src="../bower/json-editor/dist/jsoneditor.js"></script>
   <script src="../scripts/options.js"></script>
 </body>

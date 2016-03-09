@@ -15,6 +15,10 @@ export default {
     messages.on(messages.UPDATE_STATUS, callback);
   },
 
+  onGetOptions(callback) {
+    messages.on(messages.GET_OPTIONS, callback);
+  },
+
   getStatus(tabId) {
     return messages.tabSend(tabId, messages.GET_STATUS);
   },
@@ -25,5 +29,10 @@ export default {
 
   showMark(tabId, markId) {
     return messages.tabSend(tabId, messages.SHOW_MARK, { markId: markId });
+  },
+
+  updateOptions(tabId, options, ruleChanged) {
+    return messages.tabSend(tabId, messages.UPDATE_OPTIONS,
+      { options: options, ruleChanged: ruleChanged });
   },
 }

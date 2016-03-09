@@ -3,36 +3,37 @@
 import _ from "lodash";
 import $ from "jquery";
 import messages from "./lib/background/messages";
-import storage from "./lib/app/app-storage";
+import appStorage from "./lib/app/app-storage";
 import cutil from "./lib/util/chrome-util";
 import textlintConfig from "./lib/textlint/textlint-config";
 import "./lib/util/i18n-replace";
 
 function updatePresets() {
-  let checkedName = textlintConfig.getDefaultPreset().name;
-  storage.getSelectedPreset().then((selected) => {
-    checkedName = selected || checkedName;
-    $("#presets").html(
-      _.map(textlintConfig.presets, (preset) => {
-        return $("<div />")
-          .addClass("radio")
-          .append(
-            $("<label />")
+  appStorage.getSelectedPreset().then((selected) => {
+    textlintConfig.getDefaultPreset().then((defPreset) => {
+      const checkedName = selected || defPreset.name;
+      $("#presets").html(
+        _.map(textlintConfig.presets, (preset) => {
+          return $("<div />")
+            .addClass("radio")
             .append(
-              $("<input />").attr({
-                id: `preset-item-${preset.name}`,
-                type: "radio",
-                name: "preset",
-                value: preset.name,
-                checked: checkedName === preset.name
-              })
-            )
-            .append(
-              chrome.i18n.getMessage(`preset${preset.name}`)
-            )
-          );
-      })
-    );
+              $("<label />")
+              .append(
+                $("<input />").attr({
+                  id: `preset-item-${preset.name}`,
+                  type: "radio",
+                  name: "preset",
+                  value: preset.name,
+                  checked: checkedName === preset.name
+                })
+              )
+              .append(
+                chrome.i18n.getMessage(`preset${preset.name}`)
+              )
+            );
+        })
+      );
+    });
   });
 }
 
@@ -86,6 +87,7 @@ messages.onError((reason) => {
 
 messages.onUpdateStatus((msg, sender, sendResponse) => {
   if (sender.tab) updateForTab(sender.tab);
+  sendResponse();
 });
 
 $("#options-button").on("click", () => {
@@ -94,12 +96,12 @@ $("#options-button").on("click", () => {
 
 $("#activate-button").on("click", () => {
   let selected = $("#presets input:radio[name=preset]:checked").val();
-  let preset = textlintConfig.getPreset(selected) || textlintConfig.getDefaultPreset();
-  storage.setSelectedPreset(preset.name).then(() => {
+  appStorage.setSelectedPreset(selected).then(() => {
     chrome.runtime.getBackgroundPage((background) => {
       cutil.withActiveTab((tab) => {
-        background.setupTextlintForTab(tab.id, preset);
-        messages.toggleLinter(tab.id);
+        background.setupTextlintForTab(tab.id, selected).then(() => {
+          messages.toggleLinter(tab.id);
+        });
       });
     });
   });

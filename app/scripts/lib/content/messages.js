@@ -19,11 +19,19 @@ export default {
     messages.on(messages.SHOW_MARK, callback);
   },
 
+  onUpdateOptions(callback) {
+    messages.on(messages.UPDATE_OPTIONS, callback);
+  },
+
   lintText(text) {
     return messages.send(messages.LINT_TEXT, { text: text });
   },
 
   updateStatus() {
     return messages.send(messages.UPDATE_STATUS);
+  },
+
+  getOptions() {
+    return messages.send(messages.GET_OPTIONS);
   },
 }

@@ -4,23 +4,48 @@
 import './lib/background/livereload';
 
 import _ from "lodash";
+import textlintConfig from "./lib/textlint/textlint-config";
 import TextlintWrapper from "./lib/textlint/textlint-wrapper";
 import cutil from "./lib/util/chrome-util";
 import appConfig from "./lib/app/app-config";
+import appStorage from "./lib/app/app-storage";
+import AppOptions from "./lib/app/app-options";
 import messages from "./lib/background/messages";
 
-let tabTextlints = {};
+const appOptions = new AppOptions({});
+const tabTextlints = {};
 
-function setupTextlintForTab(tabId, {rules, ruleOptions}) {
-  const tl = new TextlintWrapper(rules, ruleOptions);
-  tabTextlints[tabId] = tl;
-  tl.onLoad(updateForActiveTab);
-  tl.onLoadError(updateForActiveTab);
-  return tl;
+appStorage.getOptions().then((options) => {
+  appOptions.overwrite(options);
+});
+
+function setupTextlintForTab(tabId, presetName) {
+  return new Promise((resolve, reject) => {
+    textlintConfig.getPresetOrDefault(presetName).then((preset) => {
+      const tl = new TextlintWrapper(preset.rules, preset.ruleOptions);
+      tabTextlints[tabId] = {
+        textlint: tl,
+        preset: preset.name,
+      };
+      const updateTab = _.bind(updateForTab, null, tabId);
+      tl.onLoad(updateTab);
+      tl.onLoadError(updateTab);
+      resolve(tl);
+    }).catch(reject);
+  });
+}
+
+function reloadTextlintForTab(tabId) {
+  return new Promise((resolve, reject) => {
+    const old = tabTextlints[tabId];
+    if (!old) return resolve(null);
+    setupTextlintForTab(tabId, old.preset).then(resolve).catch(reject);
+  });
 }
 
 function getTextlintForTab(tabId) {
-  return tabTextlints[tabId];
+  const entry = tabTextlints[tabId];
+  return entry && entry.textlint;
 }
 
 function removeTextlintForTab(tabId) {
@@ -49,14 +74,16 @@ function updateForTab(tab) {
       tabId: tab.id,
       path: active ? appConfig.activeIcon : appConfig.deactiveIcon
     });
-    if (active && tl && !tl.isLinting()) {
+    if (active && tl && !tl.isLinting() && !_.isEmpty(appOptions.badgeCountSeverity)) {
+      let count = 0;
+      _.each(appOptions.badgeCountSeverity, (sev) => { count += counts[sev] });
       chrome.browserAction.setBadgeText({
         tabId: tab.id,
-        text: counts.error > 0 ? counts.error.toString() : "OK"
+        text: count > 0 ? count.toString() : "OK"
       });
       chrome.browserAction.setBadgeBackgroundColor({
         tabId: tab.id,
-        color: counts.error > 0 ? "#EC1A2A" : "#99EC6B"
+        color: count > 0 ? "#EC1A2A" : "#99EC6B"
       });
     } else {
       chrome.browserAction.setBadgeText({ tabId: tab.id, text: "" });
@@ -66,6 +93,9 @@ function updateForTab(tab) {
       removeTextlintForTab(tab.id);
     }
   });
+}
+function updateForTabId(tabId) {
+  cutil.withTab(tabId, updateForTab);
 }
 function updateForActiveTab() {
   cutil.withActiveTab(updateForTab);
@@ -97,6 +127,11 @@ messages.onLintText(({text}, sender, sendResponse) => {
 
 messages.onUpdateStatus((msg, sender, sendResponse) => {
   if (sender.tab) updateForTab(sender.tab);
+  sendResponse();
+});
+
+messages.onGetOptions((msg, sender, sendResponse) => {
+  sendResponse(appOptions.contentOptions);
 });
 
 chrome.tabs.onActivated.addListener((activeInfo) => {
@@ -107,6 +142,22 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 });
 chrome.tabs.onRemoved.addListener((tabId, removeInfo) => {
   removeTextlintForTab(tabId);
+});
+chrome.storage.onChanged.addListener((changes, areaName) => {
+  if (changes["options"]) {
+    const ruleChanged = !_.isEqual(
+      changes["options"].oldValue.ruleOptions,
+      changes["options"].newValue.ruleOptions
+    );
+
+    appOptions.overwrite(changes["options"].newValue);
+    _.each(tabTextlints, (entry, tabId) => {
+      tabId = _.parseInt(tabId);
+      if (ruleChanged) reloadTextlintForTab(tabId);
+      messages.updateOptions(tabId, appOptions.contentOptions, ruleChanged);
+    });
+    updateForActiveTab();
+  }
 });
 chrome.runtime.onStartup.addListener(updateForActiveTab);
 chrome.runtime.onInstalled.addListener(updateForActiveTab);

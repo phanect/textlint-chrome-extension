@@ -82,7 +82,13 @@ const DEFAULT_OPTIONS = {
   lintText: (text) => Promise.resolve([]),
 
   // Event handler called when lint marks is changed.
-  onMarksChanged: null
+  onMarksChanged: null,
+
+  // Show markers for highlighting words in textarea
+  showMarks: true,
+
+  // Highlight textarea border to show linting status
+  showBorder: true,
 };
 
 // Page-global linter for textarea content.
@@ -101,6 +107,13 @@ export class TextareaLinter {
       this.deactivate();
     } else {
       this.activate();
+    }
+  }
+
+  setOptions(options) {
+    _.extend(this.options, options);
+    if (this.active && this.lintedTextArea) {
+      this.updateTextareaForOptions(this.lintedTextArea);
     }
   }
 
@@ -196,12 +209,21 @@ export class TextareaLinter {
       .addClass(_.uniq(_.map(lintMessages, (m) => `${cls}-${m.severity}`)).join(" "))
       .toggleClass(`${cls}-none`, lintMessages.length === 0);
 
+    this.updateTextareaForOptions(textarea);
     this.tooltip.hide();
     this.options.onMarksChanged && this.options.onMarksChanged.call(textarea);
   }
 
+  updateTextareaForOptions(textarea) {
+    const $textarea = $(textarea);
+    const cls = `${CLASS_PREFIX}textarea`;
+    $textarea
+      .textareaMarker(this.options.showMarks ? "show" : "hide")
+      .toggleClass(`${cls}-show-border`, this.options.showBorder);
+  }
+
   hideLintMessages(textarea) {
-    $(textarea)
+    $(textarea || this.lintedTextArea)
       .textareaMarker("destroy")
       .off("markmousemove.extTextlint")
       .off("markmouseout.extTextlint")

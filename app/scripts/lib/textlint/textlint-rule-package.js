@@ -1,7 +1,7 @@
 "use strict";
 
 import $ from "jquery";
-import requireBundle from "../bundle/require-bundle";
+import bundles from "../app/bundles";
 import stripDefault from "../util/strip-default";
 
 const NPM_REGISTRY_URL = "https://registry.npmjs.org/";
@@ -90,21 +90,21 @@ export default class TextlintRulePackage {
 
   loadBundled() {
     return new Promise((resolve, reject) => {
-      requireBundle(this.packageName).then((pkg) => {
-        resolve(stripDefault(pkg));
-      }).catch(reject);
+      try {
+        bundles.load(this.packageName, (pkg) => {
+          resolve(stripDefault(pkg));
+        });
+      } catch (e) {
+        reject(e);
+      }
     });
   }
 
   loadBundledOrLatest() {
     return new Promise((resolve, reject) => {
-      this.loadBundled().then((bundled) => {
-        if (bundled) {
-          resolve(bundled);
-        } else {
-          this.loadLatest().then(resolve, reject);
-        }
-      }).catch(reject);
+      this.loadBundled().then(resolve).catch(() => {
+        this.loadLatest().then(resolve, reject);
+      });
     });
   }
 }

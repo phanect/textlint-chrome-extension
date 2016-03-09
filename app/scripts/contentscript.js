@@ -3,16 +3,25 @@
 import messages from "./lib/content/messages";
 
 let textareaLinter;
+
 function initTextareaLinter() {
-  if (!textareaLinter) {
-    // Delay load to avoid initial impact
-    let TextareaLinter = require("./lib/content/textarea-linter").TextareaLinter;
-    textareaLinter = new TextareaLinter({
-      lintText: lintText,
-      onMarksChanged: onMarksChanged
-    });
-  }
-  return textareaLinter;
+  return new Promise((resolve, reject) => {
+    if (textareaLinter) {
+      resolve(textareaLinter);
+    } else {
+      messages.getOptions().then((options) => {
+        // Delay load to avoid initial impact
+        let TextareaLinter = require("./lib/content/textarea-linter").TextareaLinter;
+        textareaLinter = new TextareaLinter({
+          lintText: lintText,
+          onMarksChanged: onMarksChanged,
+          showMarks: options.showMarks,
+          showBorder: options.showBorder,
+        });
+        resolve(textareaLinter);
+      });
+    }
+  });
 }
 
 function lintText(text) {
@@ -44,14 +53,24 @@ messages.onGetStatus((msg, sender, sendResponse) => {
 });
 
 messages.onToggleLinter((msg, sender, sendResponse) => {
-  initTextareaLinter();
-  textareaLinter.toggle();
-  messages.updateStatus();
-  sendResponse({ active: textareaLinter.active });
+  initTextareaLinter().then(() => {
+    textareaLinter.toggle();
+    messages.updateStatus();
+    sendResponse({ active: textareaLinter.active });
+  });
+  return true;
 });
 
-messages.onShowMark(({markId}) => {
-  textareaLinter.showMark(markId);
+messages.onShowMark(({markId}, sender, sendResponse) => {
+  if (textareaLinter) textareaLinter.showMark(markId);
+  sendResponse();
+});
+
+messages.onUpdateOptions(({options, ruleChanged}, sender, sendResponse) => {
+  if (textareaLinter) {
+    textareaLinter.setOptions(options);
+  }
+  sendResponse();
 });
 
 messages.updateStatus();

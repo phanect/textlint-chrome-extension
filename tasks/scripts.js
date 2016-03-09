@@ -10,7 +10,7 @@ import path from 'path';
 const appDir = path.join(__dirname, '../app');
 const scriptsDir = `${appDir}/scripts`;
 
-gulp.task('scripts', (cb) => {
+gulp.task('scripts', ['bundle'], (cb) => {
   return gulp.src(['app/scripts/*.js'])
     .pipe(gulpWebpack({
       entry: {

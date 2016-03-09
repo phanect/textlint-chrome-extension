@@ -4,10 +4,12 @@ import _ from "lodash";
 
 const MESSAGES = {
   GET_STATUS: "GetStatus",
+  GET_OPTIONS: "GetOptions",
   TOGGLE_LINTER: "ToggleLinter",
   SHOW_MARK: "ShowMark",
   LINT_TEXT: "LintText",
   UPDATE_STATUS: "UpdateStatus",
+  UPDATE_OPTIONS: "UpdateOptions",
 };
 const VALID_MESSAGES = _.invert(MESSAGES);
 

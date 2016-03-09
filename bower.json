@@ -22,17 +22,23 @@
   "dependencies": {
     "font-awesome": "^4.5.0",
     "json-editor": "^0.7.24",
-    "bootswatch-dist": "3.3.6-paper"
+    "bootswatch-dist": "3.3.6-paper",
+    "bootstrap-switch": "^3.3.2",
+    "selectize": "^0.12.1",
+    "selectize-bootswatch": "*"
   },
   "overrides": {
     "bootswatch-dist": {
       "main": "**/*.min.{css,js}"
     },
-    "jquery": {
-      "ignore": true
+    "selectize": {
+      "main": [
+        "dist/js/standalone/selectize.min.js",
+        "dist/css/selectize.bootstrap3.css"
+      ]
     },
-    "font-awesome": {
-      "ignore": true
+    "selectize-bootswatch": {
+      "main": "css/selectize.paper.css"
     }
   }
 }

@@ -23,6 +23,10 @@ export default {
     );
   },
 
+  withTab(tabId, fn) {
+    chrome.tabs.get(tabId, fn);
+  },
+
   syncGet(keys) {
     return promised((cb) => chrome.storage.sync.get(keys, cb));
   },
@@ -80,6 +84,15 @@ export default {
         }
       });
     }
+  },
+
+  translate(key, fallback) {
+    key = _.camelCase(key);
+    const translated = chrome.i18n.getMessage(key);
+    // if (!translated) {
+    //   console.log(`Missing translation: "${key}" (with fallback "${fallback}")`)
+    // }
+    return translated || fallback;
   },
 
 }

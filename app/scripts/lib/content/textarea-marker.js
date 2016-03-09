@@ -75,13 +75,13 @@ export default class TextareaMarker {
 
   show() {
     if (this.$background) {
-      this.$background.find("mark").css("visibility", "visible");
+      this.$background.removeClass(`${this.options.classPrefix}background-hide-marks`);
     }
   }
 
   hide() {
     if (this.$background) {
-      this.$background.find("mark").css("visibility", "hidden");
+      this.$background.addClass(`${this.options.classPrefix}background-hide-marks`);
     }
   }
 

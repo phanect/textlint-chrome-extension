@@ -65,7 +65,129 @@
   "presetCustom": {
     "message": "カスタム設定 (オプションで設定)"
   },
+  "menuRules": {
+    "message": "ルール"
+  },
+  "menuVisual": {
+    "message": "表示設定"
+  },
   "customizeRules": {
-    "message": "文書チェックのルールをカスタム設定"
+    "message": "ルールのカスタム設定"
+  },
+  "visualEffects": {
+    "message": "表示設定"
+  },
+  "save": {
+    "message": "保存"
+  },
+
+  "ruleAlexDescription": {
+    "message": "性差別などの差別的な英単語を Alex でチェックします"
+  },
+  "ruleGeneralNovelStyleJaDescription": {
+    "message": "日本の小説における一般的な作法に従ってチェックします"
+  },
+  "ruleMaxTenDescription": {
+    "message": "一文の中で使える読点(、)の数を制限します"
+  },
+  "ruleNoDoubleNegativeJaDescription": {
+    "message": "「なくもない」「ないことはない」などの二重否定を検出します"
+  },
+  "ruleNoDoubledJoshiDescription": {
+    "message": "文中に同じ助詞が複数出てくるのをチェックします"
+  },
+  "ruleNoMixDearuDesumasuDescription": {
+    "message": "「である」と「ですます」の混在を検出します"
+  },
+  "ruleNoStartDuplicatedConjunctionDescription": {
+    "message": "同じ接続詞で始まる文章が連続しているのを検出します"
+  },
+  "ruleRousseauDescription": {
+    "message": "英文の一般的な校閲ルールを Rousseau でチェックします"
+  },
+  "ruleSentenceLengthDescription": {
+    "message": "一文あたりの最大文字数を制限します"
+  },
+  "ruleSpellcheckTechWordDescription": {
+    "message": "JavaScript 関連の技術用語をチェックします"
+  },
+
+  "labelIgnoringTypeOfMessage": {
+    "message": "無視するメッセージの種類"
+  },
+  "labelCharactersAllowedToLeadAParagraph": {
+    "message": "各段落の先頭に許可する文字"
+  },
+  "labelDisallowToPutPunctuationsBeforeClosingQuote": {
+    "message": "閉じ括弧の手前に句読点(。、)を置かない"
+  },
+  "labelRequireASpaceAfterExclamationAndQuestionMarks": {
+    "message": "疑問符(？)と感嘆符(！)の直後にスペースを置く"
+  },
+  "labelRequireEvenNumberOfEllipsises": {
+    "message": "連続した三点リーダー(…)の数は偶数にする"
+  },
+  "labelRequireEvenNumberOfDashes": {
+    "message": "連続したダッシュ(―)の数は偶数にする"
+  },
+  "labelDisallowConsecutivePunctuations": {
+    "message": "連続した句読点(。、)を許可しない"
+  },
+  "labelDisallowConsecutiveInterpuncts": {
+    "message": "連続した中黒(・)を許可しない"
+  },
+  "labelDisallowConsecutiveChoOnpu": {
+    "message": "連続した長音符(ー)を許可しない"
+  },
+  "labelRequireNumberAfterMinusSign": {
+    "message": "マイナス記号(−)は数字の前にしか許可しない"
+  },
+  "labelMaximumDigitsOfArabicNumerals": {
+    "message": "アラビア数字の桁数は2桁まで"
+  },
+  "labelMaxNumber": {
+    "message": "最大桁数"
+  },
+  "labelMaximumNumberOfAllowedInASentence": {
+    "message": "一文に利用できる \"、\" の数"
+  },
+  "labelStrictCheck": {
+    "message": "厳しくチェックする"
+  },
+  "labelMinimumIntervalOfJoshi": {
+    "message": "同じ助詞を使うのに最低限必要な単語の数"
+  },
+  "labelIntervalOfSentences": {
+    "message": "同じ接続詞を使うのに最低限あける文の数"
+  },
+  "labelLevelOfImportance": {
+    "message": "表示するメッセージの重要度"
+  },
+  "labelIgnoringTypeOfCheck": {
+    "message": "無視するメッセージの種類"
+  },
+  "labelMaximumLengthOfASentence": {
+    "message": "一文の最大文字数"
+  },
+  "labelShowMarkersOfHintMessagesInTextArea": {
+    "message": "編集中のテキストにマーカーでチェック結果を表示する"
+  },
+  "labelHighlightBorderOfTextArea": {
+    "message": "編集中のテキストボックスの枠線をチェック結果で色付けする"
+  },
+  "labelShowCountOfMessagesOnTheBadge": {
+    "message": "バッジに数として表示するメッセージの種類"
+  },
+  "labelErrors": {
+    "message": "エラーのみ"
+  },
+  "labelErrorsAndWarnings": {
+    "message": "エラーと警告"
+  },
+  "labelEverything": {
+    "message": "全て"
+  },
+  "labelNone": {
+    "message": "なし"
   }
 }

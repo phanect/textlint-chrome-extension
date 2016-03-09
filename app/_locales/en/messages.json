@@ -64,5 +64,99 @@
   },
   "presetCustom": {
     "message": "Custom rules in Options"
+  },
+  "menuRules": {
+    "message": "Rules"
+  },
+  "menuVisual": {
+    "message": "Visual"
+  },
+  "customizeRules": {
+    "message": "Customize textlint rules"
+  },
+  "visualEffects": {
+    "message": "Visual effects"
+  },
+  "save": {
+    "message": "Save"
+  },
+
+  "labelIgnoringTypeOfMessage": {
+    "message": "Ignoring type of message"
+  },
+  "labelCharactersAllowedToLeadAParagraph": {
+    "message": "Characters allowed to lead a paragraph"
+  },
+  "labelDisallowToPutPunctuationsBeforeClosingQuote": {
+    "message": "Disallow to put punctuations before closing quote"
+  },
+  "labelRequireASpaceAfterExclamationAndQuestionMarks": {
+    "message": "Require a space after exclamation and question marks"
+  },
+  "labelRequireEvenNumberOfEllipsises": {
+    "message": "Require even number of ellipsises"
+  },
+  "labelRequireEvenNumberOfDashes": {
+    "message": "Require even number of dashes"
+  },
+  "labelDisallowConsecutivePunctuations": {
+    "message": "Disallow consecutive punctuations"
+  },
+  "labelDisallowConsecutiveInterpuncts": {
+    "message": "Disallow consecutive interpuncts"
+  },
+  "labelDisallowConsecutiveChoOnpu": {
+    "message": "Disallow consecutive cho-onpu"
+  },
+  "labelRequireNumberAfterMinusSign": {
+    "message": "Require number after minus sign"
+  },
+  "labelMaximumDigitsOfArabicNumerals": {
+    "message": "Maximum digits of Arabic numerals"
+  },
+  "labelMaxNumber": {
+    "message": "Max number"
+  },
+  "labelMaximumNumberOfAllowedInASentence": {
+    "message": "Maximum number of \"、\" allowed in a sentence"
+  },
+  "labelStrictCheck": {
+    "message": "Strict check"
+  },
+  "labelMinimumIntervalOfJoshi": {
+    "message": "Minimum interval of joshi"
+  },
+  "labelIntervalOfSentences": {
+    "message": "Interval of sentences"
+  },
+  "labelLevelOfImportance": {
+    "message": "Level of importance"
+  },
+  "labelIgnoringTypeOfCheck": {
+    "message": "Ignoring type of check"
+  },
+  "labelMaximumLengthOfASentence": {
+    "message": "Maximum length of a sentence"
+  },
+  "labelShowMarkersOfHintMessagesInTextArea": {
+    "message": "Show markers of hint messages in text area"
+  },
+  "labelHighlightBorderOfTextArea": {
+    "message": "Highlight border of text area"
+  },
+  "labelShowCountOfMessagesOnTheBadge": {
+    "message": "Show count of messages on the badge"
+  },
+  "labelErrors": {
+    "message": "Errors"
+  },
+  "labelErrorsAndWarnings": {
+    "message": "Errors and warnings"
+  },
+  "labelEverything": {
+    "message": "Everything"
+  },
+  "labelNone": {
+    "message": "None"
   }
 }
