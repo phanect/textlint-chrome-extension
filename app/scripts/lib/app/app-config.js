@@ -63,6 +63,13 @@ export default {
         "no-start-duplicated-conjunction": true,
         "general-novel-style-ja": true,
       }
+    },
+    {
+      name: "Custom",
+      rules: [
+      ],
+      ruleOptions: {
+      }
     }
   ],
 }

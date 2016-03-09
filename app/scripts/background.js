@@ -145,16 +145,18 @@ chrome.tabs.onRemoved.addListener((tabId, removeInfo) => {
 });
 chrome.storage.onChanged.addListener((changes, areaName) => {
   if (changes["options"]) {
-    const ruleChanged = !_.isEqual(
-      changes["options"].oldValue.ruleOptions,
-      changes["options"].newValue.ruleOptions
-    );
-
-    appOptions.overwrite(changes["options"].newValue);
+    const {oldValue, newValue} = changes["options"];
+    const ruleChanged = oldValue ? !_.isEqual(oldValue.ruleOptions, newValue.ruleOptions) : true;
+    appOptions.overwrite(newValue);
     _.each(tabTextlints, (entry, tabId) => {
       tabId = _.parseInt(tabId);
-      if (ruleChanged) reloadTextlintForTab(tabId);
-      messages.updateOptions(tabId, appOptions.contentOptions, ruleChanged);
+
+      const update = () => messages.updateOptions(tabId, appOptions.contentOptions, ruleChanged);
+      if (ruleChanged) {
+        reloadTextlintForTab(tabId).then(update);
+      } else {
+        update();
+      }
     });
     updateForActiveTab();
   }

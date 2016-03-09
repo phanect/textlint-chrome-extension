@@ -113,7 +113,7 @@ export class TextareaLinter {
   setOptions(options) {
     _.extend(this.options, options);
     if (this.active && this.lintedTextArea) {
-      this.updateTextareaForOptions(this.lintedTextArea);
+      this.lintTextArea(this.lintedTextArea);
     }
   }
 
@@ -207,19 +207,12 @@ export class TextareaLinter {
       .addClass(cls)
       .removeClass(this._prefixedClass(`${cls}-`))
       .addClass(_.uniq(_.map(lintMessages, (m) => `${cls}-${m.severity}`)).join(" "))
-      .toggleClass(`${cls}-none`, lintMessages.length === 0);
-
-    this.updateTextareaForOptions(textarea);
-    this.tooltip.hide();
-    this.options.onMarksChanged && this.options.onMarksChanged.call(textarea);
-  }
-
-  updateTextareaForOptions(textarea) {
-    const $textarea = $(textarea);
-    const cls = `${CLASS_PREFIX}textarea`;
-    $textarea
+      .toggleClass(`${cls}-none`, lintMessages.length === 0)
       .textareaMarker(this.options.showMarks ? "show" : "hide")
       .toggleClass(`${cls}-show-border`, this.options.showBorder);
+
+    this.tooltip.hide();
+    this.options.onMarksChanged && this.options.onMarksChanged.call(textarea);
   }
 
   hideLintMessages(textarea) {

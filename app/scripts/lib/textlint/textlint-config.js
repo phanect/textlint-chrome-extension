@@ -5,14 +5,8 @@ import appConfig from "../app/app-config";
 import appStorage from "../app/app-storage";
 import AppOptions from "../app/app-options";
 
-let customConfig = {
-  name: "Custom",
-  rules: [],
-  ruleOptions: {}
-};
-
 export default {
-  presets: _.concat(appConfig.presets, customConfig),
+  presets: appConfig.presets,
   defaultPreset: appConfig.defaultPreset,
 
   getPreset(name) {

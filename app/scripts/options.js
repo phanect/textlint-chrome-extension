@@ -80,8 +80,6 @@ $("#save-button").on("click", () => {
         return false;
       }
       ruleOptions[ruleKey] = editor.getValue() || true;
-    } else {
-      ruleOptions[ruleKey] = false;
     }
     return true;
   });
@@ -111,7 +109,7 @@ function buildRuleItem(rule, ruleOptions) {
 
   $item.find(".rule-enabled")
     .attr("name", `rules[${ruleKey}][enabled]`)
-    .attr("checked", options !== false)
+    .attr("checked", options)
     .bootstrapSwitch({
       size: "mini",
       onInit: updateRuleItem,

@@ -40,6 +40,7 @@ export default class TextlintWrapper {
       this.loadingPromise.then(() => {
         this.loaded = true;
         console.log("textlint and rules have been successfully loaded.");
+        console.log("using ruleNames:", this.ruleNames, ", ruleOptions:", this.ruleOptions);
       }).catch((reason) => {
         this.loadingFailed = true;
         console.error("Error occurred while loading textlint and rules: ", reason);
