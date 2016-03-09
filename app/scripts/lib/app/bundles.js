@@ -57,6 +57,7 @@ export default {
                   "title": "Ignoring type of message",
                   "type": "array",
                   "items": {
+                    "title": "Type of message",
                     "type": "string",
                     "minLength": 1
                   },
@@ -90,7 +91,20 @@ export default {
               "properties": {
                 "chars_leading_paragraph": {
                   "title": "Characters allowed to lead a paragraph",
-                  "type": "string",
+                  "oneOf": [
+                    {
+                      "title": "Characters",
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    {
+                      "title": "Disable checking",
+                      "type": "boolean",
+                      "enum": [
+                        false
+                      ]
+                    }
+                  ],
                   "default": "　「『【〈《（(“\"‘'［[〔｛{＜<"
                 },
                 "no_punctuation_at_closing_quote": {
@@ -137,9 +151,13 @@ export default {
                   "title": "Maximum digits of Arabic numerals",
                   "oneOf": [
                     {
-                      "type": "integer"
+                      "title": "Max number",
+                      "type": "integer",
+                      "minimum": 1
                     },
                     {
+                      "title": "Disable checking",
+                      "type": "boolean",
                       "enum": [
                         false
                       ]
@@ -203,8 +221,7 @@ export default {
         "schema": {
           "$schema": "http://json-schema.org/draft-04/schema#",
           "title": "Enable this rule",
-          "type": "boolean",
-          "default": false
+          "type": "boolean"
         }
       },
 
@@ -258,8 +275,7 @@ export default {
         "schema": {
           "$schema": "http://json-schema.org/draft-04/schema#",
           "title": "Enable this rule",
-          "type": "boolean",
-          "default": false
+          "type": "boolean"
         }
       },
 
@@ -319,6 +335,7 @@ export default {
                   "title": "Level of importance",
                   "type": "array",
                   "items": {
+                    "title": "Level",
                     "type": "string",
                     "enum": [
                       "suggestion",
@@ -332,6 +349,7 @@ export default {
                   "title": "Ignoring type of check",
                   "type": "array",
                   "items": {
+                    "title": "Type of message",
                     "type": "string",
                     "enum": [
                       "passive",
@@ -399,8 +417,7 @@ export default {
         "schema": {
           "$schema": "http://json-schema.org/draft-04/schema#",
           "title": "Enable this rule",
-          "type": "boolean",
-          "default": false
+          "type": "boolean"
         }
       },
 
