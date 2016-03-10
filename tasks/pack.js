@@ -1,25 +1,20 @@
 import gulp from 'gulp';
 import { colors, log } from 'gulp-util';
-import zip from 'gulp-zip';
+import crx from 'gulp-crx-pack';
 import packageDetails from '../package.json';
 import args from './lib/args';
+import path from 'path';
+import fs from 'fs';
 
-function getPackFileType(){
-  switch(args.vendor){
-    case 'firefox':
-      return '.xpi';
-    default:
-      return '.zip';
-  }
-}
-
-gulp.task('pack', () => {
+gulp.task('pack', ['build'], () => {
   let name = packageDetails.name;
   let version = packageDetails.version;
-  let filetype = getPackFileType();
-  let filename = `${name}-${version}-${args.vendor}${filetype}`;
-  return gulp.src(`dist/${args.vendor}/**/*`)
-    .pipe(zip(filename))
+  let filename = `${name}-${version}.crx`;
+  return gulp.src(`dist/${args.vendor}`)
+    .pipe(crx({
+      privateKey: fs.readFileSync('certs/key.pem', 'utf-8'),
+      filename: filename,
+    }))
     .pipe(gulp.dest('./packages'))
     .on('end', () => {
       let distStyled = colors.magenta(`dist/${args.vendor}`);

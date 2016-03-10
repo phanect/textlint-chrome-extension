@@ -48,8 +48,9 @@ gulp.task('scripts', ['bundle'], (cb) => {
           minChunks: Infinity
         }),
       ].concat(args.production ? [
-        new webpack.optimize.UglifyJsPlugin(),
         new webpack.optimize.DedupePlugin(),
+        new webpack.optimize.AggressiveMergingPlugin(),
+        new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false } }),
       ] : []),
       module: {
         preLoaders: [

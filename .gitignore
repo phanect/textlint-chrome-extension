@@ -8,3 +8,4 @@ bower_components
 
 dist/
 packages/
+certs/*.pem
