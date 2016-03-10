@@ -50,7 +50,7 @@
     "require-dir": "^0.3.0",
     "string-replace-loader": "^1.0.0",
     "textlint": "^5.7.0",
-    "textlint-registry": "^2.0.0",
+    "textlint-registry": "^2.0.1",
     "textlint-rule-alex": "^1.0.1",
     "textlint-rule-general-novel-style-ja": "^1.2.0",
     "textlint-rule-max-ten": "^2.0.1",

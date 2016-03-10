@@ -351,6 +351,11 @@ export default {
                       "error"
                     ]
                   },
+                  "default": [
+                    "suggestion",
+                    "warning",
+                    "error"
+                  ],
                   "uniqueItems": true
                 },
                 "ignoreTypes": {
