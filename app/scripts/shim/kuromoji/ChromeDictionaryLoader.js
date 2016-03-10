@@ -24,7 +24,8 @@ ChromeDictionaryLoader.prototype.loadArrayBuffer = function (path, callback) {
   getExtensionFile(path).then((file) => {
     const reader = new FileReader();
     reader.onload = () => {
-      callback(null, new Uint8Array(reader.result));
+      const typedArray = new Uint8Array(reader.result);
+      callback(null, typedArray.buffer);
     };
     reader.onerror = () => { callback(reader.error) };
     reader.readAsArrayBuffer(file);
