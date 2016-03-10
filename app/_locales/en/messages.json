@@ -47,6 +47,9 @@
   "noMarks": {
     "message": "Your text has passed all tests."
   },
+  "ready": {
+    "message": "I'm ready. Let's start writing!"
+  },
   "requireRefresh": {
     "message": "Please refresh the page to use this extension."
   },

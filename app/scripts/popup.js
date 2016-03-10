@@ -76,7 +76,7 @@ function updateForTab(tab) {
   withLinters((linters) => {
     messages.getStatus(tab.id).then(({active, marks, counts}) => {
       const status = linters.getStatus(tab.id);
-      const loading = !status.active || !status.clientLinted || status.linting;
+      const loading = !status.active || status.linting;
       const anyMarks = marks.length > 0;
 
       if (status.lastError) {
@@ -90,8 +90,9 @@ function updateForTab(tab) {
       $(".settings-area").toggle(!active);
       $(".marks-area").toggle(active);
       $("#loading-marks").toggle(loading);
-      $("#any-marks").toggle(!loading && anyMarks);
-      $("#no-marks").toggle(!loading && !anyMarks);
+      $("#ready").toggle(!loading && !status.clientLinted);
+      $("#any-marks").toggle(!loading && status.clientLinted && anyMarks);
+      $("#no-marks").toggle(!loading && status.clientLinted && !anyMarks);
       updateMarks(marks, counts);
     });
   });
