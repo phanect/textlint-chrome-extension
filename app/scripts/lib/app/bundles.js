@@ -36,6 +36,7 @@ export default {
     "textlint-rule-alex":
       {
         "name": "textlint-rule-alex",
+        "key": "alex",
         "version": "1.0.1",
         "description": "textlint rule for alex",
         "author": "azu",
@@ -72,6 +73,7 @@ export default {
     "textlint-rule-general-novel-style-ja":
       {
         "name": "textlint-rule-general-novel-style-ja",
+        "key": "general-novel-style-ja",
         "version": "1.2.0",
         "description": "textlint rule to follow general style of Japanese novels",
         "author": "IRIDE Monad",
@@ -174,6 +176,7 @@ export default {
     "textlint-rule-max-ten":
       {
         "name": "textlint-rule-max-ten",
+        "key": "max-ten",
         "version": "2.0.1",
         "description": "textlint rule that limit maxinum ten(、) count of sentence.",
         "author": "azu",
@@ -211,6 +214,7 @@ export default {
     "textlint-rule-no-double-negative-ja":
       {
         "name": "textlint-rule-no-double-negative-ja",
+        "key": "no-double-negative-ja",
         "version": "1.0.3",
         "description": "二重否定をチェックするtextlint rule",
         "author": "azu",
@@ -228,6 +232,7 @@ export default {
     "textlint-rule-no-doubled-joshi":
       {
         "name": "textlint-rule-no-doubled-joshi",
+        "key": "no-doubled-joshi",
         "version": "3.2.0",
         "description": "textlint rule check doubled joshi",
         "author": "azu",
@@ -265,6 +270,7 @@ export default {
     "textlint-rule-no-mix-dearu-desumasu":
       {
         "name": "textlint-rule-no-mix-dearu-desumasu",
+        "key": "no-mix-dearu-desumasu",
         "version": "1.4.0",
         "description": "textlint rule that no mix である and ですます.",
         "author": "azu",
@@ -282,6 +288,7 @@ export default {
     "textlint-rule-no-start-duplicated-conjunction":
       {
         "name": "textlint-rule-no-start-duplicated-conjunction",
+        "key": "no-start-duplicated-conjunction",
         "version": "1.0.7",
         "description": "textlint rule that check no start with duplicated conjunction.",
         "author": "azu",
@@ -314,6 +321,7 @@ export default {
     "textlint-rule-rousseau":
       {
         "name": "textlint-rule-rousseau",
+        "key": "rousseau",
         "version": "1.3.2",
         "description": "textlint rule check english sentence using rousseau",
         "author": "azu",
@@ -375,6 +383,7 @@ export default {
     "textlint-rule-sentence-length":
       {
         "name": "textlint-rule-sentence-length",
+        "key": "sentence-length",
         "version": "1.0.4",
         "description": "textlint rule check sentence length",
         "author": "azu",
@@ -407,6 +416,7 @@ export default {
     "textlint-rule-spellcheck-tech-word":
       {
         "name": "textlint-rule-spellcheck-tech-word",
+        "key": "spellcheck-tech-word",
         "version": "4.2.0",
         "description": "textlint rule: spell check technical word for japanese.",
         "author": "azu",

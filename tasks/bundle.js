@@ -10,6 +10,7 @@ function getRulePackageInfo(packageName) {
   const info = require(`${packageName}/package.json`);
   return {
     name: info.name,
+    key: info.name.replace(/^textlint-rule-/, ""),
     version: info.version,
     description: info.description,
     author: _.isObject(info.author) ? info.author.name : info.author,

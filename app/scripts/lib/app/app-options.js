@@ -120,6 +120,11 @@ export default class AppOptions {
     if (_.isArray(v) && v.length === 0) v = "none";
     this.options.badgeCountSeverity = _.isArray(v) ? v.join(',') : v;
   }
+
+  getRuleOption(ruleName) {
+    ruleName = ruleName.replace(/^textlint-rule-/, "");
+    return this.ruleOptions[ruleName];
+  }
   get ruleOptions() {
     return this.options.ruleOptions;
   }
