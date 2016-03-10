@@ -13,6 +13,7 @@ import VisualEditor from "./lib/options/visual-editor";
 import "./lib/util/i18n-replace";
 import "./lib/json-editor/editor-multiselectize";
 import "./lib/json-editor/editor-enumconstant";
+import "./lib/json-editor/editor-checkboxed-editor";
 import "./lib/json-editor/messages";
 
 JSONEditor.defaults.options.theme = "bootstrap3";
@@ -41,6 +42,7 @@ $("#save-button").on("click", () => {
   if (optionsEditor.validate()) {
     optionsEditor.save(appOptions);
     appOptions.save().then(() => {
+      DEBUG && console.log("Saved ", appOptions.toObject());
       window.close();
     });
   }
