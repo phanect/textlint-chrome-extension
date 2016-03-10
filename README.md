@@ -25,8 +25,6 @@ Produce a production-packaged zip in `packages` directory.
 
     $ npm run pack
 
-Note: You must put a secret key file `certs/key.pem` before.
-
 ### Version
 
 Increment version number of `manifest.json` and `package.json`, then commit the change to git and add a git tag.
