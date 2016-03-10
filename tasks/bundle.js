@@ -46,13 +46,14 @@ gulp.task('bundle', (cb) => {
     const outPath = path.join(__dirname, '../app/scripts/lib/app/bundles.js');
     const templatePath = path.join(__dirname, 'templates/bundle.js.tpl');
     const template = _.template(fs.readFileSync(templatePath));
+    const textlintInfo = getRulePackageInfo('textlint');
 
     const list = JSON.parse(stdout);
     const rules = scanDependenciesForRules(list.dependencies);
     Promise.all(_.map(rules, (rule) => textlintRegistry.getSchema(rule.name)))
     .then((schemas) => {
       _.each(schemas, (schema, index) => rules[index].schema = schema);
-      const content = template({ rules: rules });
+      const content = template({ rules: rules, textlintInfo: textlintInfo });
       fs.writeFile(outPath, content, cb);
     })
     .catch(cb);

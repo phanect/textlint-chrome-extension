@@ -10,11 +10,16 @@ export default {
     name = "textlint-rule-" + name.replace(/^textlint-rule-/, "");
     this.loaders[name].call(null, cb);
   },
+
   loaders: {
 <% _.forEach(rules, function (rule) { %>
     "<%= rule.name %>": (cb) => { require(["<%= rule.name %>"], cb) },
 <% }); %>
   },
+
+  textlint:
+<%= JSON.stringify(textlintInfo, null, 2).replace(/^/mg, "    ") %>,
+
   bundles: {
 <% _.forEach(rules, function (rule) { %>
     "<%= rule.name %>":

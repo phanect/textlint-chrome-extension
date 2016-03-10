@@ -10,6 +10,7 @@ export default {
     name = "textlint-rule-" + name.replace(/^textlint-rule-/, "");
     this.loaders[name].call(null, cb);
   },
+
   loaders: {
 
     "textlint-rule-alex": (cb) => { require(["textlint-rule-alex"], cb) },
@@ -33,6 +34,21 @@ export default {
     "textlint-rule-spellcheck-tech-word": (cb) => { require(["textlint-rule-spellcheck-tech-word"], cb) },
 
   },
+
+  textlint:
+    {
+      "name": "textlint",
+      "key": "textlint",
+      "version": "5.7.0",
+      "description": "The pluggable linting tool for text and markdown.",
+      "author": "azu",
+      "license": "MIT",
+      "homepage": "https://github.com/textlint/textlint/",
+      "isPreset": false,
+      "rules": [],
+      "schema": null
+    },
+
   bundles: {
 
     "textlint-rule-alex":

@@ -26,6 +26,12 @@
               <span data-i18n="menuVisual">Visual</span>
             </a>
           </li>
+          <li role="presentation">
+            <a href="#about" aria-controls="about" role="tab" data-toggle="tab">
+              <i class="fa fa-info-circle"></i>
+              <span data-i18n="menuAbout">About</span>
+            </a>
+          </li>
         </ul>
       </div>
 
@@ -70,6 +76,69 @@
             <form class="visuals-area editor" id="visual-editor">
             </form>
           </div>
+
+          <div role="tabpanel" class="tab-pane fade" id="about">
+            <h1>
+              <i class="fa fa-info-circle"></i>
+              <span data-i18n="aboutExtension">About this extension</span>
+            </h1>
+            <div class="about-area">
+              <div class="about-section">
+                <h2 data-i18n="aboutExtension">About this extension</h2>
+                <p data-i18n="aboutP1_1"></p>
+                <p data-i18n="aboutP1_2"></p>
+                <p data-i18n="aboutP1_3"></p>
+              </div>
+              <div class="author-section">
+                <h2 data-i18n="contact">Contact</h2>
+                <p data-i18n="aboutP2_1"></p>
+                <p>
+                  <span class="label label-warning" data-i18n="notice">Notice</span>
+                  <span data-i18n="aboutP2_2"></span>
+                </p>
+                <ul>
+                  <li>
+                    <a href="https://twitter.com/io_monad" target="_blank">
+                      <i class="fa fa-twitter"></i>
+                      Twitter: @io_monad
+                    </a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/io-monad/textlint-chrome-extension/issues" target="_blank">
+                      <i class="fa fa-github"></i>
+                      GitHub: io-monad/textlint-chrome-extension
+                    </a>
+                  </li>
+                  <li>
+                    <a href="mailto:iride.monad@gmail.com" class="mail-link">
+                      <i class="fa fa-envelope"></i>
+                      iride.monad@gmail.com
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="license-section">
+                <h2 data-i18n="license">License</h2>
+                <p data-i18n="aboutP3_1"></p>
+              </div>
+              <div class="bundles-section">
+                <h2 data-i18n="bundledTextlintAndRules">Bundled textlint and rules</h2>
+                <p data-i18n="aboutP4_1"></p>
+                <table class="bundles-table table table-striped">
+                  <thead>
+                    <tr>
+                      <th data-i18n="name">Name</th>
+                      <th data-i18n="version">Version</th>
+                      <th data-i18n="author">Author</th>
+                      <th data-i18n="license">License</th>
+                    </tr>
+                  </thead>
+                  <tbody id="bundles-tbody">
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -79,7 +148,7 @@
         <div class="row">
           <div class="col-xs-9 links-area">
             <span class="app-brand">
-              ver <span class="app-version"></span>
+              textlint Extension ver <span class="app-version"></span>
             </span>
             <a href="#" target="_blank" class="store-link btn btn-link btn-sm">
               <i class="fa fa-star fa-lg"></i>

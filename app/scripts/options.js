@@ -4,6 +4,7 @@ import _ from "lodash";
 import $ from "jquery";
 import cutil from "./lib/util/chrome-util";
 import AppOptions from "./lib/app/app-options";
+import bundles from "./lib/app/bundles";
 
 import OptionsEditor from "./lib/options/options-editor";
 import RuleEditor from "./lib/options/rule-editor";
@@ -24,6 +25,8 @@ const optionsEditor = new OptionsEditor([
 ]);
 
 renderAppVersion();
+fixMailLinks();
+updateBundlesTable();
 
 AppOptions.load().then((appOptions) => {
   optionsEditor.init(appOptions).then(() => {
@@ -49,6 +52,28 @@ function renderAppVersion() {
   const storeUrl = `https://chrome.google.com/webstore/detail/currently/${extensionId}/reviews`;
   $(".app-version").text(chrome.runtime.getManifest().version);
   $(".store-link").attr("href", storeUrl);
+}
+
+function fixMailLinks() {
+  $(".mail-link").on("click", function () {
+    chrome.tabs.create({ url: this.href }, (tab) => {
+      setTimeout(() => { chrome.tabs.remove(tab.id) }, 500);
+    });
+    return false;
+  });
+}
+
+function updateBundlesTable() {
+  const $tbody = $("#bundles-tbody");
+  const bundleList = [bundles.textlint].concat(_.sortBy(bundles.bundles, "name"));
+  $tbody.html(
+    _.map(bundleList, (bundle) => ($("<tr />")
+      .append($("<td />").html($("<a />").attr({ href: bundle.homepage, target: "_blank" }).text(bundle.name)))
+      .append($("<td />").text(bundle.version))
+      .append($("<td />").text(bundle.author))
+      .append($("<td />").html($("<a />").attr({ href: bundle.homepage, target: "_blank" }).text(bundle.license)))
+    ))
+  );
 }
 
 function translateLabels() {
