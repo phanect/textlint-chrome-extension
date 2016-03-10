@@ -198,7 +198,7 @@
     "message": "マイナス記号(−)は数字の前にしか許可しない"
   },
   "labelMaximumDigitsOfArabicNumerals": {
-    "message": "アラビア数字の桁数は2桁まで"
+    "message": "許可するアラビア数字の最大桁数"
   },
   "labelMaxNumber": {
     "message": "最大桁数"
