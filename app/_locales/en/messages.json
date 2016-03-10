@@ -18,13 +18,16 @@
     "message": "Options"
   },
   "activate": {
-    "message": "Activate textlint"
+    "message": "Activate Linting"
   },
   "deactivate": {
-    "message": "Deactivate textlint"
+    "message": "Deactivate Linting"
   },
   "choosePreset": {
     "message": "Choose what type of text you write."
+  },
+  "checkAsMarkdown": {
+    "message": "Check text as Markdown"
   },
   "filter": {
     "message": "Filter"

@@ -24,18 +24,33 @@
       <div class="col-xs-6 toggle-area">
         <button class="btn btn-primary" id="activate-button">
           <i class="fa fa-flash"></i>
-          <span data-i18n="activate">Activate textlint</span>
+          <span data-i18n="activate">Activate Linting</span>
         </button>
         <button class="btn btn-primary active default-hidden" id="deactivate-button">
           <i class="fa fa-flash"></i>
-          <span data-i18n="deactivate">Deactivate textlint</span>
+          <span data-i18n="deactivate">Deactivate Linting</span>
         </button>
       </div>
     </div>
 
-    <div class="presets-area">
+    <div class="settings-area">
       <p data-i18n="choosePreset">Choose what type of text you write:</p>
-      <form id="presets"></form>
+      <form id="settings-form">
+        <div id="presets">
+          <div class="preset-item radio template">
+            <label>
+              <input class="preset-item-radio" type="radio" name="preset" value="">
+              <span class="preset-item-name"></span>
+            </label>
+          </div>
+        </div>
+        <div id="formats">
+          <label class="checkbox">
+            <input type="checkbox" name="format" value="md" id="markdown-checkbox">
+            <span data-i18n="checkAsMarkdown">Check text as Markdown</span>
+          </label>
+        </div>
+      </form>
     </div>
 
     <div class="marks-area default-hidden">
@@ -66,7 +81,17 @@
             </label>
           </div>
         </div>
-        <div id="marks"></div>
+        <div id="marks">
+          <div class="mark-item template">
+            <div class="mark-item-text">
+              <i class="mark-severity"></i>
+              <span class="mark-message"></span>
+            </div>
+            <div class="mark-item-rule">
+              <a href="#" class="mark-rule mark-link" target="_blank"></a>
+            </div>
+          </div>
+        </div>
       </div>
       <div id="no-marks" class="default-hidden notice">
         <i class="fa fa-check-circle notice-mark"></i>

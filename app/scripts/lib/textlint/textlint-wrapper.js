@@ -14,9 +14,10 @@ const SEVERITY_NAMES = {
 const PRESET_PREFIX_RE = /^preset-/;
 
 export default class TextlintWrapper {
-  constructor(ruleNames, ruleOptions) {
+  constructor(ruleNames, ruleOptions, format) {
     this.ruleNames = ruleNames;
     this.ruleOptions = ruleOptions;
+    this.format = format || "txt";
     this.textlint = new TextLintCore();
     this.loadingPromise = null;
     this.loaded = false;
@@ -28,7 +29,7 @@ export default class TextlintWrapper {
     if (!this.loadingPromise) {
       this.loadingPromise = new Promise((resolve, reject) => {
         const promises = _.map(this.ruleNames, (ruleName) => {
-          return (new TextlintRulePackage(ruleName)).loadBundledOrLatest();
+          return (new TextlintRulePackage(ruleName)).loadBundled();
         });
         Promise.all(promises).then((rules) => {
           const flattenRules = this._flattenPreset(_.fromPairs(_.zip(this.ruleNames, rules)));
@@ -58,7 +59,7 @@ export default class TextlintWrapper {
       };
 
       this.getTextlint().then((textlint) => {
-        textlint.lintText(text).then(({messages}) => {
+        textlint.lintText(text, `.${this.format}`).then(({messages}) => {
           this.lintStackCount--;
           resolve(this._buildLintMessages(text, messages));
         }).catch(rejectCatch);

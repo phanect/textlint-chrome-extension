@@ -26,6 +26,9 @@
   "choosePreset": {
     "message": "チェックする文書のタイプを指定できます"
   },
+  "checkAsMarkdown": {
+    "message": "Markdown としてチェックする"
+  },
   "filter": {
     "message": "絞り込み"
   },

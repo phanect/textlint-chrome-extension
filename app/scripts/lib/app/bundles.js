@@ -3,9 +3,11 @@
 
 export default {
   get: function (name) {
+    name = "textlint-rule-" + name.replace(/^textlint-rule-/, "");
     return this.bundles[name];
   },
   load: function (name, cb) {
+    name = "textlint-rule-" + name.replace(/^textlint-rule-/, "");
     this.loaders[name].call(null, cb);
   },
   loaders: {

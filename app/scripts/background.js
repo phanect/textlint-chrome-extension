@@ -19,13 +19,14 @@ appStorage.getOptions().then((options) => {
   appOptions.overwrite(options);
 });
 
-function setupTextlintForTab(tabId, presetName) {
+function setupTextlintForTab(tabId, presetName, format) {
   return new Promise((resolve, reject) => {
     textlintConfig.getPresetOrDefault(presetName).then((preset) => {
-      const tl = new TextlintWrapper(preset.rules, preset.ruleOptions);
+      const tl = new TextlintWrapper(preset.rules, preset.ruleOptions, format);
       tabTextlints[tabId] = {
         textlint: tl,
         preset: preset.name,
+        format: format,
       };
       const updateTab = _.bind(updateForTab, null, tabId);
       tl.onLoad(updateTab);
@@ -39,7 +40,7 @@ function reloadTextlintForTab(tabId) {
   return new Promise((resolve, reject) => {
     const old = tabTextlints[tabId];
     if (!old) return resolve(null);
-    setupTextlintForTab(tabId, old.preset).then(resolve).catch(reject);
+    setupTextlintForTab(tabId, old.preset, old.format).then(resolve).catch(reject);
   });
 }
 
@@ -120,7 +121,7 @@ messages.onLintText(({text}, sender, sendResponse) => {
     sendResponse({ lintMessages: lintMessages });
   }).catch((error) => {
     sendResponse({ error: error });
-    console.error("Error on linting text:", error, text);
+    console.error("Error on linting. error:", error, ", text:", text);
   });
   return true;
 });
