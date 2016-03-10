@@ -5,15 +5,22 @@ import $ from "jquery";
 import messages from "./lib/background/messages";
 import appStorage from "./lib/app/app-storage";
 import bundles from "./lib/app/bundles";
-import cutil from "./lib/util/chrome-util";
 import textlintConfig from "./lib/textlint/textlint-config";
+import cutil from "./lib/util/chrome-util";
 import "./lib/util/i18n-replace";
 
 const $settingsForm = $("#settings-form");
 const $presets = $("#presets");
 const $presetItemTemplate = $(".preset-item.template").remove().removeClass("template");
 const $marks = $("#marks");
+const $marksFilters = $("#marks-filter input[type=checkbox]");
 const $markItemTemplate = $(".mark-item.template").remove().removeClass("template");
+
+function withLinters(fn) {
+  chrome.runtime.getBackgroundPage((background) => {
+    fn(background.linters);
+  });
+}
 
 function updateSettings() {
   appStorage.getPopupSettings().then((settings) => {
@@ -66,13 +73,14 @@ function updateMarks(marks, counts) {
 }
 
 function updateForTab(tab) {
-  chrome.runtime.getBackgroundPage((background) => {
+  withLinters((linters) => {
     messages.getStatus(tab.id).then(({active, marks, counts}) => {
-      const tl = background.getTextlintForTab(tab.id);
-      const status = tl ? tl.getStatus() : { loaded: false, loadingFailed: false, linting: false };
+      const status = linters.getStatus(tab.id);
+      const loading = !status.active || !status.clientLinted || status.linting;
+      const anyMarks = marks.length > 0;
 
-      if (status.loadingFailed) {
-        showErrorPage("textlint loading failed");
+      if (status.lastError) {
+        showErrorPage(status.lastError);
         return;
       }
 
@@ -81,9 +89,9 @@ function updateForTab(tab) {
       $("#deactivate-button").toggle(active);
       $(".settings-area").toggle(!active);
       $(".marks-area").toggle(active);
-      $("#loading-marks").toggle(!status.loaded || status.linting);
-      $("#any-marks").toggle(status.loaded && !status.linting && marks.length > 0);
-      $("#no-marks").toggle(status.loaded && !status.linting && marks.length === 0);
+      $("#loading-marks").toggle(loading);
+      $("#any-marks").toggle(!loading && anyMarks);
+      $("#no-marks").toggle(!loading && !anyMarks);
       updateMarks(marks, counts);
     });
   });
@@ -105,29 +113,25 @@ $("#options-button").on("click", () => {
 $("#activate-button").on("click", () => {
   const preset = $settingsForm.find("[name=preset]:checked").val();
   const format = $settingsForm.find("[name=format]:checked").val() || "txt";
-  const settings = { preset: preset, format: format };
-  appStorage.setPopupSettings(settings).then(() => {
-    chrome.runtime.getBackgroundPage((background) => {
+  appStorage.setPopupSettings({ preset, format }).then(() => {
+    withLinters((linters) => {
       cutil.withActiveTab((tab) => {
-        background.setupTextlintForTab(tab.id, preset, format).then(() => {
-          messages.toggleLinter(tab.id);
-        });
+        linters.activate(tab.id, preset, format);
       });
-    });
+    })
   });
 });
 
 $("#deactivate-button").on("click", () => {
-  chrome.runtime.getBackgroundPage((background) => {
+  withLinters((linters) => {
     cutil.withActiveTab((tab) => {
-      background.removeTextlintForTab(tab.id);
-      messages.toggleLinter(tab.id);
+      linters.deactivate(tab.id);
     });
   });
 });
 
-$("#marks-filter input[type=checkbox]").on("change", function () {
-  $("#marks-filter input[type=checkbox]").each(function () {
+$marksFilters.on("change", function () {
+  $marksFilters.each(function () {
     $marks.toggleClass(`filter-${this.value}`, !this.checked);
   });
 });
@@ -160,7 +164,7 @@ function showErrorPage(reason) {
   $(".page").hide();
   $("#error-page").show();
 
-  if (reason && __ENV__ === "development") {
+  if (__ENV__ === "development") {
     $("#error-details").text(reason).show();
   }
 }

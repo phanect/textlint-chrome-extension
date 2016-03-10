@@ -20,9 +20,6 @@ export default class TextlintWrapper {
     this.format = format || "txt";
     this.textlint = new TextLintCore();
     this.loadingPromise = null;
-    this.loaded = false;
-    this.loadingFailed = false;
-    this.lintStackCount = 0;
   }
 
   getTextlint() {
@@ -37,33 +34,17 @@ export default class TextlintWrapper {
           resolve(this.textlint);
         }).catch(reject);
       });
-
-      this.loadingPromise.then(() => {
-        this.loaded = true;
-        console.log("textlint and rules have been successfully loaded.");
-        console.log("using ruleNames:", this.ruleNames, ", ruleOptions:", this.ruleOptions);
-      }).catch((reason) => {
-        this.loadingFailed = true;
-        console.error("Error occurred while loading textlint and rules: ", reason);
-      });
     }
     return this.loadingPromise;
   }
 
   lint(text) {
     return new Promise((resolve, reject) => {
-      this.lintStackCount++;
-      let rejectCatch = (error) => {
-        this.lintStackCount--;
-        reject(error);
-      };
-
       this.getTextlint().then((textlint) => {
         textlint.lintText(text, `.${this.format}`).then(({messages}) => {
-          this.lintStackCount--;
           resolve(this._buildLintMessages(text, messages));
-        }).catch(rejectCatch);
-      }).catch(rejectCatch);
+        }).catch(reject);
+      }).catch(reject);
     });
   }
 
@@ -76,24 +57,6 @@ export default class TextlintWrapper {
   }
   onLoadError(callback) {
     this.getTextlint().catch(callback);
-  }
-
-  isLoaded() {
-    return this.loaded;
-  }
-  isLoadingFailed() {
-    return this.loadingFailed;
-  }
-  isLinting() {
-    return this.lintStackCount > 0;
-  }
-
-  getStatus() {
-    return {
-      loaded: this.isLoaded(),
-      loadingFailed: this.isLoadingFailed(),
-      linting: this.isLinting(),
-    };
   }
 
   _flattenPreset(rules) {

@@ -7,6 +7,10 @@ export default {
     messages.onError(callback);
   },
 
+  onGetOptions(callback) {
+    messages.on(messages.GET_OPTIONS, callback);
+  },
+
   onLintText(callback) {
     messages.on(messages.LINT_TEXT, callback);
   },
@@ -15,24 +19,27 @@ export default {
     messages.on(messages.UPDATE_STATUS, callback);
   },
 
-  onGetOptions(callback) {
-    messages.on(messages.GET_OPTIONS, callback);
-  },
-
   getStatus(tabId) {
     return messages.tabSend(tabId, messages.GET_STATUS);
   },
 
-  toggleLinter(tabId) {
-    return messages.tabSend(tabId, messages.TOGGLE_LINTER);
+  activateLinter(tabId) {
+    return messages.tabSend(tabId, messages.ACTIVATE_LINTER);
+  },
+
+  deactivateLinter(tabId) {
+    return messages.tabSend(tabId, messages.DEACTIVATE_LINTER);
+  },
+
+  sendLintResult(tabId, lintId, lintMessages) {
+    return messages.tabSend(tabId, messages.LINT_RESULT, { lintId, lintMessages });
   },
 
   showMark(tabId, markId) {
-    return messages.tabSend(tabId, messages.SHOW_MARK, { markId: markId });
+    return messages.tabSend(tabId, messages.SHOW_MARK, { markId });
   },
 
   updateOptions(tabId, options, ruleChanged) {
-    return messages.tabSend(tabId, messages.UPDATE_OPTIONS,
-      { options: options, ruleChanged: ruleChanged });
+    return messages.tabSend(tabId, messages.UPDATE_OPTIONS, { options, ruleChanged });
   },
 }

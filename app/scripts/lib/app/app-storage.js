@@ -18,4 +18,12 @@ export default {
   setOptions(options) {
     return cutil.syncSetValue(OPTIONS, options);
   },
+
+  observeOptionsUpdate(callback) {
+    chrome.storage.onChanged.addListener((changes, areaName) => {
+      if (changes["options"]) {
+        callback(changes["options"]);
+      }
+    });
+  },
 };

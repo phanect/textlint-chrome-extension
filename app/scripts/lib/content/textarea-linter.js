@@ -77,9 +77,7 @@ class TextareaLinterTooltip {
 
 const DEFAULT_OPTIONS = {
   // Actual linting text method
-  // It should be a function that is called with a text string and
-  // returns a Promise resolving to lint messages.
-  lintText: (text) => Promise.resolve([]),
+  lintText: (lintId, text) => {},
 
   // Event handler called when lint marks is changed.
   onMarksChanged: null,
@@ -158,11 +156,13 @@ export class TextareaLinter {
     }
     this.lintedTextArea = textarea;
 
-    this.options.lintText(text).then((lintMessages) => {
-      if (this._getTextAreaId(this.lintedTextArea) == textareaId) {
-        this.showLintMessages(this.lintedTextArea, lintMessages);
-      }
-    });
+    this.options.lintText(textareaId, text);
+  }
+
+  receiveLintResult({lintId, lintMessages}) {
+    if (this._getTextAreaId(this.lintedTextArea) === lintId) {
+      this.showLintMessages(this.lintedTextArea, lintMessages);
+    }
   }
 
   showLintMessages(textarea, lintMessages) {

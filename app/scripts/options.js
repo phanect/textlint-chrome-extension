@@ -3,7 +3,6 @@
 import _ from "lodash";
 import $ from "jquery";
 import cutil from "./lib/util/chrome-util";
-import appStorage from "./lib/app/app-storage";
 import AppOptions from "./lib/app/app-options";
 
 import OptionsEditor from "./lib/options/options-editor";
@@ -26,8 +25,7 @@ const optionsEditor = new OptionsEditor([
 
 renderAppVersion();
 
-appStorage.getOptions().then((options) => {
-  const appOptions = new AppOptions(options);
+AppOptions.load().then((appOptions) => {
   optionsEditor.init(appOptions).then(() => {
     translateLabels();
     $("#save-button").removeClass("disabled").attr("disabled", false);
@@ -39,7 +37,7 @@ $("#save-button").on("click", () => {
   const appOptions = new AppOptions({});
   if (optionsEditor.validate()) {
     optionsEditor.save(appOptions);
-    appStorage.setOptions(appOptions.toObject()).then(() => {
+    appOptions.save().then(() => {
       window.close();
     });
   }

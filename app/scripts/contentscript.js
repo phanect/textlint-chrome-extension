@@ -13,8 +13,8 @@ function initTextareaLinter() {
         // Delay load to avoid initial impact
         let TextareaLinter = require("./lib/content/textarea-linter").TextareaLinter;
         textareaLinter = new TextareaLinter({
-          lintText: lintText,
-          onMarksChanged: onMarksChanged,
+          lintText: (lintId, text) => { messages.lintText(lintId, text) },
+          onMarksChanged: () => { messages.updateStatus() },
           showMarks: options.showMarks,
           showBorder: options.showBorder,
         });
@@ -22,23 +22,6 @@ function initTextareaLinter() {
       });
     }
   });
-}
-
-function lintText(text) {
-  return new Promise((resolve, reject) => {
-    messages.lintText(text).then((message) => {
-      if (message.error) {
-        reject(message.error);
-      } else {
-        resolve(message.lintMessages);
-      }
-    })
-    .catch(reject);
-  });
-}
-
-function onMarksChanged() {
-  messages.updateStatus();
 }
 
 messages.onGetStatus((msg, sender, sendResponse) => {
@@ -52,13 +35,26 @@ messages.onGetStatus((msg, sender, sendResponse) => {
   });
 });
 
-messages.onToggleLinter((msg, sender, sendResponse) => {
+messages.onActivateLinter((msg, sender, sendResponse) => {
   initTextareaLinter().then(() => {
-    textareaLinter.toggle();
+    textareaLinter.activate();
     messages.updateStatus();
     sendResponse({ active: textareaLinter.active });
   });
   return true;
+});
+
+messages.onDeactivateLinter((msg, sender, sendResponse) => {
+  if (textareaLinter) {
+    textareaLinter.deactivate();
+    messages.updateStatus();
+  }
+  sendResponse({ active: textareaLinter.active });
+});
+
+messages.onLintResult((lintResult, sender, sendResponse) => {
+  textareaLinter.receiveLintResult(lintResult);
+  sendResponse();
 });
 
 messages.onShowMark(({markId}, sender, sendResponse) => {

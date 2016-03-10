@@ -14,10 +14,7 @@
     "storage"
   ],
   "background": {
-    "scripts": [
-      "scripts/vendor.js",
-      "scripts/background.js"
-    ]
+    "page": "pages/background.html"
   },
   "browser_action": {
     "default_icon": {
@@ -45,8 +42,12 @@
       "all_frames": false
     }
   ],
+  "sandbox": {
+    "pages": ["pages/sandbox.html"]
+  },
   "web_accessible_resources": [
-    "fonts/font-awesome/*"
+    "fonts/font-awesome/*",
+    "dict/*"
   ],
   "content_security_policy": "script-src 'self' https://www.brcdn.org https://brcdn.org; object-src 'self'"
 }

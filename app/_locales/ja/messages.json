@@ -178,8 +178,8 @@
   "labelHighlightBorderOfTextArea": {
     "message": "編集中のテキストボックスの枠線をチェック結果で色付けする"
   },
-  "labelShowCountOfMessagesOnTheBadge": {
-    "message": "バッジに数として表示するメッセージの種類"
+  "labelTypeOfMessagesToShowTheSumAsBadge": {
+    "message": "バッジとして数を表示するメッセージの種類"
   },
   "labelErrors": {
     "message": "エラーのみ"

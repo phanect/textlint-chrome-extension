@@ -11,8 +11,16 @@ export default {
     messages.on(messages.GET_STATUS, callback);
   },
 
-  onToggleLinter(callback) {
-    messages.on(messages.TOGGLE_LINTER, callback);
+  onActivateLinter(callback) {
+    messages.on(messages.ACTIVATE_LINTER, callback);
+  },
+
+  onDeactivateLinter(callback) {
+    messages.on(messages.DEACTIVATE_LINTER, callback);
+  },
+
+  onLintResult(callback) {
+    messages.on(messages.LINT_RESULT, callback);
   },
 
   onShowMark(callback) {
@@ -23,15 +31,15 @@ export default {
     messages.on(messages.UPDATE_OPTIONS, callback);
   },
 
-  lintText(text) {
-    return messages.send(messages.LINT_TEXT, { text: text });
+  getOptions() {
+    return messages.send(messages.GET_OPTIONS);
+  },
+
+  lintText(lintId, text) {
+    return messages.send(messages.LINT_TEXT, { lintId, text });
   },
 
   updateStatus() {
     return messages.send(messages.UPDATE_STATUS);
-  },
-
-  getOptions() {
-    return messages.send(messages.GET_OPTIONS);
   },
 }

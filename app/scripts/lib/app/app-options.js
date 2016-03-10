@@ -1,11 +1,12 @@
 "use strict";
 
 import _ from "lodash";
+import appStorage from "./app-storage";
 
 const DEFAULT_OPTIONS = {
   showMarks: true,
   showBorder: true,
-  badgeCountSeverity: "error,warning,info",
+  badgeCountSeverity: "error",
   ruleOptions: {},
 };
 
@@ -38,7 +39,7 @@ const VISUAL_OPTIONS_SCHEMA = {
       "default": true,
     },
     "badgeCountSeverity": {
-      "title": "Show count of messages on the badge",
+      "title": "Type of messages to show the sum as badge",
       "type": "string",
       "enum": [
         "error",
@@ -60,6 +61,14 @@ const VISUAL_OPTIONS_SCHEMA = {
 };
 
 export default class AppOptions {
+  static load() {
+    return new Promise((resolve, reject) => {
+      appStorage.getOptions().then((options) => {
+        resolve(new AppOptions(options));
+      }).catch(reject);
+    });
+  }
+
   constructor(options) {
     this.options = _.defaultsDeep(options, DEFAULT_OPTIONS);
   }
@@ -130,5 +139,24 @@ export default class AppOptions {
   }
   set ruleOptions(v) {
     this.options.ruleOptions = v;
+  }
+
+  load() {
+    return new Promise((resolve, reject) => {
+      appStorage.getOptions().then((options) => {
+        this.overwrite(options);
+        resolve(this);
+      }).catch(reject);
+    });
+  }
+  save() {
+    return appStorage.setOptions(this.toObject());
+  }
+
+  observeUpdate(callback) {
+    appStorage.observeOptionsUpdate(({oldValue, newValue}) => {
+      this.overwrite(newValue);
+      callback.call(this, { oldValue, newValue });
+    });
   }
 }

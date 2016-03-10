@@ -3,13 +3,18 @@
 import _ from "lodash";
 
 const MESSAGES = {
+  // Background -> Content
   GET_STATUS: "GetStatus",
-  GET_OPTIONS: "GetOptions",
-  TOGGLE_LINTER: "ToggleLinter",
+  ACTIVATE_LINTER: "ActivateLinter",
+  DEACTIVATE_LINTER: "DeactivateLinter",
+  LINT_RESULT: "LintResult",
   SHOW_MARK: "ShowMark",
+  UPDATE_OPTIONS: "UpdateOptions",
+
+  // Content -> Background
+  GET_OPTIONS: "GetOptions",
   LINT_TEXT: "LintText",
   UPDATE_STATUS: "UpdateStatus",
-  UPDATE_OPTIONS: "UpdateOptions",
 };
 const VALID_MESSAGES = _.invert(MESSAGES);
 
@@ -18,6 +23,7 @@ let eventHandlers = {};
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type && VALID_MESSAGES[message.type]) {
     if (eventHandlers[message.type]) {
+      DEBUG && console.log("Message recv ", message)
       return eventHandlers[message.type].call(this, message, sender, sendResponse);
     }
   } else {
@@ -61,6 +67,7 @@ function send(messageType, message, tabId) {
     } else {
       chrome.runtime.sendMessage(message, {}, callback);
     }
+    DEBUG && console.log("Message sent ", message);
   });
 
   if (eventHandlers["error"]) {

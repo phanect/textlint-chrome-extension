@@ -147,8 +147,8 @@
   "labelHighlightBorderOfTextArea": {
     "message": "Highlight border of text area"
   },
-  "labelShowCountOfMessagesOnTheBadge": {
-    "message": "Show count of messages on the badge"
+  "labelTypeOfMessagesToShowTheSumAsBadge": {
+    "message": "Type of messages to show the sum as badge"
   },
   "labelErrors": {
     "message": "Errors"

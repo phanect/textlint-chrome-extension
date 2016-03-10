@@ -2,7 +2,6 @@
 
 import _ from "lodash";
 import appConfig from "../app/app-config";
-import appStorage from "../app/app-storage";
 import AppOptions from "../app/app-options";
 
 export default {
@@ -44,10 +43,8 @@ export default {
 
   getCustom() {
     return new Promise((resolve, reject) => {
-      appStorage.getOptions().then((options) => {
-        const opts = new AppOptions(options);
-        const filtered = _.pickBy(opts.ruleOptions);
-        resolve(filtered);
+      AppOptions.load().then((appOptions) => {
+        resolve(_.pickBy(appOptions.ruleOptions));
       }).catch(reject);
     });
   },

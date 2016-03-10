@@ -2,35 +2,29 @@
 
 const DictionaryLoader = require("kuromoji/dist/node/loader/DictionaryLoader");
 
-function ChromeDictionaryLoader() {
-  DictionaryLoader.call(this, "dict/kuromoji");
+function ChromeDictionaryLoader(dicPath) {
+  DictionaryLoader.call(this, dicPath);
 }
 ChromeDictionaryLoader.prototype = Object.create(DictionaryLoader.prototype);
 
-function getExtensionFile(path) {
-  return new Promise((resolve, reject) => {
-    chrome.runtime.getPackageDirectoryEntry((root) => {
-      root.getFile(path, { create: false }, (entry) => {
-        entry.file(resolve, reject);
-      }, reject);
-    });
-  });
-}
-
-ChromeDictionaryLoader.prototype.loadArrayBuffer = function (path, callback) {
+ChromeDictionaryLoader.prototype.loadArrayBuffer = function (url, callback) {
   // Strip ".gz" since they are decompressed in dist directory
-  path = path.replace(/\.gz$/, "");
+  url = url.replace(/\.gz$/, "");
 
-  getExtensionFile(path).then((file) => {
-    const reader = new FileReader();
-    reader.onload = () => {
-      const typedArray = new Uint8Array(reader.result);
-      callback(null, typedArray.buffer);
-    };
-    reader.onerror = () => { callback(reader.error) };
-    reader.readAsArrayBuffer(file);
-  })
-  .catch(callback);
+  const xhr = new XMLHttpRequest();
+  xhr.open("GET", url, true);
+  xhr.responseType = "arraybuffer";
+  xhr.onload = function () {
+    if (this.status !== 200) {
+      callback(xhr.statusText, null);
+    }
+    const typedArray = new Uint8Array(this.response);
+    callback(null, typedArray.buffer);
+  };
+  xhr.onerror = function (err) {
+    callback(err, null);
+  };
+  xhr.send();
 }
 
 module.exports = ChromeDictionaryLoader;

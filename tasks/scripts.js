@@ -23,6 +23,7 @@ gulp.task('scripts', ['bundle'], (cb) => {
         contentscript: `${scriptsDir}/contentscript.js`,
         options: `${scriptsDir}/options.js`,
         popup: `${scriptsDir}/popup.js`,
+        sandbox: `${scriptsDir}/sandbox.js`,
 
         vendor: ['jquery', 'lodash'],
         jquery: `${scriptsDir}/exporter/jquery.js`,
@@ -36,7 +37,8 @@ gulp.task('scripts', ['bundle'], (cb) => {
       plugins: [
         new webpack.DefinePlugin({
           '__ENV__': JSON.stringify(args.production ? 'production' : 'development'),
-          '__VENDOR__': JSON.stringify(args.vendor)
+          '__VENDOR__': JSON.stringify(args.vendor),
+          'DEBUG': !args.production,
         }),
         new webpack.IgnorePlugin(
           /package\.json$|\.md$|\.d\.ts$/
