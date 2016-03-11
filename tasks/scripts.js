@@ -69,6 +69,14 @@ gulp.task('scripts', ['bundle'], (cb) => {
               search: 'require.resolve("kuromoji")',
               replace: '""'
             }
+          },
+          {
+            test: /node_modules\/sorted-array\/sorted-array\.js/,
+            loader: 'string-replace',
+            query: {
+              search: 'define(SortedArray);',
+              replace: 'void(0);'
+            }
           }
         ],
         loaders: [
