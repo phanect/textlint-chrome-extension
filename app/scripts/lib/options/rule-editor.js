@@ -54,10 +54,8 @@ export default class RuleEditor {
 
     $item.data("rule-key", rule.key);
     $item.attr("id", "rule-item-" + rule.key);
-    $item.find(".rule-name").text(
-      cutil.translate(`rule-${rule.key}-name`, rule.key)
-    );
-    $item.find(".rule-description").text(
+    $item.find(".rule-name").text(rule.key);
+    $item.find(".rule-description").html(
       cutil.translate(`rule-${rule.key}-description`, rule.description)
     );
     _.each(["version", "author", "license"], (key) => {

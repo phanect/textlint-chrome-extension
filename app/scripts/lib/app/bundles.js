@@ -17,21 +17,41 @@ export default {
 
     "textlint-rule-general-novel-style-ja": (cb) => { require(["textlint-rule-general-novel-style-ja"], cb) },
 
+    "textlint-rule-incremental-headers": (cb) => { require(["textlint-rule-incremental-headers"], cb) },
+
+    "textlint-rule-max-appearence-count-of-words": (cb) => { require(["textlint-rule-max-appearence-count-of-words"], cb) },
+
+    "textlint-rule-max-length-of-title": (cb) => { require(["textlint-rule-max-length-of-title"], cb) },
+
+    "textlint-rule-max-number-of-lines": (cb) => { require(["textlint-rule-max-number-of-lines"], cb) },
+
     "textlint-rule-max-ten": (cb) => { require(["textlint-rule-max-ten"], cb) },
+
+    "textlint-rule-ng-word": (cb) => { require(["textlint-rule-ng-word"], cb) },
 
     "textlint-rule-no-double-negative-ja": (cb) => { require(["textlint-rule-no-double-negative-ja"], cb) },
 
+    "textlint-rule-no-doubled-conjunctive-particle-ga": (cb) => { require(["textlint-rule-no-doubled-conjunctive-particle-ga"], cb) },
+
     "textlint-rule-no-doubled-joshi": (cb) => { require(["textlint-rule-no-doubled-joshi"], cb) },
+
+    "textlint-rule-no-dropping-the-ra": (cb) => { require(["textlint-rule-no-dropping-the-ra"], cb) },
 
     "textlint-rule-no-mix-dearu-desumasu": (cb) => { require(["textlint-rule-no-mix-dearu-desumasu"], cb) },
 
     "textlint-rule-no-start-duplicated-conjunction": (cb) => { require(["textlint-rule-no-start-duplicated-conjunction"], cb) },
 
+    "textlint-rule-preset-jtf-style": (cb) => { require(["textlint-rule-preset-jtf-style"], cb) },
+
     "textlint-rule-rousseau": (cb) => { require(["textlint-rule-rousseau"], cb) },
 
     "textlint-rule-sentence-length": (cb) => { require(["textlint-rule-sentence-length"], cb) },
 
+    "textlint-rule-sjsj": (cb) => { require(["textlint-rule-sjsj"], cb) },
+
     "textlint-rule-spellcheck-tech-word": (cb) => { require(["textlint-rule-spellcheck-tech-word"], cb) },
+
+    "textlint-rule-unexpanded-acronym": (cb) => { require(["textlint-rule-unexpanded-acronym"], cb) },
 
   },
 
@@ -191,6 +211,142 @@ export default {
         }
       },
 
+    "textlint-rule-incremental-headers":
+      {
+        "name": "textlint-rule-incremental-headers",
+        "key": "incremental-headers",
+        "version": "0.2.0",
+        "description": "見出しの深さが１つずつ増えているかどうかを確認するtextlintプラグイン",
+        "author": "matsu_chara",
+        "license": "MIT",
+        "homepage": "https://github.com/matsu-chara/textlint-rule-incremental-headers#readme",
+        "isPreset": false,
+        "rules": [],
+        "schema": {
+          "$schema": "http://json-schema.org/draft-04/schema#",
+          "title": "Enable this rule",
+          "type": "boolean"
+        }
+      },
+
+    "textlint-rule-max-appearence-count-of-words":
+      {
+        "name": "textlint-rule-max-appearence-count-of-words",
+        "key": "max-appearence-count-of-words",
+        "version": "1.0.1",
+        "description": "textlint rule that check maximum appearance count of words in paragraph",
+        "author": "Keita Moromizato",
+        "license": "MIT",
+        "homepage": "https://github.com/KeitaMoromizato/textlint-rule-max-appearence-count-of-words#readme",
+        "isPreset": false,
+        "rules": [],
+        "schema": {
+          "$schema": "http://json-schema.org/draft-04/schema#",
+          "oneOf": [
+            {
+              "title": "Enable this rule with default options",
+              "type": "boolean"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "limit": {
+                  "title": "Maximum apprearance count of words",
+                  "type": "integer",
+                  "minimum": 1,
+                  "default": 4
+                }
+              }
+            }
+          ]
+        }
+      },
+
+    "textlint-rule-max-length-of-title":
+      {
+        "name": "textlint-rule-max-length-of-title",
+        "key": "max-length-of-title",
+        "version": "1.0.1",
+        "description": "textlint rule that check limit maximum length of title",
+        "author": "Keita Moromizato",
+        "license": "MIT",
+        "homepage": "https://github.com/KeitaMoromizato/textlint-rule-max-length-of-title#readme",
+        "isPreset": false,
+        "rules": [],
+        "schema": {
+          "$schema": "http://json-schema.org/draft-04/schema#",
+          "oneOf": [
+            {
+              "title": "Enable this rule with default options",
+              "type": "boolean"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "#": {
+                  "title": "Maximum length of h1 title",
+                  "type": "integer",
+                  "default": 32
+                },
+                "##": {
+                  "title": "Maximum length of h2 title",
+                  "type": "integer"
+                },
+                "###": {
+                  "title": "Maximum length of h3 title",
+                  "type": "integer"
+                },
+                "####": {
+                  "title": "Maximum length of h4 title",
+                  "type": "integer"
+                },
+                "#####": {
+                  "title": "Maximum length of h5 title",
+                  "type": "integer"
+                },
+                "######": {
+                  "title": "Maximum length of h6 title",
+                  "type": "integer"
+                }
+              }
+            }
+          ]
+        }
+      },
+
+    "textlint-rule-max-number-of-lines":
+      {
+        "name": "textlint-rule-max-number-of-lines",
+        "key": "max-number-of-lines",
+        "version": "1.0.2",
+        "description": "textlint rule for linting number of lines.",
+        "author": "azu",
+        "license": "MIT",
+        "homepage": "https://github.com/azu/textlint-rule-max-number-of-lines",
+        "isPreset": false,
+        "rules": [],
+        "schema": {
+          "$schema": "http://json-schema.org/draft-04/schema#",
+          "oneOf": [
+            {
+              "title": "Enable this rule with default options",
+              "type": "boolean"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "max": {
+                  "title": "Maximum number of lines",
+                  "type": "integer",
+                  "minimum": 1,
+                  "default": 300
+                }
+              }
+            }
+          ]
+        }
+      },
+
     "textlint-rule-max-ten":
       {
         "name": "textlint-rule-max-ten",
@@ -229,6 +385,43 @@ export default {
         }
       },
 
+    "textlint-rule-ng-word":
+      {
+        "name": "textlint-rule-ng-word",
+        "key": "ng-word",
+        "version": "1.0.0",
+        "description": "textlint rule that check NG words",
+        "author": "Keita Moromizato",
+        "license": "MIT",
+        "homepage": "https://github.com/KeitaMoromizato/textlint-rule-ng-word#readme",
+        "isPreset": false,
+        "rules": [],
+        "schema": {
+          "$schema": "http://json-schema.org/draft-04/schema#",
+          "oneOf": [
+            {
+              "title": "Enable this rule with default options",
+              "type": "boolean"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "words": {
+                  "title": "NG words",
+                  "type": "array",
+                  "items": {
+                    "title": "NG word",
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "uniqueItems": true
+                }
+              }
+            }
+          ]
+        }
+      },
+
     "textlint-rule-no-double-negative-ja":
       {
         "name": "textlint-rule-no-double-negative-ja",
@@ -238,6 +431,24 @@ export default {
         "author": "azu",
         "license": "MIT",
         "homepage": "https://github.com/azu/textlint-rule-no-double-negative-ja",
+        "isPreset": false,
+        "rules": [],
+        "schema": {
+          "$schema": "http://json-schema.org/draft-04/schema#",
+          "title": "Enable this rule",
+          "type": "boolean"
+        }
+      },
+
+    "textlint-rule-no-doubled-conjunctive-particle-ga":
+      {
+        "name": "textlint-rule-no-doubled-conjunctive-particle-ga",
+        "key": "no-doubled-conjunctive-particle-ga",
+        "version": "1.0.2",
+        "description": "textlint rule plugin to check duplicated conjunctive particle `ga` in a sentence.",
+        "author": "takahashim",
+        "license": "MIT",
+        "homepage": "https://github.com/takahashim/textlint-rule-no-doubled-conjunctive-particle-ga",
         "isPreset": false,
         "rules": [],
         "schema": {
@@ -285,6 +496,24 @@ export default {
         }
       },
 
+    "textlint-rule-no-dropping-the-ra":
+      {
+        "name": "textlint-rule-no-dropping-the-ra",
+        "key": "no-dropping-the-ra",
+        "version": "1.0.1",
+        "description": "ら抜き言葉を検出するtextlint rule",
+        "author": "azu",
+        "license": "MIT",
+        "homepage": "https://github.com/azu/textlint-rule-no-dropping-the-ra",
+        "isPreset": false,
+        "rules": [],
+        "schema": {
+          "$schema": "http://json-schema.org/draft-04/schema#",
+          "title": "Enable this rule",
+          "type": "boolean"
+        }
+      },
+
     "textlint-rule-no-mix-dearu-desumasu":
       {
         "name": "textlint-rule-no-mix-dearu-desumasu",
@@ -329,6 +558,194 @@ export default {
                   "type": "integer",
                   "minimum": 1,
                   "default": 2
+                }
+              }
+            }
+          ]
+        }
+      },
+
+    "textlint-rule-preset-jtf-style":
+      {
+        "name": "textlint-rule-preset-jtf-style",
+        "key": "preset-jtf-style",
+        "version": "2.1.0",
+        "description": "JTF Style Guide for Translators Working into Japanese for textlint.",
+        "author": "azu",
+        "license": "MIT",
+        "homepage": "https://github.com/azu/textlint-rule-preset-jtf-style",
+        "isPreset": true,
+        "rules": [
+          {
+            "name": "textlint-rule-prh",
+            "key": "prh",
+            "version": "2.4.1",
+            "description": "textlint rule for prh.",
+            "author": "azu",
+            "license": "MIT",
+            "homepage": "https://github.com/azu/textlint-rule-prh",
+            "isPreset": false,
+            "rules": [],
+            "schema": null
+          }
+        ],
+        "schema": {
+          "$schema": "http://json-schema.org/draft-04/schema#",
+          "oneOf": [
+            {
+              "title": "Enable this rule with default options",
+              "type": "boolean"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "1.1.1.本文": {
+                  "type": "boolean",
+                  "default": true
+                },
+                "1.1.2.見出し": {
+                  "type": "boolean",
+                  "default": true
+                },
+                "1.1.3.箇条書き": {
+                  "type": "boolean",
+                  "default": true
+                },
+                "1.1.5.図表のキャプション": {
+                  "type": "boolean",
+                  "default": true
+                },
+                "1.2.1.句点(。)と読点(、)": {
+                  "type": "boolean",
+                  "default": true
+                },
+                "1.2.2.ピリオド(.)とカンマ(,)": {
+                  "type": "boolean",
+                  "default": true
+                },
+                "2.1.2.漢字": {
+                  "type": "boolean",
+                  "default": false
+                },
+                "2.1.5.カタカナ": {
+                  "type": "boolean",
+                  "default": false
+                },
+                "2.1.6.カタカナの長音": {
+                  "type": "boolean",
+                  "default": false
+                },
+                "2.1.8.算用数字": {
+                  "type": "boolean",
+                  "default": true
+                },
+                "2.1.9.アルファベット": {
+                  "type": "boolean",
+                  "default": true
+                },
+                "2.1.10.算用数字の位取りの表記": {
+                  "type": "boolean",
+                  "default": true
+                },
+                "2.2.1.ひらがなと漢字の使い分け": {
+                  "type": "boolean",
+                  "default": false
+                },
+                "2.2.2.算用数字と漢数字の使い分け": {
+                  "type": "boolean",
+                  "default": true
+                },
+                "2.2.3.一部の助数詞の表記": {
+                  "type": "boolean",
+                  "default": true
+                },
+                "3.1.1.全角文字と半角文字の間": {
+                  "type": "boolean",
+                  "default": true
+                },
+                "3.1.2.全角文字どうし": {
+                  "type": "boolean",
+                  "default": true
+                },
+                "3.2.カタカナ語間のスペースの有無": {
+                  "type": "boolean",
+                  "default": true
+                },
+                "3.3.かっこ類と隣接する文字の間のスペースの有無": {
+                  "type": "boolean",
+                  "default": true
+                },
+                "4.1.1.句点(。)": {
+                  "type": "boolean",
+                  "default": true
+                },
+                "4.1.3.ピリオド(.)、カンマ(,)": {
+                  "type": "boolean",
+                  "default": true
+                },
+                "4.2.1.感嘆符(！)": {
+                  "type": "boolean",
+                  "default": true
+                },
+                "4.2.2.疑問符(？)": {
+                  "type": "boolean",
+                  "default": true
+                },
+                "4.2.4.中黒(・)": {
+                  "type": "boolean",
+                  "default": true
+                },
+                "4.2.5.波線(〜)": {
+                  "type": "boolean",
+                  "default": true
+                },
+                "4.2.6.ハイフン(-)": {
+                  "type": "boolean",
+                  "default": true
+                },
+                "4.2.7.コロン(：)": {
+                  "type": "boolean",
+                  "default": true
+                },
+                "4.2.8.セミコロン(;)": {
+                  "type": "boolean",
+                  "default": true
+                },
+                "4.2.9.ダッシュ(-)": {
+                  "type": "boolean",
+                  "default": true
+                },
+                "4.3.1.丸かっこ（）": {
+                  "type": "boolean",
+                  "default": true
+                },
+                "4.3.2.大かっこ［］": {
+                  "type": "boolean",
+                  "default": true
+                },
+                "4.3.3.かぎかっこ「」": {
+                  "type": "boolean",
+                  "default": true
+                },
+                "4.3.4.二重かぎかっこ『』": {
+                  "type": "boolean",
+                  "default": true
+                },
+                "4.3.5.二重引用符": {
+                  "type": "boolean",
+                  "default": true
+                },
+                "4.3.6.中かっこ{ }": {
+                  "type": "boolean",
+                  "default": true
+                },
+                "4.3.7.山かっこ<>": {
+                  "type": "boolean",
+                  "default": true
+                },
+                "4.3.8.一重引用符": {
+                  "type": "boolean",
+                  "default": true
                 }
               }
             }
@@ -436,6 +853,39 @@ export default {
         }
       },
 
+    "textlint-rule-sjsj":
+      {
+        "name": "textlint-rule-sjsj",
+        "key": "sjsj",
+        "version": "1.0.5",
+        "description": "texlint rule check spell of Simplified JavaScript Jargon",
+        "author": "azu",
+        "license": "MIT",
+        "homepage": "https://github.com/azu/textlint-rule-sjsj",
+        "isPreset": false,
+        "rules": [],
+        "schema": {
+          "$schema": "http://json-schema.org/draft-04/schema#",
+          "oneOf": [
+            {
+              "title": "Enable this rule with default options",
+              "type": "boolean"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "distance": {
+                  "title": "Maximum edit distance from correct spelling",
+                  "type": "integer",
+                  "minimum": 1,
+                  "default": 1
+                }
+              }
+            }
+          ]
+        }
+      },
+
     "textlint-rule-spellcheck-tech-word":
       {
         "name": "textlint-rule-spellcheck-tech-word",
@@ -451,6 +901,55 @@ export default {
           "$schema": "http://json-schema.org/draft-04/schema#",
           "title": "Enable this rule",
           "type": "boolean"
+        }
+      },
+
+    "textlint-rule-unexpanded-acronym":
+      {
+        "name": "textlint-rule-unexpanded-acronym",
+        "key": "unexpanded-acronym",
+        "version": "1.2.1",
+        "description": "textlint rule that check unexpanded acronym word.",
+        "author": "azu",
+        "license": "MIT",
+        "homepage": "https://github.com/azu/textlint-rule-unexpanded-acronym",
+        "isPreset": false,
+        "rules": [],
+        "schema": {
+          "$schema": "http://json-schema.org/draft-04/schema#",
+          "oneOf": [
+            {
+              "title": "Enable this rule with default options",
+              "type": "boolean"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "min_acronym_len": {
+                  "title": "Minimum size for the acronym",
+                  "type": "integer",
+                  "minimum": 1,
+                  "default": 3
+                },
+                "max_acronym_len": {
+                  "title": "Maximum size for the acronym",
+                  "type": "integer",
+                  "minimum": 1,
+                  "default": 5
+                },
+                "ignore_acronyms": {
+                  "title": "Ignoring acronym list",
+                  "type": "array",
+                  "items": {
+                    "title": "Acronym",
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "uniqueItems": true
+                }
+              }
+            }
+          ]
         }
       },
 

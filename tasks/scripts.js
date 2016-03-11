@@ -9,8 +9,8 @@ import notify from 'gulp-notify';
 import args from './lib/args';
 import path from 'path';
 
-const appDir = path.join(__dirname, '../app');
-const scriptsDir = `${appDir}/scripts`;
+const rootDir = path.join(__dirname, '..')
+const scriptsDir = `${rootDir}/app/scripts`;
 
 gulp.task('scripts', ['bundle'], (cb) => {
   return gulp.src(['app/scripts/*.js'])
@@ -78,6 +78,10 @@ gulp.task('scripts', ['bundle'], (cb) => {
             loader: 'babel'
           },
           {
+            test: /node_modules\/regx\/src\/regx\.js$/,
+            loader: 'babel'
+          },
+          {
             test: /interop-require|try-resolve|require-like|textlint-formatter/,
             loader: 'null'
           },
@@ -91,6 +95,12 @@ gulp.task('scripts', ['bundle'], (cb) => {
         process: 'mock',
         fs: 'empty',
         module: 'empty'
+      },
+      resolve: {
+        alias: {
+          // Avoid "This seems to be a pre-built javascript file" warning.
+          regx: `${rootDir}/node_modules/regx/src/regx.js`,
+        }
       }
     }))
     .pipe(gulp.dest(`dist/${args.vendor}/scripts`))

@@ -136,6 +136,108 @@
     "message": "Author"
   },
 
+  "ruleAlexDescription": {
+    "message": "Find gender, religious, race or other unequal phrasing; using <a href=\"http://alexjs.com/\" target=\"_blank\">Alex</a>."
+  },
+  "ruleGeneralNovelStyleJaDescription": {
+    "message": "<i class=\"flag-icon flag-icon-jp\"></i> Follow the general novel style in Japanese."
+  },
+  "ruleMaxTenDescription": {
+    "message": "<i class=\"flag-icon flag-icon-jp\"></i> Limit the number of punctuations in one sentence."
+  },
+  "ruleNoDoubleNegativeJaDescription": {
+    "message": "<i class=\"flag-icon flag-icon-jp\"></i> Detect double-negative words."
+  },
+  "ruleNoDoubledJoshiDescription": {
+    "message": "<i class=\"flag-icon flag-icon-jp\"></i> Detect repeated particles in one sentence."
+  },
+  "ruleNoMixDearuDesumasuDescription": {
+    "message": "<i class=\"flag-icon flag-icon-jp\"></i> Detect confusion of decided tone and honorific tone."
+  },
+  "ruleNoStartDuplicatedConjunctionDescription": {
+    "message": "Detect repeated conjunctions at the beginning of sentences."
+  },
+  "ruleRousseauDescription": {
+    "message": "Keep readability and simiplicity for better English with <a href=\"https://github.com/GitbookIO/rousseau#readme\" target=\"_blank\">Rousseau</a>."
+  },
+  "ruleSentenceLengthDescription": {
+    "message": "Limit the length of one sentence."
+  },
+  "ruleSpellcheckTechWordDescription": {
+    "message": "Spell-checker for tech words related to JavaScript."
+  },
+  "ruleIncrementalHeadersDescription": {
+    "message": "Check the level of headings (h1-h6) is correctly nested."
+  },
+  "ruleMaxAppearenceCountOfWordsDescription": {
+    "message": "Limit the number of appearance of words in a paragraph."
+  },
+  "ruleMaxLengthOfTitleDescription": {
+    "message": "Limit the length of titles."
+  },
+  "ruleMaxNumberOfLinesDescription": {
+    "message": "Limit the number of lines."
+  },
+  "ruleNgWordDescription": {
+    "message": "Customizable NG word list."
+  },
+  "ruleNoDoubledConjunctiveParticleGaDescription": {
+    "message": "<i class=\"flag-icon flag-icon-jp\"></i> Detect repeated conjunctive particle \"が\" (ga) in one sentence."
+  },
+  "ruleNoDroppingTheRaDescription": {
+    "message": "<i class=\"flag-icon flag-icon-jp\"></i> Detect \"ら\" (ra)-removed words."
+  },
+  "rulePresetJtfStyleDescription": {
+    "message": "<i class=\"flag-icon flag-icon-jp\"></i> Follow <a href=\"https://www.jtf.jp/jp/style_guide/styleguide_top.html\" target=\"_blank\">JTF Style Guide for Japanese translators</a>."
+  },
+  "ruleSjsjDescription": {
+    "message": "Spell-checker using <a href=\"https://github.com/HugoGiraudel/SJSJ#readme\" target=\"_blank\">SJSJ</a> the community-driven dictionary of buzzwords around JavaScript."
+  },
+  "ruleUnexpandedAcronymDescription": {
+    "message": "Detect acronyms unexpanded in text."
+  },
+  "labelCharacters": {
+    "message": "Characters"
+  },
+  "labelMaximumApprearanceCountOfWords": {
+    "message": "Maximum number of apprearance"
+  },
+  "labelMaximumLengthOfH1Title": {
+    "message": "Maximum length of h1 title"
+  },
+  "labelMaximumLengthOfH2Title": {
+    "message": "Maximum length of h2 title"
+  },
+  "labelMaximumLengthOfH3Title": {
+    "message": "Maximum length of h3 title"
+  },
+  "labelMaximumLengthOfH4Title": {
+    "message": "Maximum length of h4 title"
+  },
+  "labelMaximumLengthOfH5Title": {
+    "message": "Maximum length of h5 title"
+  },
+  "labelMaximumLengthOfH6Title": {
+    "message": "Maximum length of h6 title"
+  },
+  "labelMaximumNumberOfLines": {
+    "message": "Maximum number of lines"
+  },
+  "labelNgWords": {
+    "message": "NG words"
+  },
+  "labelMaximumEditDistanceFromCorrectSpelling": {
+    "message": "Maximum edit distance from correct spelling"
+  },
+  "labelMinimumSizeForTheAcronym": {
+    "message": "Minimum size for the acronym"
+  },
+  "labelMaximumSizeForTheAcronym": {
+    "message": "Maximum size for the acronym"
+  },
+  "labelIgnoringAcronymList": {
+    "message": "Ignoring acronym list"
+  },
   "labelIgnoringTypeOfMessage": {
     "message": "Ignoring type of message"
   },
@@ -179,7 +281,7 @@
     "message": "Strict check"
   },
   "labelMinimumIntervalOfJoshi": {
-    "message": "Minimum interval of joshi"
+    "message": "Minimum interval of particles"
   },
   "labelIntervalOfSentences": {
     "message": "Interval of sentences"

@@ -25,7 +25,8 @@
     "bootswatch-dist": "3.3.6-paper",
     "bootstrap-switch": "^3.3.2",
     "selectize": "^0.12.1",
-    "selectize-bootswatch": "*"
+    "selectize-bootswatch": "*",
+    "flag-icon-css": "^1.4.0"
   },
   "overrides": {
     "bootswatch-dist": {
@@ -39,6 +40,14 @@
     },
     "selectize-bootswatch": {
       "main": "css/selectize.paper.css"
+    },
+    "flag-icon-css": {
+      "main": [
+        "css/flag-icon.min.css",
+        "flags/4x3/jp.svg",
+        "flags/4x3/gb.svg",
+        "flags/4x3/us.svg"
+      ]
     }
   }
 }

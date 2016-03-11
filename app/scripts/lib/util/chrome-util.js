@@ -89,9 +89,9 @@ export default {
   translate(key, fallback) {
     key = _.camelCase(key);
     const translated = chrome.i18n.getMessage(key);
-    // if (!translated) {
-    //   console.log(`Missing translation: "${key}" (with fallback "${fallback}")`)
-    // }
+    if (DEBUG && !translated) {
+      console.log(`Missing translation: "${key}" (with fallback "${fallback}")`)
+    }
     return translated || fallback;
   },
 
