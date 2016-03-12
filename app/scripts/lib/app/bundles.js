@@ -84,6 +84,7 @@ export default {
         "rules": [],
         "schema": {
           "$schema": "http://json-schema.org/draft-04/schema#",
+          "title": "textlint-rule-alex configuration",
           "oneOf": [
             {
               "title": "Enable this rule with default options",
@@ -101,6 +102,16 @@ export default {
                     "minLength": 1
                   },
                   "uniqueItems": true
+                },
+                "severity": {
+                  "title": "Severity of lint messages",
+                  "type": "string",
+                  "enum": [
+                    "error",
+                    "warning",
+                    "info"
+                  ],
+                  "default": "error"
                 }
               }
             }
@@ -112,7 +123,7 @@ export default {
       {
         "name": "textlint-rule-general-novel-style-ja",
         "key": "general-novel-style-ja",
-        "version": "1.2.0",
+        "version": "1.3.0",
         "description": "textlint rule to follow general style of Japanese novels",
         "author": "IRIDE Monad",
         "license": "MIT",
@@ -121,6 +132,7 @@ export default {
         "rules": [],
         "schema": {
           "$schema": "http://json-schema.org/draft-04/schema#",
+          "title": "textlint-rule-general-novel-style-ja configuration",
           "oneOf": [
             {
               "title": "Enable this rule with default options",
@@ -204,6 +216,16 @@ export default {
                     }
                   ],
                   "default": 2
+                },
+                "severity": {
+                  "title": "Severity of lint messages",
+                  "type": "string",
+                  "enum": [
+                    "error",
+                    "warning",
+                    "info"
+                  ],
+                  "default": "error"
                 }
               }
             }
@@ -224,8 +246,28 @@ export default {
         "rules": [],
         "schema": {
           "$schema": "http://json-schema.org/draft-04/schema#",
-          "title": "Enable this rule",
-          "type": "boolean"
+          "title": "textlint-rule-incremental-headers configuration",
+          "oneOf": [
+            {
+              "title": "Enable this rule with default options",
+              "type": "boolean"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "severity": {
+                  "title": "Severity of lint messages",
+                  "type": "string",
+                  "enum": [
+                    "error",
+                    "warning",
+                    "info"
+                  ],
+                  "default": "error"
+                }
+              }
+            }
+          ]
         }
       },
 
@@ -242,6 +284,7 @@ export default {
         "rules": [],
         "schema": {
           "$schema": "http://json-schema.org/draft-04/schema#",
+          "title": "textlint-rule-max-appearence-count-of-words configuration",
           "oneOf": [
             {
               "title": "Enable this rule with default options",
@@ -255,6 +298,16 @@ export default {
                   "type": "integer",
                   "minimum": 1,
                   "default": 4
+                },
+                "severity": {
+                  "title": "Severity of lint messages",
+                  "type": "string",
+                  "enum": [
+                    "error",
+                    "warning",
+                    "info"
+                  ],
+                  "default": "error"
                 }
               }
             }
@@ -275,6 +328,7 @@ export default {
         "rules": [],
         "schema": {
           "$schema": "http://json-schema.org/draft-04/schema#",
+          "title": "textlint-rule-max-length-of-title configuration",
           "oneOf": [
             {
               "title": "Enable this rule with default options",
@@ -307,6 +361,16 @@ export default {
                 "######": {
                   "title": "Maximum length of h6 title",
                   "type": "integer"
+                },
+                "severity": {
+                  "title": "Severity of lint messages",
+                  "type": "string",
+                  "enum": [
+                    "error",
+                    "warning",
+                    "info"
+                  ],
+                  "default": "error"
                 }
               }
             }
@@ -327,6 +391,7 @@ export default {
         "rules": [],
         "schema": {
           "$schema": "http://json-schema.org/draft-04/schema#",
+          "title": "textlint-rule-max-number-of-lines configuration",
           "oneOf": [
             {
               "title": "Enable this rule with default options",
@@ -340,6 +405,16 @@ export default {
                   "type": "integer",
                   "minimum": 1,
                   "default": 300
+                },
+                "severity": {
+                  "title": "Severity of lint messages",
+                  "type": "string",
+                  "enum": [
+                    "error",
+                    "warning",
+                    "info"
+                  ],
+                  "default": "error"
                 }
               }
             }
@@ -360,6 +435,7 @@ export default {
         "rules": [],
         "schema": {
           "$schema": "http://json-schema.org/draft-04/schema#",
+          "title": "textlint-rule-max-ten configuration",
           "oneOf": [
             {
               "title": "Enable this rule with default options",
@@ -378,6 +454,16 @@ export default {
                   "title": "Strict check",
                   "type": "boolean",
                   "default": false
+                },
+                "severity": {
+                  "title": "Severity of lint messages",
+                  "type": "string",
+                  "enum": [
+                    "error",
+                    "warning",
+                    "info"
+                  ],
+                  "default": "error"
                 }
               }
             }
@@ -398,6 +484,7 @@ export default {
         "rules": [],
         "schema": {
           "$schema": "http://json-schema.org/draft-04/schema#",
+          "title": "textlint-rule-ng-word configuration",
           "oneOf": [
             {
               "title": "Enable this rule with default options",
@@ -415,6 +502,16 @@ export default {
                     "minLength": 1
                   },
                   "uniqueItems": true
+                },
+                "severity": {
+                  "title": "Severity of lint messages",
+                  "type": "string",
+                  "enum": [
+                    "error",
+                    "warning",
+                    "info"
+                  ],
+                  "default": "error"
                 }
               }
             }
@@ -435,8 +532,28 @@ export default {
         "rules": [],
         "schema": {
           "$schema": "http://json-schema.org/draft-04/schema#",
-          "title": "Enable this rule",
-          "type": "boolean"
+          "title": "textlint-rule-no-double-negative-ja configuration",
+          "oneOf": [
+            {
+              "title": "Enable this rule with default options",
+              "type": "boolean"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "severity": {
+                  "title": "Severity of lint messages",
+                  "type": "string",
+                  "enum": [
+                    "error",
+                    "warning",
+                    "info"
+                  ],
+                  "default": "error"
+                }
+              }
+            }
+          ]
         }
       },
 
@@ -453,8 +570,28 @@ export default {
         "rules": [],
         "schema": {
           "$schema": "http://json-schema.org/draft-04/schema#",
-          "title": "Enable this rule",
-          "type": "boolean"
+          "title": "textlint-rule-doubled-conjunctive-particle-ga configuration",
+          "oneOf": [
+            {
+              "title": "Enable this rule with default options",
+              "type": "boolean"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "severity": {
+                  "title": "Severity of lint messages",
+                  "type": "string",
+                  "enum": [
+                    "error",
+                    "warning",
+                    "info"
+                  ],
+                  "default": "error"
+                }
+              }
+            }
+          ]
         }
       },
 
@@ -471,6 +608,7 @@ export default {
         "rules": [],
         "schema": {
           "$schema": "http://json-schema.org/draft-04/schema#",
+          "title": "textlint-rule-no-doubled-joshi configuration",
           "oneOf": [
             {
               "title": "Enable this rule with default options",
@@ -489,6 +627,16 @@ export default {
                   "title": "Strict check",
                   "type": "boolean",
                   "default": false
+                },
+                "severity": {
+                  "title": "Severity of lint messages",
+                  "type": "string",
+                  "enum": [
+                    "error",
+                    "warning",
+                    "info"
+                  ],
+                  "default": "error"
                 }
               }
             }
@@ -509,8 +657,28 @@ export default {
         "rules": [],
         "schema": {
           "$schema": "http://json-schema.org/draft-04/schema#",
-          "title": "Enable this rule",
-          "type": "boolean"
+          "title": "textlint-rule-no-dropping-the-ra configuration",
+          "oneOf": [
+            {
+              "title": "Enable this rule with default options",
+              "type": "boolean"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "severity": {
+                  "title": "Severity of lint messages",
+                  "type": "string",
+                  "enum": [
+                    "error",
+                    "warning",
+                    "info"
+                  ],
+                  "default": "error"
+                }
+              }
+            }
+          ]
         }
       },
 
@@ -527,8 +695,28 @@ export default {
         "rules": [],
         "schema": {
           "$schema": "http://json-schema.org/draft-04/schema#",
-          "title": "Enable this rule",
-          "type": "boolean"
+          "title": "textlint-rule-no-mix-dearu-desumasu configuration",
+          "oneOf": [
+            {
+              "title": "Enable this rule with default options",
+              "type": "boolean"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "severity": {
+                  "title": "Severity of lint messages",
+                  "type": "string",
+                  "enum": [
+                    "error",
+                    "warning",
+                    "info"
+                  ],
+                  "default": "error"
+                }
+              }
+            }
+          ]
         }
       },
 
@@ -545,6 +733,7 @@ export default {
         "rules": [],
         "schema": {
           "$schema": "http://json-schema.org/draft-04/schema#",
+          "title": "textlint-rule-no-start-duplicated-conjunction configuration",
           "oneOf": [
             {
               "title": "Enable this rule with default options",
@@ -558,6 +747,16 @@ export default {
                   "type": "integer",
                   "minimum": 1,
                   "default": 2
+                },
+                "severity": {
+                  "title": "Severity of lint messages",
+                  "type": "string",
+                  "enum": [
+                    "error",
+                    "warning",
+                    "info"
+                  ],
+                  "default": "error"
                 }
               }
             }
@@ -569,7 +768,7 @@ export default {
       {
         "name": "textlint-rule-preset-jtf-style",
         "key": "preset-jtf-style",
-        "version": "2.1.0",
+        "version": "2.1.1",
         "description": "JTF Style Guide for Translators Working into Japanese for textlint.",
         "author": "azu",
         "license": "MIT",
@@ -591,6 +790,7 @@ export default {
         ],
         "schema": {
           "$schema": "http://json-schema.org/draft-04/schema#",
+          "title": "textlint-rule-preset-jtf-style configuration",
           "oneOf": [
             {
               "title": "Enable this rule with default options",
@@ -766,6 +966,7 @@ export default {
         "rules": [],
         "schema": {
           "$schema": "http://json-schema.org/draft-04/schema#",
+          "title": "textlint-rule-rousseau configuration",
           "oneOf": [
             {
               "title": "Enable this rule with default options",
@@ -813,6 +1014,16 @@ export default {
                     ]
                   },
                   "uniqueItems": true
+                },
+                "severity": {
+                  "title": "Severity of lint messages",
+                  "type": "string",
+                  "enum": [
+                    "error",
+                    "warning",
+                    "info"
+                  ],
+                  "default": "error"
                 }
               }
             }
@@ -833,6 +1044,7 @@ export default {
         "rules": [],
         "schema": {
           "$schema": "http://json-schema.org/draft-04/schema#",
+          "title": "textlint-rule-sentence-length configuration",
           "oneOf": [
             {
               "title": "Enable this rule with default options",
@@ -846,6 +1058,16 @@ export default {
                   "type": "integer",
                   "minimum": 1,
                   "default": 100
+                },
+                "severity": {
+                  "title": "Severity of lint messages",
+                  "type": "string",
+                  "enum": [
+                    "error",
+                    "warning",
+                    "info"
+                  ],
+                  "default": "error"
                 }
               }
             }
@@ -866,6 +1088,7 @@ export default {
         "rules": [],
         "schema": {
           "$schema": "http://json-schema.org/draft-04/schema#",
+          "title": "textlint-rule-sjsj configuration",
           "oneOf": [
             {
               "title": "Enable this rule with default options",
@@ -879,6 +1102,16 @@ export default {
                   "type": "integer",
                   "minimum": 1,
                   "default": 1
+                },
+                "severity": {
+                  "title": "Severity of lint messages",
+                  "type": "string",
+                  "enum": [
+                    "error",
+                    "warning",
+                    "info"
+                  ],
+                  "default": "error"
                 }
               }
             }
@@ -899,8 +1132,28 @@ export default {
         "rules": [],
         "schema": {
           "$schema": "http://json-schema.org/draft-04/schema#",
-          "title": "Enable this rule",
-          "type": "boolean"
+          "title": "textlint-rule-spellcheck-tech-word configuration",
+          "oneOf": [
+            {
+              "title": "Enable this rule with default options",
+              "type": "boolean"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "severity": {
+                  "title": "Severity of lint messages",
+                  "type": "string",
+                  "enum": [
+                    "error",
+                    "warning",
+                    "info"
+                  ],
+                  "default": "error"
+                }
+              }
+            }
+          ]
         }
       },
 
@@ -917,6 +1170,7 @@ export default {
         "rules": [],
         "schema": {
           "$schema": "http://json-schema.org/draft-04/schema#",
+          "title": "textlint-rule-unexpanded-acronym configuration",
           "oneOf": [
             {
               "title": "Enable this rule with default options",
@@ -946,6 +1200,16 @@ export default {
                     "minLength": 1
                   },
                   "uniqueItems": true
+                },
+                "severity": {
+                  "title": "Severity of lint messages",
+                  "type": "string",
+                  "enum": [
+                    "error",
+                    "warning",
+                    "info"
+                  ],
+                  "default": "error"
                 }
               }
             }
