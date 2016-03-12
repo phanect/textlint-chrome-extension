@@ -98,6 +98,15 @@
   "save": {
     "message": "保存"
   },
+  "showAsErrors": {
+    "message": "チェック結果をエラーとして表示"
+  },
+  "showAsWarnings": {
+    "message": "チェック結果を警告として表示"
+  },
+  "showAsInfo": {
+    "message": "チェック結果を情報として表示"
+  },
 
   "aboutP1_1": {
     "message": "この拡張機能は <a href=\"http://textlint.github.io/\" target=\"_blank\">textlint</a> を Chrome 上で利用するためのものです。textlint とは、文章をプラグイン方式の様々なルールによって検証するためのツールです。"

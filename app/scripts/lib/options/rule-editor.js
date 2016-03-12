@@ -43,7 +43,15 @@ export default class RuleEditor {
     const ruleOptions = {};
     _.each(this.editors, (editor, ruleKey) => {
       if (this.isRuleEnabled(ruleKey)) {
-        ruleOptions[ruleKey] = editor.getValue() || true;
+        let options = editor.getValue() || true;
+
+        const $severity = $(`#rule-item-${ruleKey} .rule-severity`);
+        if ($severity.is(":visible")) {
+          options = _.isObject(options) ? options : {};
+          options.severity = $severity.find("input[name=severity]:checked").val();
+        }
+
+        ruleOptions[ruleKey] = options;
       }
     });
     appOptions.ruleOptions = ruleOptions;
@@ -51,6 +59,7 @@ export default class RuleEditor {
 
   appendItem(rule, appOptions) {
     const $item = this.$itemTemplate.clone(false);
+    const ruleOptions = appOptions.getRuleOption(rule.key);
 
     $item.data("rule-key", rule.key);
     $item.attr("id", "rule-item-" + rule.key);
@@ -66,13 +75,21 @@ export default class RuleEditor {
     $item.find(".rule-enabled")
       .attr({
         name: `rules[${rule.key}][enabled]`,
-        checked: !!appOptions.getRuleOption(rule.key)
+        checked: !!ruleOptions
       })
       .bootstrapSwitch({
         size: "mini",
         onInit: this.onSwitchChange,
         onSwitchChange: this.onSwitchChange,
       });
+
+    if (rule.isPreset) {
+      $item.find(".rule-severity").hide();
+    } else {
+      const severity = (_.isObject(ruleOptions) && ruleOptions.severity) || "error";
+      $item.find(`.rule-severity-${severity}`).addClass("active")
+        .find("input[name=severity]").attr("checked", true);
+    }
 
     this.$editor.append($item);
     return $item;
@@ -87,10 +104,13 @@ export default class RuleEditor {
     const schema = fixSchema(rule.schema);
     if (schema) {
       return new Promise((resolve, reject) => {
+        const options = appOptions.getRuleOption(rule.key);
+        if (_.isObject(options) && options.hasOwnProperty("severity")) delete options.severity;
+
         const editor = new JSONEditor($item.find(".rule-options")[0], {
           form_name_root: `rules[${rule.key}][options]`,
           schema: schema,
-          startval: appOptions.getRuleOption(rule.key),
+          startval: options,
         });
         editor.on("ready", () => { resolve(editor) });
       });

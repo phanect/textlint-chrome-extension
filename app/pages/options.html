@@ -45,27 +45,43 @@
             </h1>
 
             <div class="bundled-rules">
-              <form class="rules-area f16" id="rule-editor">
-                <fieldset class="rule-item template">
-                  <div class="rule-header clearfix">
-                    <div class="rule-switch">
-                      <input type="checkbox" class="rule-enabled toggle-switch" name="enabled" value="true">
+              <div class="rules-area f16" id="rule-editor">
+                <form class="rule-item template">
+                  <fieldset>
+                    <div class="rule-header clearfix">
+                      <div class="rule-switch">
+                        <div class="rule-severity severity-switch btn-group" data-toggle="buttons">
+                          <label class="rule-severity-error btn btn-link btn-xs" data-i18n-attr="title:showAsErrors">
+                            <input type="radio" name="severity" value="error" autocomplete="off">
+                            <i class="icon-error"></i>
+                          </label>
+                          <label class="rule-severity-warning btn btn-link btn-xs" data-i18n-attr="title:showAsWarnings">
+                            <input type="radio" name="severity" value="warning" autocomplete="off">
+                            <i class="icon-warning"></i>
+                          </label>
+                          <label class="rule-severity-info btn btn-link btn-xs" data-i18n-attr="title:showAsInfo">
+                            <input type="radio" name="severity" value="info" autocomplete="off">
+                            <i class="icon-info"></i>
+                          </label>
+                        </div>
+                        <input type="checkbox" class="rule-enabled toggle-switch" name="enabled" value="true">
+                      </div>
+                      <div class="rule-title">
+                        <a class="rule-name rule-homepage" href="#" target="_blank"></a>
+                        <span class="rule-version"></span>
+                        <span class="rule-author"></span>
+                        <a class="rule-homepage" href="#" target="_blank"><i class="fa fa-home"></i></a>
+                      </div>
                     </div>
-                    <div class="rule-title">
-                      <a class="rule-name rule-homepage" href="#" target="_blank"></a>
-                      <span class="rule-version"></span>
-                      <span class="rule-author"></span>
-                      <a class="rule-homepage" href="#" target="_blank"><i class="fa fa-home"></i></a>
+                    <div class="rule-body">
+                      <div class="rule-description">
+                      </div>
+                      <div class="rule-options editor">
+                      </div>
                     </div>
-                  </div>
-                  <div class="rule-body">
-                    <div class="rule-description">
-                    </div>
-                    <div class="rule-options editor">
-                    </div>
-                  </div>
-                </fieldset>
-              </form>
+                  </fieldset>
+                </form>
+              </div>
             </div>
           </div>
 

@@ -5,6 +5,10 @@
 @menu-pane-width: 200px;
 @bottom-pane-height: 55px;
 
+.icon-info { .fa-icon-info(); }
+.icon-warning { .fa-icon-warning(); }
+.icon-error { .fa-icon-error(); }
+
 html {
   height: 100%;
 }
@@ -97,6 +101,17 @@ fieldset legend {
       .rule-switch {
         float: right;
         margin-left: 5px;
+
+        .severity-switch {
+          i:before {
+            color: #EFEFEF;
+          }
+          .active {
+            .icon-error:before { color: darken(@icon-error-color, 20%); }
+            .icon-warning:before { color: darken(@icon-warning-color, 20%); }
+            .icon-info:before { color: darken(@icon-info-color, 20%); }
+          }
+        }
       }
       .rule-title {
         padding-top: 5px;
@@ -137,6 +152,9 @@ fieldset legend {
     &.disabled {
       .rule-header .rule-title .rule-name {
         color: #999999;
+      }
+      .severity-switch {
+        display: none;
       }
       .rule-body {
         .rule-description {

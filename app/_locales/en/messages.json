@@ -98,6 +98,15 @@
   "save": {
     "message": "Save"
   },
+  "showAsErrors": {
+    "message": "Show messages as errors"
+  },
+  "showAsWarnings": {
+    "message": "Show messages as warnings"
+  },
+  "showAsInfo": {
+    "message": "Show messages as information"
+  },
 
   "aboutP1_1": {
     "message": "This extension provides you with <a href=\"http://textlint.github.io/\" target=\"_blank\">textlint</a> on Chrome. textlint is a tool that can check your texts with various rules in plug-in way."

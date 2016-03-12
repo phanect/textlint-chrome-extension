@@ -69,6 +69,14 @@ export default function fixSchema(root) {
   if (root.oneOf && root.oneOf.length === 2 && root.oneOf[0].type === "boolean") {
     root = root.oneOf[1];
   }
+  // Strip severity property since it is switched by selector.
+  if (root.type === "object" && root.properties && root.properties["severity"]) {
+    delete root.properties["severity"];
+    if (_.isEmpty(root.properties)) {
+      // There was only severity property.
+      return null;
+    }
+  }
   // Return no schema if there is only enability setting.
   if (root.type === "boolean") {
     return null;
