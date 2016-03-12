@@ -45,6 +45,24 @@
             </h1>
 
             <div class="bundled-rules">
+              <div class="rules-header clearfix">
+                <div class="search-area form-inline">
+                  <div class="form-group">
+                    <label for="search-input"><i class="fa fa-search"></i></label>
+                    <input type="search" class="form-control input-sm" id="search-input" placeholder="Search" data-i18n-attr="placeholder:search">
+                  </div>
+                </div>
+                <div class="toggle-controller">
+                  <button class="btn btn-default btn-sm" id="turn-on-button">
+                    <i class="fa fa-toggle-on"></i>
+                    <span data-i18n="turnOnAll">Turn on all</span>
+                  </button>
+                  <button class="btn btn-default btn-sm" id="turn-off-button">
+                    <i class="fa fa-toggle-off"></i>
+                    <span data-i18n="turnOffAll">Turn off all</span>
+                  </button>
+                </div>
+              </div>
               <div class="rules-area f16" id="rule-editor">
                 <form class="rule-item template">
                   <fieldset>

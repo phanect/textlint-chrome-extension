@@ -98,6 +98,15 @@
   "save": {
     "message": "Save"
   },
+  "search": {
+    "message": "Search"
+  },
+  "turnOnAll": {
+    "message": "Turn On All"
+  },
+  "turnOffAll": {
+    "message": "Turn Off All"
+  },
   "showAsErrors": {
     "message": "Show messages as errors"
   },

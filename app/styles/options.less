@@ -89,9 +89,27 @@ fieldset legend {
   margin-bottom: 6px;
 }
 
+.rules-header {
+  margin: 20px 0;
+}
+.search-area {
+  float: left;
+  label {
+    color: #999999;
+    margin-right: 5px;
+  }
+}
+.toggle-controller {
+  float: right;
+  text-align: right;
+  white-space: nowrap;
+  button { margin-left: 6px; }
+}
+
 .rules-area {
   .rule-item {
     margin-bottom: 10px;
+    &.filtered { display: none; }
 
     .rule-header {
       position: relative;

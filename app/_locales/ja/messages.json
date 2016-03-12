@@ -98,6 +98,15 @@
   "save": {
     "message": "保存"
   },
+  "search": {
+    "message": "検索"
+  },
+  "turnOnAll": {
+    "message": "すべて ON"
+  },
+  "turnOffAll": {
+    "message": "すべて OFF"
+  },
   "showAsErrors": {
     "message": "チェック結果をエラーとして表示"
   },
