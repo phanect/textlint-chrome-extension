@@ -23,4 +23,11 @@ export default {
   onReturnLintText(callback) {
     messages.on(messages.RETURN_LINT_TEXT, callback);
   },
+
+  correctText(tabId, correctId, text) {
+    messages.send(messages.CORRECT_TEXT, {tabId, correctId, text});
+  },
+  onReturnCorrectText(callback) {
+    messages.on(messages.RETURN_CORRECT_TEXT, callback);
+  },
 }

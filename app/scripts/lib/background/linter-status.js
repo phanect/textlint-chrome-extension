@@ -15,6 +15,7 @@ export default class LinterStatus {
     this.serverLinted = false;
     this.clientLinted = false;
     this.lintingCount = 0;
+    this.correctingCount = 0;
   }
 
   get active() {
@@ -22,6 +23,12 @@ export default class LinterStatus {
   }
   get linting() {
     return this.lintingCount > 0;
+  }
+  get correcting() {
+    return this.correctingCount > 0;
+  }
+  get waiting() {
+    return this.linting || this.correcting;
   }
 
   setLastError(error) {
@@ -68,6 +75,23 @@ export default class LinterStatus {
 
   afterClientLintingText() {
     this.clientLinted = true;
+  }
+
+  beforeCorrectingText() {
+    this.correctingCount++;
+  }
+
+  afterServerCorrectingText(error) {
+    this.correctingCount--;
+    if (error) {
+      this.setLastError(error);
+      return false;
+    }
+    return true;
+  }
+
+  afterClientCorrectingText() {
+    // noop
   }
 
   isUsingCustomRule() {

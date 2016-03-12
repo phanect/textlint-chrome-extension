@@ -54,6 +54,10 @@ messages.onLintText(({lintId, text}, sender, sendResponse) => {
   if (sender.tab) linters.lintText(sender.tab.id, lintId, text);
   sendResponse();
 });
+messages.onCorrectText(({correctId, text}, sender, sendResponse) => {
+  if (sender.tab) linters.correctText(sender.tab.id, correctId, text);
+  sendResponse();
+});
 messages.onUpdateStatus((msg, sender, sendResponse) => {
   if (sender.tab) badge.updateForTab(sender.tab);
   sendResponse();

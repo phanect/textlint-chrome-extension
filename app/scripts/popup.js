@@ -54,19 +54,24 @@ function updateFormats(selectedFormat) {
 
 function updateMarks(marks, counts) {
   $marks.empty();
+  let correctable = false;
   _.each(marks, (mark) => {
     const $item = $markItemTemplate.clone(false);
     const rule = bundles.get(mark.ruleId);
+    correctable = mark.correctable || correctable;
+
     $item.data("markId", mark.markId)
     $item.attr("title", `[${mark.severity}] ${mark.message} (${mark.ruleId})`)
     $item.addClass(`mark-item-${mark.severity}`)
 
     $item.find(".mark-message").text(mark.message);
     $item.find(".mark-severity").addClass(`icon-${mark.severity}`);
+    $item.find(".mark-correctable").toggle(mark.correctable);
     $item.find(".mark-rule").text(mark.ruleId);
     $item.find(".mark-link").attr("href", rule && rule.homepage ? rule.homepage : "#");
     $item.appendTo($marks);
   });
+  $("#correct-button").toggle(correctable);
   _.each(counts, (count, severity) => {
     $(`#marks-count-${severity}`).text(count);
   });
@@ -76,7 +81,7 @@ function updateForTab(tab) {
   withLinters((linters) => {
     messages.getStatus(tab.id).then(({active, marks, counts}) => {
       const status = linters.getStatus(tab.id);
-      const loading = !status.active || status.linting;
+      const loading = !status.active || status.waiting;
       const anyMarks = marks.length > 0;
 
       if (status.lastError) {
@@ -135,6 +140,10 @@ $marksFilters.on("change", function () {
   $marksFilters.each(function () {
     $marks.toggleClass(`filter-${this.value}`, !this.checked);
   });
+});
+
+$("#correct-button").on("click", () => {
+  cutil.withActiveTab((tab) => { messages.triggerCorrect(tab.id) });
 });
 
 $marks.on("click", ".mark-item", function () {

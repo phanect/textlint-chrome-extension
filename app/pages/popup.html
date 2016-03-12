@@ -63,31 +63,39 @@
         <p data-i18n="ready">I'm ready. Let's start writing!</p>
       </div>
       <div id="any-marks" class="default-hidden">
-        <div id="marks-filter">
-          <div class="btn-group" data-toggle="buttons">
-            <label class="marks-filter-item btn btn-link btn-sm active" id="marks-filter-error">
-              <input type="checkbox" autocomplete="off" name="filter[]" value="error" checked>
-              <i class="icon-error"></i>
-              <span class="stat-count" id="marks-count-error"></span>
-              <span data-i18n="error">Error</span>
-            </label>
-            <label class="marks-filter-item btn btn-link btn-sm active" id="marks-filter-warning">
-              <input type="checkbox" autocomplete="off" name="filter[]" value="warning" checked>
-              <i class="icon-warning"></i>
-              <span class="stat-count" id="marks-count-warning"></span>
-              <span data-i18n="warning">Warning</span>
-            </label>
-            <label class="marks-filter-item btn btn-link btn-sm active" id="marks-filter-info">
-              <input type="checkbox" autocomplete="off" name="filter[]" value="info" checked>
-              <i class="icon-info"></i>
-              <span class="stat-count" id="marks-count-info"></span>
-              <span data-i18n="info">Info</span>
-            </label>
+        <div class="clearfix">
+          <div id="marks-filter">
+            <div class="btn-group" data-toggle="buttons">
+              <label class="marks-filter-item btn btn-link btn-sm active" id="marks-filter-error">
+                <input type="checkbox" autocomplete="off" name="filter[]" value="error" checked>
+                <i class="icon-error"></i>
+                <span class="stat-count" id="marks-count-error"></span>
+                <span data-i18n="error">Error</span>
+              </label>
+              <label class="marks-filter-item btn btn-link btn-sm active" id="marks-filter-warning">
+                <input type="checkbox" autocomplete="off" name="filter[]" value="warning" checked>
+                <i class="icon-warning"></i>
+                <span class="stat-count" id="marks-count-warning"></span>
+                <span data-i18n="warning">Warning</span>
+              </label>
+              <label class="marks-filter-item btn btn-link btn-sm active" id="marks-filter-info">
+                <input type="checkbox" autocomplete="off" name="filter[]" value="info" checked>
+                <i class="icon-info"></i>
+                <span class="stat-count" id="marks-count-info"></span>
+                <span data-i18n="info">Info</span>
+              </label>
+            </div>
+          </div>
+          <div id="marks-correct">
+            <button class="btn btn-success btn-sm" id="correct-button">
+              <i class="fa fa-check-circle"></i>
+              <span data-i18n="correct">Correct</span>
+            </button>
           </div>
         </div>
         <div id="marks">
-          <div class="mark-item template">
-            <div class="mark-item-text"><i class="mark-severity"></i><span class="mark-message"></span></div>
+          <div class="mark-item clearfix template">
+            <div class="mark-item-text"><i class="mark-severity"></i><i class="mark-correctable fa fa-check"></i><span class="mark-message"></span></div>
             <div class="mark-item-rule">
               <a href="#" class="mark-rule mark-link" target="_blank"></a>
             </div>

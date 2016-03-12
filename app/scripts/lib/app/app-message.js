@@ -8,12 +8,15 @@ const MESSAGES = {
   ACTIVATE_LINTER: "ActivateLinter",
   DEACTIVATE_LINTER: "DeactivateLinter",
   LINT_RESULT: "LintResult",
+  CORRECT_RESULT: "CorrectResult",
   SHOW_MARK: "ShowMark",
+  TRIGGER_CORRECT: "TriggerCorrect",
   UPDATE_OPTIONS: "UpdateOptions",
 
   // Content -> Background
   GET_OPTIONS: "GetOptions",
   LINT_TEXT: "LintText",
+  CORRECT_TEXT: "CorrectText",
   UPDATE_STATUS: "UpdateStatus",
 };
 const VALID_MESSAGES = _.invert(MESSAGES);

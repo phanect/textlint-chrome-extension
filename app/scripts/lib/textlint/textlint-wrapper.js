@@ -5,13 +5,12 @@ import {TextLintCore} from "textlint";
 import TextCaretScanner from "../util/text-caret-scanner";
 import TextlintRulePackage from "./textlint-rule-package";
 
+const PRESET_PREFIX_RE = /^preset-/;
 const SEVERITY_NAMES = {
   0: "info",
   1: "warning",
   2: "error"
 };
-
-const PRESET_PREFIX_RE = /^preset-/;
 
 export default class TextlintWrapper {
   constructor(ruleNames, ruleOptions, format) {
@@ -41,15 +40,31 @@ export default class TextlintWrapper {
   lint(text) {
     return new Promise((resolve, reject) => {
       this.getTextlint().then((textlint) => {
-        textlint.lintText(text, `.${this.format}`).then(({messages}) => {
-          resolve(this._buildLintMessages(text, messages));
+        textlint.lintText(text, `.${this.format}`).then((lintResult) => {
+          this._decorateMessages(text, lintResult.messages);
+          resolve(lintResult);
         }).catch(reject);
       }).catch(reject);
     });
   }
 
-  getSeverities() {
-    return _.values(SEVERITY_NAMES);
+  _decorateMessages(text, messages) {
+    const scanner = new TextCaretScanner(text);
+    _.each(messages, (msg) => {
+      const range = scanner.getWordRangeFromLineColumn(msg.line, msg.column);
+      msg.severity = SEVERITY_NAMES[msg.severity] || SEVERITY_NAMES[0];
+      msg.correctable = _.isObject(msg.fix);
+      msg.start = range[0];
+      msg.end = range[1];
+    });
+  }
+
+  fix(text) {
+    return new Promise((resolve, reject) => {
+      this.getTextlint().then((textlint) => {
+        textlint.fixText(text, `.${this.format}`).then(resolve, reject);
+      }).catch(reject);
+    });
   }
 
   onLoad(callback) {
@@ -68,19 +83,5 @@ export default class TextlintWrapper {
       }
       return accum;
     }, {});
-  }
-
-  _buildLintMessages(text, messages) {
-    let scanner = new TextCaretScanner(text);
-    return _.map(messages, (m) => {
-      let range = scanner.getWordRangeFromLineColumn(m.line, m.column);
-      return {
-        "start":    range[0],
-        "end":      range[1],
-        "message":  m.message,
-        "ruleId":   m.ruleId,
-        "severity": SEVERITY_NAMES[m.severity] || SEVERITY_NAMES[0]
-      };
-    });
   }
 }

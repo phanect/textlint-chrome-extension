@@ -23,8 +23,16 @@ export default {
     messages.on(messages.LINT_RESULT, callback);
   },
 
+  onCorrectResult(callback) {
+    messages.on(messages.CORRECT_RESULT, callback);
+  },
+
   onShowMark(callback) {
     messages.on(messages.SHOW_MARK, callback);
+  },
+
+  onTriggerCorrect(callback) {
+    messages.on(messages.TRIGGER_CORRECT, callback);
   },
 
   onUpdateOptions(callback) {
@@ -37,6 +45,10 @@ export default {
 
   lintText(lintId, text) {
     return messages.send(messages.LINT_TEXT, { lintId, text });
+  },
+
+  correctText(correctId, text) {
+    return messages.send(messages.CORRECT_TEXT, { correctId, text });
   },
 
   updateStatus() {

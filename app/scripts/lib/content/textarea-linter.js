@@ -4,8 +4,8 @@ import _ from "lodash";
 import $ from "jquery";
 import "./textarea-marker";
 
-const LINT_DELAY        = 1000;
-const CLASS_PREFIX      = "ext-textlint-";
+const LINT_DELAY = 1000;
+const CLASS_PREFIX = "ext-textlint-";
 
 // Page-global tooltip for showing hints from TextareaLinter.
 class TextareaLinterTooltip {
@@ -44,12 +44,12 @@ class TextareaLinterTooltip {
 
   update(marks) {
     this.init();
-    let combinedMarkId = _.map(marks, (mark) => mark["markId"]).join("-");
+    let combinedMarkId = _.map(marks, "markId").join("-");
     if (this.$tooltip.data("markId") != combinedMarkId) {
-      this.$tooltip.empty();
-      _.each(marks, (mark) => {
-        this._buildItemByMark(mark).appendTo(this.$tooltip);
-      });
+      this.$tooltip.data("markId", combinedMarkId);
+      this.$tooltip.html(
+        _.map(marks, (mark) => this._buildItemByMark(mark))
+      );
       this.$tooltip.fadeIn("fast");
     }
   }
@@ -57,20 +57,20 @@ class TextareaLinterTooltip {
   _buildItemByMark(mark) {
     return $("<div />")
       .addClass(`${CLASS_PREFIX}tooltip-item`)
-      .addClass(`${CLASS_PREFIX}${mark["severity"]}`)
+      .addClass(`${CLASS_PREFIX}${mark.severity}`)
       .append(
         $("<span />")
           .addClass(`${CLASS_PREFIX}tooltip-text`)
-          .text(mark["message"])
+          .text(mark.message)
           .prepend(
             $("<span />")
-              .addClass(`${CLASS_PREFIX}icon-${mark["severity"]}`)
+              .addClass(`${CLASS_PREFIX}icon-${mark.severity}`)
           )
       )
       .append(
         $("<span />")
           .addClass(`${CLASS_PREFIX}tooltip-rule`)
-          .text(mark["ruleId"])
+          .text(mark.ruleId)
       );
   }
 }
@@ -78,6 +78,9 @@ class TextareaLinterTooltip {
 const DEFAULT_OPTIONS = {
   // Actual linting text method
   lintText: (lintId, text) => {},
+
+  // Actual correcting text method
+  correctText: (correctId, text) => {},
 
   // Event handler called when lint marks is changed.
   onMarksChanged: null,
@@ -129,10 +132,6 @@ export class TextareaLinter {
       "focusin.textareaLinter", "textarea",
       function () { self.lintTextArea(this) }
     );
-
-    // Lint first textarea that is visible and contains any text
-    _($("textarea:visible:enabled")).filter("value").take(1)
-      .each((textarea) => { this.lintTextArea(textarea) })
   }
 
   deactivate() {
@@ -140,9 +139,10 @@ export class TextareaLinter {
     this.active = false;
 
     $(document).off("input.textareaLinter", "textarea");
+    $(document).off("focusin.textareaLinter", "textarea");
 
     if (this.lintedTextArea) {
-      this.hideLintMessages(this.lintedTextArea);
+      this._hideLintResult(this.lintedTextArea);
       this.lintedTextArea = null;
     }
   }
@@ -152,38 +152,24 @@ export class TextareaLinter {
     const text = textarea.value;
 
     if (this.lintedTextArea && this.lintedTextArea !== textarea) {
-      this.hideLintMessages(this.lintedTextArea);
+      this._hideLintResult(this.lintedTextArea);
     }
     this.lintedTextArea = textarea;
 
     this.options.lintText(textareaId, text);
   }
 
-  receiveLintResult({lintId, lintMessages}) {
+  receiveLintResult({lintId, lintResult}) {
     if (this._getTextAreaId(this.lintedTextArea) === lintId) {
-      this.showLintMessages(this.lintedTextArea, lintMessages);
+      this._showLintResult(this.lintedTextArea, lintResult);
     }
   }
 
-  showLintMessages(textarea, lintMessages) {
-    // Map to hashes for textarea-marker
-    let markers = _.map(lintMessages, (msg) => {
-      let markId = _.uniqueId("mark");
-      return {
-        id:    `${CLASS_PREFIX}${markId}`,
-        class: `${CLASS_PREFIX}${msg.severity}`,
-        start: msg.start,
-        end:   msg.end,
-        data:  {
-          markId:   markId,
-          message:  msg.message,
-          ruleId:   msg.ruleId,
-          severity: msg.severity
-        }
-      };
-    });
+  _showLintResult(textarea, lintResult) {
+    const $textarea = $(textarea);
+    const text = $(this.lintedTextArea).val();
+    const markers = this._buildMarkersFromLintMessages(text, lintResult.messages);
 
-    let $textarea = $(textarea);
     if ($textarea.textareaMarker("isActive")) {
       $textarea.textareaMarker("setMarkers", markers);
     } else {
@@ -206,8 +192,8 @@ export class TextareaLinter {
     $textarea
       .addClass(cls)
       .removeClass(this._prefixedClass(`${cls}-`))
-      .addClass(_.uniq(_.map(lintMessages, (m) => `${cls}-${m.severity}`)).join(" "))
-      .toggleClass(`${cls}-none`, lintMessages.length === 0)
+      .addClass(_.uniq(_.map(lintResult.messages, (m) => `${cls}-${m.severity}`)).join(" "))
+      .toggleClass(`${cls}-none`, lintResult.messages.length === 0)
       .textareaMarker(this.options.showMarks ? "show" : "hide")
       .toggleClass(`${cls}-show-border`, this.options.showBorder);
 
@@ -215,7 +201,7 @@ export class TextareaLinter {
     this.options.onMarksChanged && this.options.onMarksChanged.call(textarea);
   }
 
-  hideLintMessages(textarea) {
+  _hideLintResult(textarea) {
     $(textarea || this.lintedTextArea)
       .textareaMarker("destroy")
       .off("markmousemove.extTextlint")
@@ -223,6 +209,19 @@ export class TextareaLinter {
       .removeClass(this._prefixedClass(CLASS_PREFIX));
     this.tooltip.hide();
     this.options.onMarksChanged && this.options.onMarksChanged.call(textarea);
+  }
+
+  _buildMarkersFromLintMessages(text, messages) {
+    return _.map(messages || [], (msg) => {
+      msg.markId = msg.markId || _.uniqueId("mark");
+      return {
+        id:    `${CLASS_PREFIX}${msg.markId}`,
+        class: `${CLASS_PREFIX}${msg.severity}`,
+        start: msg.start,
+        end:   msg.end,
+        data:  msg,
+      };
+    });
   }
 
   getCurrentLintMarks() {
@@ -241,6 +240,45 @@ export class TextareaLinter {
   showMark(markId) {
     $(this.lintedTextArea)
       .textareaMarker("scrollToMark", `#${CLASS_PREFIX}${markId}`);
+  }
+
+  correct() {
+    if (this.lintedTextArea) this.correctTextarea(this.lintedTextArea);
+  }
+
+  correctTextarea(textarea) {
+    const $textarea = $(textarea);
+    const textareaId = this._getTextAreaId(textarea);
+    const text = textarea.value;
+
+    if ($textarea.data("correcting")) return;
+    $textarea.data("correcting", true);
+    $textarea.data("lastDisabled", $textarea.attr("disabled"));
+    $textarea.attr("disabled", true);
+    $textarea.addClass(`${CLASS_PREFIX}textarea-correcting`);
+
+    this._hideLintResult(textarea);
+    this.options.correctText(textareaId, text);
+  }
+
+  receiveCorrectResult({correctId, correctResult}) {
+    if (this._getTextAreaId(this.lintedTextArea) === correctId) {
+      this.applyCorrectResult(this.lintedTextArea, correctResult);
+    }
+  }
+
+  applyCorrectResult(textarea, correctResult) {
+    const $textarea = $(textarea);
+
+    if (!$textarea.data("correcting")) return;
+
+    $textarea.val(correctResult.output);
+    this.lintTextArea(textarea);
+
+    const lastDisabled = $textarea.data("lastDisabled");
+    $textarea.attr("disabled", lastDisabled || false);
+    $textarea.removeClass(`${CLASS_PREFIX}textarea-correcting`);
+    $textarea.removeData(["correcting", "lastDisabled"]);
   }
 
   _getTextAreaId(textarea) {

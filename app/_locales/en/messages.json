@@ -41,6 +41,9 @@
   "info": {
     "message": "Info"
   },
+  "correct": {
+    "message": "Correct"
+  },
   "linting": {
     "message": "Checking your text..."
   },

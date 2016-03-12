@@ -40,7 +40,7 @@ body {
   margin-top: 10px;
 
   #marks-filter {
-    text-align: right;
+    float: left;
 
     .stat-count {
       margin: 0 3px;
@@ -54,7 +54,16 @@ body {
       &.active {
         color: #666666;
       }
+      .icon-error:before { color: darken(@icon-error-color, 20%); }
+      .icon-warning:before { color: darken(@icon-warning-color, 20%); }
+      .icon-info:before { color: darken(@icon-info-color, 20%); }
     }
+  }
+
+  #marks-correct {
+    text-align: right;
+
+    i { margin-right: 3px; }
   }
 
   #marks {
@@ -110,12 +119,18 @@ body {
     text-shadow: 0 1px black;
     white-space: pre-wrap;
     i { margin-right: 5px; }
+
+    .mark-correctable {
+      color: #A5FF92;
+    }
   }
 
   .mark-item-rule {
+    float: right;
     font-size: 10px;
     text-align: right;
     margin-left: 10px;
+    white-space: nowrap;
     a { color: #999999; }
   }
 

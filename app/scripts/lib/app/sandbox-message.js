@@ -11,6 +11,9 @@ const MESSAGES = {
 
   LINT_TEXT: "LintText",
   RETURN_LINT_TEXT: "ReturnLintText",
+
+  CORRECT_TEXT: "CorrectText",
+  RETURN_CORRECT_TEXT: "ReturnCorrectText",
 };
 const VALID_MESSAGES = _.invert(MESSAGES);
 

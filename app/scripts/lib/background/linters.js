@@ -53,10 +53,22 @@ function lintText(tabId, lintId, text) {
   getStatus(tabId).beforeLintingText();
   sandboxClient.lintText(tabId, lintId, text);
 }
-sandboxClient.onReturnLintText(({tabId, lintId, lintMessages, error}) => {
+sandboxClient.onReturnLintText(({tabId, lintId, lintResult, error}) => {
   if (getStatus(tabId).afterServerLintingText(error)) {
-    messages.sendLintResult(tabId, lintId, lintMessages).then(() => {
+    messages.sendLintResult(tabId, lintId, lintResult).then(() => {
       getStatus(tabId).afterClientLintingText();
+    });
+  }
+});
+
+function correctText(tabId, correctId, text) {
+  getStatus(tabId).beforeCorrectingText();
+  sandboxClient.correctText(tabId, correctId, text);
+}
+sandboxClient.onReturnCorrectText(({tabId, correctId, correctResult, error}) => {
+  if (getStatus(tabId).afterServerCorrectingText(error)) {
+    messages.sendCorrectResult(tabId, correctId, correctResult).then(() => {
+      getStatus(tabId).afterClientCorrectingText();
     });
   }
 });
@@ -69,4 +81,5 @@ export default {
   deactivate: deactivate,
   reload: reload,
   lintText: lintText,
+  correctText: correctText,
 }

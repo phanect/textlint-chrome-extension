@@ -14,4 +14,8 @@ export default {
   onLintText(callback) {
     messages.on(messages.LINT_TEXT, callback);
   },
+
+  onCorrectText(callback) {
+    messages.on(messages.CORRECT_TEXT, callback);
+  },
 }

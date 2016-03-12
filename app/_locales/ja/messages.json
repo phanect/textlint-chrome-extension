@@ -41,6 +41,9 @@
   "info": {
     "message": "情報"
   },
+  "correct": {
+    "message": "自動で修正する"
+  },
   "linting": {
     "message": "文書をチェックしています…"
   },

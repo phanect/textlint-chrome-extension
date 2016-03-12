@@ -14,6 +14,7 @@ function initTextareaLinter() {
         let TextareaLinter = require("./lib/content/textarea-linter").TextareaLinter;
         textareaLinter = new TextareaLinter({
           lintText: (lintId, text) => { messages.lintText(lintId, text) },
+          correctText: (correctId, text) => { messages.correctText(correctId, text) },
           onMarksChanged: () => { messages.updateStatus() },
           showMarks: options.showMarks,
           showBorder: options.showBorder,
@@ -23,6 +24,13 @@ function initTextareaLinter() {
     }
   });
 }
+
+let lastActiveTextarea = null;
+document.body.addEventListener("focusin", (ev) => {
+  if (ev.target && ev.target.tagName && ev.target.tagName.toLowerCase() === "textarea") {
+    lastActiveTextarea = ev.target;
+  }
+}, false);
 
 messages.onGetStatus((msg, sender, sendResponse) => {
   const marks = textareaLinter ? textareaLinter.getCurrentLintMarks() : [];
@@ -38,6 +46,9 @@ messages.onGetStatus((msg, sender, sendResponse) => {
 messages.onActivateLinter((msg, sender, sendResponse) => {
   initTextareaLinter().then(() => {
     textareaLinter.activate();
+    if (lastActiveTextarea) {
+      textareaLinter.lintTextArea(lastActiveTextarea);
+    }
     messages.updateStatus();
     sendResponse({ active: textareaLinter.active });
   });
@@ -48,8 +59,10 @@ messages.onDeactivateLinter((msg, sender, sendResponse) => {
   if (textareaLinter) {
     textareaLinter.deactivate();
     messages.updateStatus();
+    sendResponse({ active: textareaLinter.active });
+  } else {
+    sendResponse({ active: false });
   }
-  sendResponse({ active: textareaLinter.active });
 });
 
 messages.onLintResult((lintResult, sender, sendResponse) => {
@@ -57,8 +70,18 @@ messages.onLintResult((lintResult, sender, sendResponse) => {
   sendResponse();
 });
 
+messages.onCorrectResult((correctResult, sender, sendResponse) => {
+  textareaLinter.receiveCorrectResult(correctResult);
+  sendResponse();
+});
+
 messages.onShowMark(({markId}, sender, sendResponse) => {
   if (textareaLinter) textareaLinter.showMark(markId);
+  sendResponse();
+});
+
+messages.onTriggerCorrect((msg, sender, sendResponse) => {
+  if (textareaLinter) textareaLinter.correct();
   sendResponse();
 });
 
