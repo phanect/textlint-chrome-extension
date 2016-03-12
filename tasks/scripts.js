@@ -77,6 +77,14 @@ gulp.task('scripts', ['bundle'], (cb) => {
               search: 'define(SortedArray);',
               replace: 'void(0);'
             }
+          },
+          {
+            tesst: /node_modules\/prh\/lib\/index\.js/,
+            loader: 'string-replace',
+            query: {
+              search: 'fs.readFileSync',
+              replace: `require("${scriptsDir}/shim/prh/fs-mock").readFileSync`
+            }
           }
         ],
         loaders: [

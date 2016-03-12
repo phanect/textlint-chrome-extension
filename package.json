@@ -51,6 +51,7 @@
     "lodash": "^4.6.1",
     "main-bower-files": "^2.11.1",
     "null-loader": "^0.1.1",
+    "raw-loader": "^0.5.1",
     "require-dir": "^0.3.0",
     "string-replace-loader": "^1.0.0",
     "textlint": "^5.7.0",
