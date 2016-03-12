@@ -137,7 +137,7 @@
   },
 
   "ruleAlexDescription": {
-    "message": "<i class=\"flag-icon flag-icon-us\"></i> 性差、宗教、人種などによる差別的な英単語を <a href=\"http://alexjs.com/\" target=\"_blank\">Alex</a> でチェックします"
+    "message": "<i class=\"flag us\"></i> 性差、宗教、人種などによる差別的な英単語を <a href=\"http://alexjs.com/\" target=\"_blank\">Alex</a> でチェックします"
   },
   "ruleGeneralNovelStyleJaDescription": {
     "message": "日本の小説における一般的な作法に従います"
@@ -158,7 +158,7 @@
     "message": "同じ接続詞で始まる文章が連続しているのを検出します"
   },
   "ruleRousseauDescription": {
-    "message": "<i class=\"flag-icon flag-icon-us\"></i> 英文の一般的な校閲ルールを <a href=\"https://github.com/GitbookIO/rousseau#readme\" target=\"_blank\">Rousseau</a> でチェックします"
+    "message": "<i class=\"flag us\"></i> 英文の一般的な校閲ルールを <a href=\"https://github.com/GitbookIO/rousseau#readme\" target=\"_blank\">Rousseau</a> でチェックします"
   },
   "ruleSentenceLengthDescription": {
     "message": "一文あたりの最大文字数を制限します"
@@ -194,7 +194,7 @@
     "message": "JavaScript 関連のバズワードなどを含む <a href=\"https://github.com/HugoGiraudel/SJSJ#readme\" target=\"_blank\">SJSJ</a> の辞書でスペルチェックします"
   },
   "ruleUnexpandedAcronymDescription": {
-    "message": "<i class=\"flag-icon flag-icon-us\"></i> 文中で展開されていない頭文字語（アクロニム）を検出します"
+    "message": "<i class=\"flag us\"></i> 文中で展開されていない頭文字語（アクロニム）を検出します"
   },
   "labelCharacters": {
     "message": "文字"
