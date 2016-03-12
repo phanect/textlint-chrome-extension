@@ -1,7 +1,7 @@
 {
   "name": "textlint-chrome-extension",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "textlint Chrome Extension",
   "author": "IRIDE Monad <iride.monad@gmail.com>",
   "license": "MIT",
