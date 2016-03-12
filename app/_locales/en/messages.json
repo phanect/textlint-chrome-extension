@@ -44,6 +44,9 @@
   "correct": {
     "message": "Correct"
   },
+  "undo": {
+    "message": "Undo"
+  },
   "linting": {
     "message": "Checking your text..."
   },

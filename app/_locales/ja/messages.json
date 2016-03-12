@@ -44,6 +44,9 @@
   "correct": {
     "message": "自動で修正する"
   },
+  "undo": {
+    "message": "修正を戻す"
+  },
   "linting": {
     "message": "文書をチェックしています…"
   },

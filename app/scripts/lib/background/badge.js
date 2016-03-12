@@ -8,9 +8,9 @@ import messages from "./messages";
 
 const BACKGROUND_COLORS = {
   passed: "#74D94F",
-  info: "#A5E7FF",
-  warning: "#FFF571",
-  error: "#FF6E8D",
+  info: "#5DB1FF",
+  warning: "#FFC31B",
+  error: "#FF355A",
 };
 
 export default class Badge {

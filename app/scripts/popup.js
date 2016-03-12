@@ -79,7 +79,7 @@ function updateMarks(marks, counts) {
 
 function updateForTab(tab) {
   withLinters((linters) => {
-    messages.getStatus(tab.id).then(({active, marks, counts}) => {
+    messages.getStatus(tab.id).then(({active, marks, counts, undoCount}) => {
       const status = linters.getStatus(tab.id);
       const loading = !status.active || status.waiting;
       const anyMarks = marks.length > 0;
@@ -98,6 +98,7 @@ function updateForTab(tab) {
       $("#ready").toggle(!loading && !status.clientLinted);
       $("#any-marks").toggle(!loading && status.clientLinted && anyMarks);
       $("#no-marks").toggle(!loading && status.clientLinted && !anyMarks);
+      $(".undo-button").toggle(undoCount > 0);
       updateMarks(marks, counts);
     });
   });
@@ -144,6 +145,10 @@ $marksFilters.on("change", function () {
 
 $("#correct-button").on("click", () => {
   cutil.withActiveTab((tab) => { messages.triggerCorrect(tab.id) });
+});
+
+$(".undo-button").on("click", () => {
+  cutil.withActiveTab((tab) => { messages.undo(tab.id) });
 });
 
 $marks.on("click", ".mark-item", function () {

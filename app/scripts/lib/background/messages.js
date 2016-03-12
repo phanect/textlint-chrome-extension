@@ -51,6 +51,10 @@ export default {
     return messages.tabSend(tabId, messages.TRIGGER_CORRECT);
   },
 
+  undo(tabId) {
+    return messages.tabSend(tabId, messages.UNDO);
+  },
+
   updateOptions(tabId, options, ruleChanged) {
     return messages.tabSend(tabId, messages.UPDATE_OPTIONS, { options, ruleChanged });
   },

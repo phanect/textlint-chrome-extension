@@ -33,14 +33,12 @@ document.body.addEventListener("focusin", (ev) => {
 }, false);
 
 messages.onGetStatus((msg, sender, sendResponse) => {
+  const active = textareaLinter ? textareaLinter.active : false;
   const marks = textareaLinter ? textareaLinter.getCurrentLintMarks() : [];
   const counts = { info: 0, warning: 0, error: 0 };
   marks.forEach((mark) => { counts[mark.severity]++ });
-  sendResponse({
-    active: textareaLinter ? textareaLinter.active : false,
-    marks: marks,
-    counts: counts
-  });
+  const undoCount = textareaLinter ? textareaLinter.getCurrentUndoCount() : 0;
+  sendResponse({ active, marks, counts, undoCount });
 });
 
 messages.onActivateLinter((msg, sender, sendResponse) => {
@@ -82,6 +80,11 @@ messages.onShowMark(({markId}, sender, sendResponse) => {
 
 messages.onTriggerCorrect((msg, sender, sendResponse) => {
   if (textareaLinter) textareaLinter.correct();
+  sendResponse();
+});
+
+messages.onUndo((msg, sender, sendResponse) => {
+  if (textareaLinter) textareaLinter.undo();
   sendResponse();
 });
 

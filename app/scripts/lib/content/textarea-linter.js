@@ -126,7 +126,10 @@ export class TextareaLinter {
     let self = this;
     $(document).on(
       "input.textareaLinter", "textarea",
-      _.debounce(function () { self.lintTextArea(this) }, LINT_DELAY)
+      _.debounce(function () {
+        self.clearUndos(this);
+        self.lintTextArea(this);
+      }, LINT_DELAY)
     );
     $(document).on(
       "focusin.textareaLinter", "textarea",
@@ -226,7 +229,7 @@ export class TextareaLinter {
 
   getCurrentLintMarks() {
     if (!this.lintedTextArea) return [];
-    let $textarea = $(this.lintedTextArea);
+    const $textarea = $(this.lintedTextArea);
     if ($textarea.textareaMarker("isActive")) {
       return _.map(
         $textarea.textareaMarker("markers"),
@@ -235,6 +238,13 @@ export class TextareaLinter {
     } else {
       return [];
     }
+  }
+
+  getCurrentUndoCount() {
+    if (!this.lintedTextArea) return 0;
+    const $textarea = $(this.lintedTextArea);
+    const undos = $textarea.data("undos");
+    return undos ? undos.length : 0;
   }
 
   showMark(markId) {
@@ -272,6 +282,10 @@ export class TextareaLinter {
 
     if (!$textarea.data("correcting")) return;
 
+    const oldText = $textarea.val();
+    const undos = $textarea.data("undos") || [];
+    undos.push(oldText);
+    $textarea.data("undos", undos);
     $textarea.val(correctResult.output);
     this.lintTextArea(textarea);
 
@@ -279,6 +293,25 @@ export class TextareaLinter {
     $textarea.attr("disabled", lastDisabled || false);
     $textarea.removeClass(`${CLASS_PREFIX}textarea-correcting`);
     $textarea.removeData(["correcting", "lastDisabled"]);
+  }
+
+  undo() {
+    if (this.lintedTextArea) this.undoTextarea(this.lintedTextArea);
+  }
+
+  undoTextarea(textarea) {
+    const $textarea = $(textarea);
+    const undos = $textarea.data("undos");
+    if (undos && undos.length > 0) {
+      const text = undos.pop();
+      $textarea.data("undos", undos);
+      $textarea.val(text);
+      this.lintTextArea(textarea);
+    }
+  }
+
+  clearUndos(textarea) {
+    $(textarea).removeData("undos");
   }
 
   _getTextAreaId(textarea) {

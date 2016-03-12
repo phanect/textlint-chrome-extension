@@ -11,6 +11,7 @@ const MESSAGES = {
   CORRECT_RESULT: "CorrectResult",
   SHOW_MARK: "ShowMark",
   TRIGGER_CORRECT: "TriggerCorrect",
+  UNDO: "Undo",
   UPDATE_OPTIONS: "UpdateOptions",
 
   // Content -> Background

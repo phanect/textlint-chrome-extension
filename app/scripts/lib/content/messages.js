@@ -35,6 +35,10 @@ export default {
     messages.on(messages.TRIGGER_CORRECT, callback);
   },
 
+  onUndo(callback) {
+    messages.on(messages.UNDO, callback);
+  },
+
   onUpdateOptions(callback) {
     messages.on(messages.UPDATE_OPTIONS, callback);
   },
