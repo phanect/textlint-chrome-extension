@@ -145,6 +145,7 @@ export class TextareaLinter {
     $(document).off("focusin.textareaLinter", "textarea");
 
     if (this.lintedTextArea) {
+      this.clearUndos(this.lintedTextArea);
       this._hideLintResult(this.lintedTextArea);
       this.lintedTextArea = null;
     }
@@ -155,6 +156,7 @@ export class TextareaLinter {
     const text = textarea.value;
 
     if (this.lintedTextArea && this.lintedTextArea !== textarea) {
+      this.clearUndos(this.lintedTextArea);
       this._hideLintResult(this.lintedTextArea);
     }
     this.lintedTextArea = textarea;
