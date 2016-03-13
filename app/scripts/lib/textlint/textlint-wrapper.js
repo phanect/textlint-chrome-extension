@@ -28,8 +28,10 @@ export default class TextlintWrapper {
           return (new TextlintRulePackage(ruleName)).loadBundled();
         });
         Promise.all(promises).then((rules) => {
-          const flattenRules = this._flattenPreset(_.fromPairs(_.zip(this.ruleNames, rules)));
-          this.textlint.setupRules(flattenRules, this.ruleOptions);
+          const loadedRules = _.fromPairs(_.zip(this.ruleNames, rules));
+          const flattenRules = this._flattenPreset(loadedRules, true);
+          const flattenRuleOptions = this._flattenPreset(this.ruleOptions, false);
+          this.textlint.setupRules(flattenRules, flattenRuleOptions);
           resolve(this.textlint);
         }).catch(reject);
       });
@@ -74,10 +76,13 @@ export default class TextlintWrapper {
     this.getTextlint().catch(callback);
   }
 
-  _flattenPreset(rules) {
+  _flattenPreset(rules, isRule) {
     return _.reduce(rules, (accum, value, key) => {
       if (PRESET_PREFIX_RE.test(key)) {
-        _.each(value.rules, (rule, name) => { accum[`${key}/${name}`] = rule });
+        _.each(
+          isRule ? value.rules : value,
+          (subValue, subKey) => { accum[`${key}/${subKey}`] = subValue }
+        );
       } else {
         accum[key] = value;
       }
