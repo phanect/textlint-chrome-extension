@@ -51,7 +51,7 @@ export default class TextareaMarker {
     this.positionTimer = null;
     this.oldPosition = null;
     this.options = _.extend({}, DEFAULT_OPTIONS, $textarea.data(), options);
-    this.options.markers = this._sortMarkers(this.options.markers || []);
+    this.options.markers = this._tidyMarkers(this.options.markers || []);
     if (this.options.activate) {
       this.activate();
     }
@@ -100,7 +100,7 @@ export default class TextareaMarker {
   }
 
   setMarkers(markers) {
-    this.options.markers = this._sortMarkers(markers);
+    this.options.markers = this._tidyMarkers(markers);
     this._syncContents();
     this.show();
   }
@@ -120,21 +120,22 @@ export default class TextareaMarker {
   scrollToMark(selector) {
     if (!this.$background) return;
 
-    let $mark = this.$background.find(selector).first();
-    if ($mark.length == 0) return;
+    const $marks = this.$background.find(selector);
+    if ($marks.length == 0) return;
 
-    let pos = $mark.position();
-    let bgX = this.$background.scrollLeft();
-    let bgY = this.$background.scrollTop();
-    let centerX = (this.$textarea.innerWidth() - $mark.outerWidth()) / 2;
-    let centerY = (this.$textarea.innerHeight() - $mark.outerHeight()) / 2;
+    const $mark = $marks.first();
+    const pos = $mark.position();
+    const bgX = this.$background.scrollLeft();
+    const bgY = this.$background.scrollTop();
+    const centerX = (this.$textarea.innerWidth() - $mark.outerWidth()) / 2;
+    const centerY = (this.$textarea.innerHeight() - $mark.outerHeight()) / 2;
 
     this.$textarea.scrollLeft(Math.max(0, pos.left + bgX - centerX));
     this.$textarea.scrollTop(Math.max(0, pos.top + bgY - centerY));
 
-    // Blink the mark
+    // Blink the marks
     for (let i = 0; i < 2; i++) {
-      $mark.animate({ "opacity": 0 }, 300).animate({ "opacity": 1 }, 100);
+      $marks.animate({ "opacity": 0 }, 300).animate({ "opacity": 1 }, 100);
     }
   }
 
@@ -199,7 +200,7 @@ export default class TextareaMarker {
     this.positionTimer = setInterval(() => {
       this._syncSizeAndPosition();
       this._syncScrollPositions();
-    }, 300);
+    }, 500);
   }
 
   _unbindEvents() {
@@ -251,13 +252,23 @@ export default class TextareaMarker {
     this.$background.scrollLeft(this.$textarea.scrollLeft());
   }
 
-  _sortMarkers(markers) {
-    let prev, overlap = (marker) => {
-      let overlapped = (prev && marker.start < prev.end && marker.end > prev.end);
+  _tidyMarkers(markers) {
+    const newMarkers = [];
+    let prev;
+    _.each(_.sortBy(markers || [], ["start", "end"]), (marker) => {
+      if (prev && marker.start < prev.end && marker.end > prev.env) {
+        // Overlapped. We have to split it into two markers
+        const inner = _.clone(marker), outer = _.clone(marker);
+        inner.end = prev.end;
+        outer.start = prev.end;
+        newMarkers.push(inner);
+        newMarkers.push(outer);
+      } else {
+        newMarkers.push(marker);
+      }
       prev = marker;
-      return overlapped;
-    };
-    return _(markers || []).sortBy(["start", "end"]).reject(overlap).value()
+    });
+    return newMarkers;
   }
 
   // Mark up text by markers using <mark> elements.

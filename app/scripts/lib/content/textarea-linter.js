@@ -220,8 +220,7 @@ export class TextareaLinter {
     return _.map(messages || [], (msg) => {
       msg.markId = msg.markId || _.uniqueId("mark");
       return {
-        id:    `${CLASS_PREFIX}${msg.markId}`,
-        class: `${CLASS_PREFIX}${msg.severity}`,
+        class: `${CLASS_PREFIX}${msg.markId} ${CLASS_PREFIX}${msg.severity}`,
         start: msg.start,
         end:   msg.end,
         data:  msg,
@@ -251,7 +250,7 @@ export class TextareaLinter {
 
   showMark(markId) {
     $(this.lintedTextArea)
-      .textareaMarker("scrollToMark", `#${CLASS_PREFIX}${markId}`);
+      .textareaMarker("scrollToMark", `.${CLASS_PREFIX}${markId}`);
   }
 
   correct() {
