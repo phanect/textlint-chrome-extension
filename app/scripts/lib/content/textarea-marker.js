@@ -47,6 +47,7 @@ export default class TextareaMarker {
   constructor($textarea, options) {
     this.$textarea = $textarea;
     this.$background = null;
+    this.$backgroundInner = null;
     this.active = false;
     this.positionTimer = null;
     this.oldPosition = null;
@@ -90,6 +91,7 @@ export default class TextareaMarker {
     this.deactivate();
     this.$textarea.removeData(PLUGIN_NAME);
     if (this.$background) {
+      this.$backgroundInner = null;
       this.$background = null;
     }
   }
@@ -143,14 +145,10 @@ export default class TextareaMarker {
     if (!this.$background) {
       this.$background = $("<div/>")
         .addClass(`${this.options.classPrefix}background`)
-        .css({
-          "position": "absolute",
-          "color": "transparent",
-          "border-color": "transparent",
-          "overflow": "hidden",
-          "z-index": "auto",
-          "background": this.$textarea.css("background")
-        });
+        .css("background", this.$textarea.css("background"));
+      this.$backgroundInner = $("<div/>")
+        .addClass(`${this.options.classPrefix}background-inner`)
+        .appendTo(this.$background);
     }
     this.$background.insertBefore(this.$textarea);
 
@@ -236,7 +234,7 @@ export default class TextareaMarker {
     if (!this.$background) return;
     const content = this.$textarea.val();
     const node = this._markupTextToNode(content);
-    this.$background.html(node);
+    this.$backgroundInner.html(node);
   }
 
   _syncSizeAndPosition() {
@@ -244,6 +242,8 @@ export default class TextareaMarker {
     this.$background.width(this.$textarea.width());
     this.$background.height(this.$textarea.height());
     this.$background.css(this.$textarea.position());
+    this.$backgroundInner.width(this.$textarea.prop("scrollWidth"));
+    this.$backgroundInner.height(this.$textarea.prop("scrollHeight"));
   }
 
   _syncScrollPositions() {
