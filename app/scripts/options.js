@@ -83,7 +83,7 @@ function translateLabels() {
     .filter(function () { return this.nodeType === 3 && !/^\s*$/.test(this.nodeValue); })
     .each(function () {
       const key = _.camelCase("label-" + this.nodeValue).replace(/[^a-zA-Z0-9]+/g, "");
-      if (key !== "label") {
+      if (/^label[A-Z][a-zA-Z0-9]+$/.test(key)) {
         this.nodeValue = cutil.translate(key, this.nodeValue);
       }
     });

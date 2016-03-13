@@ -2,7 +2,7 @@
 
 import _ from "lodash";
 import $ from "jquery";
-import fixSchema from "../json-editor/fix-schema";
+import schemaFixer from "./schema-fixer";
 
 export default class VisualEditor {
   constructor() {
@@ -14,7 +14,7 @@ export default class VisualEditor {
     return new Promise((resolve, reject) => {
       this.editor = new JSONEditor(this.$editor[0], {
         form_name_root: "visual",
-        schema: fixSchema(appOptions.visualOptionsSchema),
+        schema: schemaFixer.fixSchema(appOptions.visualOptionsSchema),
         startval: appOptions.visualOptions,
       });
       this.editor.on("ready", () => { resolve(this.editor) });

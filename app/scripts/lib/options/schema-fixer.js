@@ -16,6 +16,19 @@ function fixOne(schema) {
       "disable_edit_json": true,
       "disable_properties": true,
     });
+    if (_.isObject(schema.properties) && schema.properties["1.1.1.本文"]) {
+      // Special treatment for textlint-rule-preset-jtf-style
+      schema.properties = _.reduce(
+        _.keys(schema.properties).sort(),
+        (accum, key, index) => {
+          // Replace dots to full-width in property keys because json-editor can't handle them
+          const newKey = key.replace(/\./g, "．");
+          // Add propertyOrder to sort properties by key
+          accum[newKey] = _.extend({ propertyOrder: index }, schema.properties[key]);
+          return accum;
+        }, {}
+      );
+    }
   }
   if (schema.type === "array" || schema.type === "object") {
     schema.options = _.extend(schema.options, {
@@ -62,7 +75,7 @@ function walk(schema) {
   return schema;
 }
 
-export default function fixSchema(root) {
+function fixSchema(root) {
   root = _.clone(root);
 
   // Strip root oneOf for enability since it is switched by a toggle.
@@ -83,4 +96,48 @@ export default function fixSchema(root) {
   }
 
   return walk(root);
+}
+
+function fixInput(input) {
+  if (_.isObject(input)) {
+    if (input.hasOwnProperty("1.1.1.本文")) {
+      // Special treatment for textlint-rule-preset-jtf-style
+      input = _.reduce(input, (accum, value, key) => {
+        if (_.isObject(value) && value.hasOwnProperty("severity")) {
+          delete value.severity;
+        }
+        accum[key.replace(/\./g, "．")] = value;
+        return accum;
+      }, {});
+    } else if (input.hasOwnProperty("severity")) {
+      // Remove root severity
+      delete input.severity;
+    }
+  }
+  return input;
+}
+
+function fixOutput(output, severity) {
+  if (_.isObject(output)) {
+    if (output.hasOwnProperty("1．1．1．本文")) {
+      // Special treatment for textlint-rule-preset-jtf-style
+      output = _.reduce(output, (accum, value, key) => {
+        if (value === true) value = {};
+        if (_.isObject(value)) {
+          value.severity = severity;
+        }
+        accum[key.replace(/．/g, ".")] = value;
+        return accum;
+      }, {});
+    } else {
+      output.severity = severity;
+    }
+  }
+  return output;
+}
+
+export default {
+  fixSchema: fixSchema,
+  fixInput: fixInput,
+  fixOutput: fixOutput,
 }

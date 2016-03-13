@@ -4,7 +4,7 @@ import _ from "lodash";
 import $ from "jquery";
 import bundles from "../app/bundles";
 import cutil from "../util/chrome-util";
-import fixSchema from "../json-editor/fix-schema";
+import schemaFixer from "./schema-fixer";
 
 export default class RuleEditor {
   constructor() {
@@ -48,14 +48,9 @@ export default class RuleEditor {
     _.each(this.editors, (editor, ruleKey) => {
       if (this.isRuleEnabled(ruleKey)) {
         let options = editor.getValue() || true;
-
-        const $severity = $(`#rule-item-${ruleKey} .rule-severity`);
-        if ($severity.is(":visible")) {
-          options = _.isObject(options) ? options : {};
-          options.severity = $severity.find("input[name=severity]:checked").val();
-        }
-
-        ruleOptions[ruleKey] = options;
+        const rule = bundles.get(ruleKey);
+        const severity = $(`#rule-item-${ruleKey} .rule-severity input[name=severity]:checked`).val();
+        ruleOptions[ruleKey] = schemaFixer.fixOutput(options, severity);;
       }
     });
     appOptions.ruleOptions = ruleOptions;
@@ -121,13 +116,15 @@ export default class RuleEditor {
         onSwitchChange: this.onSwitchChange,
       });
 
+    let severity;
     if (rule.isPreset) {
-      $item.find(".rule-severity").hide();
+      const first = _.isObject(ruleOptions) && _.find(ruleOptions, "severity");
+      severity = (_.isObject(first) && first.severity) || "error";
     } else {
-      const severity = (_.isObject(ruleOptions) && ruleOptions.severity) || "error";
-      $item.find(`.rule-severity-${severity}`).addClass("active")
-        .find("input[name=severity]").attr("checked", true);
+      severity = (_.isObject(ruleOptions) && ruleOptions.severity) || "error";
     }
+    $item.find(`.rule-severity-${severity}`).addClass("active")
+      .find("input[name=severity]").attr("checked", true);
 
     this.$editor.append($item);
     return $item;
@@ -139,16 +136,14 @@ export default class RuleEditor {
   }
 
   initEditor($item, rule, appOptions) {
-    const schema = fixSchema(rule.schema);
+    const schema = schemaFixer.fixSchema(rule.schema);
     if (schema) {
       return new Promise((resolve, reject) => {
         const options = appOptions.getRuleOption(rule.key);
-        if (_.isObject(options) && options.hasOwnProperty("severity")) delete options.severity;
-
         const editor = new JSONEditor($item.find(".rule-options")[0], {
           form_name_root: `rules[${rule.key}][options]`,
           schema: schema,
-          startval: options,
+          startval: schemaFixer.fixInput(options),
         });
         editor.on("ready", () => { resolve(editor) });
       });
