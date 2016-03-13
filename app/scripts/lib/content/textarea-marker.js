@@ -49,6 +49,7 @@ export default class TextareaMarker {
     this.$background = null;
     this.active = false;
     this.positionTimer = null;
+    this.oldPosition = null;
     this.options = _.extend({}, DEFAULT_OPTIONS, $textarea.data(), options);
     this.options.markers = this._sortMarkers(this.options.markers || []);
     if (this.options.activate) {
@@ -146,17 +147,29 @@ export default class TextareaMarker {
           "color": "transparent",
           "border-color": "transparent",
           "overflow": "hidden",
-          "z-index": "-1",
+          "z-index": "auto",
           "background": this.$textarea.css("background")
         });
     }
     this.$background.insertBefore(this.$textarea);
+
+    const cssPosition = this.$textarea.css("position");
+    if (cssPosition === "static") {
+      this.oldPosition = cssPosition;
+      this.$textarea.css("position", "relative");
+    }
     this.$textarea.css("background", "none");
   }
 
   _detachBackground() {
     if (this.$background) {
       this.$textarea.css("background", this.$background.css("background"));
+
+      if (this.oldPosition) {
+        this.$textarea.css("position", this.oldPosition);
+        this.oldPosition = null;
+      }
+
       this.$background.remove();
     }
   }
