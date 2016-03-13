@@ -27,10 +27,9 @@ window.addEventListener("message", (event) => {
       const sendResponse = (data) => {
         data = data || {};
         data.type = "Return" + messageType;
+        DEBUG && console.log("     B <- S :", data);
         event.source.postMessage(data, event.origin);
-        DEBUG && console.log("Sandbox Message resp ", data);
       };
-      DEBUG && console.log("Sandbox Message recv ", event.data);
       return eventHandlers[messageType].call(this, event.data, sendResponse);
     }
   } else {
@@ -51,7 +50,7 @@ function on(messageType, callback) {
 
 function send(messageType, message) {
   message = _.extend({ type: messageType }, message);
-  DEBUG && console.log("Sandbox Message sent ", message);
+  DEBUG && console.log("     B -> S :", message);
   sandboxIframe.contentWindow.postMessage(message, '*');
 }
 

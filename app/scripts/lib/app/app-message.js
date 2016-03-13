@@ -27,7 +27,6 @@ let eventHandlers = {};
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type && VALID_MESSAGES[message.type]) {
     if (eventHandlers[message.type]) {
-      DEBUG && console.log("Message recv ", message)
       return eventHandlers[message.type].call(this, message, sender, sendResponse);
     }
   } else {
@@ -58,6 +57,10 @@ function send(messageType, message, tabId) {
   const p = new Promise((resolve, reject) => {
     const callback = (response) => {
       let error = chrome.runtime.lastError;
+
+      DEBUG && console.log(location.protocol === "chrome-extension"
+        ?  "C -> B      :" : "C <- B      :", error || response);
+
       if (_.isUndefined(response) && error) {
         reject(error.message);
       } else {
@@ -71,7 +74,8 @@ function send(messageType, message, tabId) {
     } else {
       chrome.runtime.sendMessage(message, {}, callback);
     }
-    DEBUG && console.log("Message sent ", message);
+    DEBUG && console.log(location.protocol === "chrome-extension"
+      ?  "C <- B      :" : "C -> B      :", message);
   });
 
   if (eventHandlers["error"]) {
