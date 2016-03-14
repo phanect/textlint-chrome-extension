@@ -15,6 +15,8 @@ export default {
 
     "textlint-rule-alex": (cb) => { require(["textlint-rule-alex"], cb) },
 
+    "textlint-rule-common-misspellings": (cb) => { require(["textlint-rule-common-misspellings"], cb) },
+
     "textlint-rule-general-novel-style-ja": (cb) => { require(["textlint-rule-general-novel-style-ja"], cb) },
 
     "textlint-rule-incremental-headers": (cb) => { require(["textlint-rule-incremental-headers"], cb) },
@@ -98,6 +100,54 @@ export default {
                   "type": "array",
                   "items": {
                     "title": "Type of message",
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "uniqueItems": true
+                },
+                "severity": {
+                  "title": "Severity of lint messages",
+                  "type": "string",
+                  "enum": [
+                    "error",
+                    "warning",
+                    "info"
+                  ],
+                  "default": "error"
+                }
+              }
+            }
+          ]
+        }
+      },
+
+    "textlint-rule-common-misspellings":
+      {
+        "name": "textlint-rule-common-misspellings",
+        "key": "common-misspellings",
+        "version": "1.0.1",
+        "description": "textlint rule to check common misspellings",
+        "author": "IRIDE Monad",
+        "license": "GPL-3.0",
+        "homepage": "https://github.com/io-monad/textlint-rule-common-misspellings",
+        "isPreset": false,
+        "rules": [],
+        "schema": {
+          "$schema": "http://json-schema.org/draft-04/schema#",
+          "title": "textlint-rule-common-misspellings configuration",
+          "oneOf": [
+            {
+              "title": "Enable this rule with default options",
+              "type": "boolean"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "ignore": {
+                  "title": "Ignoring misspellings",
+                  "type": "array",
+                  "items": {
+                    "title": "Misspelling",
                     "type": "string",
                     "minLength": 1
                   },

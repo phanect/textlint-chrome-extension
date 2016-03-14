@@ -163,6 +163,9 @@
   "ruleAlexDescription": {
     "message": "<i class=\"flag us\"></i> 性差、宗教、人種などによる差別的な英単語を <a href=\"http://alexjs.com/\" target=\"_blank\">Alex</a> でチェックします"
   },
+  "ruleCommonMisspellingsDescription": {
+    "message": "よくある英単語のスペルミスを <a href=\"https://en.wikipedia.org/wiki/Wikipedia:Lists_of_common_misspellings\" target=\"_blank\">Wikipedia のリスト</a> を元にチェックします"
+  },
   "ruleGeneralNovelStyleJaDescription": {
     "message": "日本の小説における一般的な作法に従います"
   },
@@ -222,6 +225,9 @@
   },
   "labelCharacters": {
     "message": "文字"
+  },
+  "labelIgnoringMisspellings": {
+    "message": "チェック対象外とするスペルミス"
   },
   "labelMaximumApprearanceCountOfWords": {
     "message": "同じ単語を使える最大回数"

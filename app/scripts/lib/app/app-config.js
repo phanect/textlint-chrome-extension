@@ -18,10 +18,12 @@ export default {
     {
       name: "English",
       rules: [
+        "common-misspellings",
         "rousseau",
         "alex"
       ],
       ruleOptions: {
+        "common-misspellings": true,
         "rousseau": true,
         "alex": true,
       }

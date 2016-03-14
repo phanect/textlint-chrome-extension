@@ -163,6 +163,9 @@
   "ruleAlexDescription": {
     "message": "Find gender, religious, race or other unequal phrasing; using <a href=\"http://alexjs.com/\" target=\"_blank\">Alex</a>."
   },
+  "ruleCommonMisspellingsDescription": {
+    "message": "Find common misspellings, from <a href=\"https://en.wikipedia.org/wiki/Wikipedia:Lists_of_common_misspellings/For_machines\" target=\"_blank\">Wikipedia: Lists of common misspellings</a>"
+  },
   "ruleGeneralNovelStyleJaDescription": {
     "message": "<i class=\"flag jp\"></i> Follow the general novel style in Japanese."
   },
@@ -222,6 +225,9 @@
   },
   "labelCharacters": {
     "message": "Characters"
+  },
+  "labelIgnoringMisspellings": {
+    "message": "Ignoring misspellings"
   },
   "labelMaximumApprearanceCountOfWords": {
     "message": "Maximum number of apprearance"
