@@ -142,7 +142,7 @@
     "message": "License"
   },
   "aboutP3_1": {
-    "message": "This extension and its source code are licensed under <a href=\"/LICENSE.txt\" target=\"_blank\">The MIT License</a>."
+    "message": "This extension and its source code are licensed under <a href=\"/LICENSE.txt\" target=\"_blank\">GNU GPLv3</a>."
   },
   "bundledTextlintAndRules": {
     "message": "Bundled textlint and rules"

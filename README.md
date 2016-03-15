@@ -1,5 +1,7 @@
 # textlint Chrome Extension
 
+[![GitHub license](https://img.shields.io/github/license/io-monad/textlint-chrome-extension.svg)](LICENSE)
+
 Chrome Extension that proofreads textarea using [textlint](http://textlint.github.io/).
 
 Work In Progress!
@@ -32,3 +34,9 @@ Increment version number of `manifest.json` and `package.json`, then commit the 
     $ gulp patch      // => 0.0.X
     $ gulp feature    // => 0.X.0
     $ gulp release    // => X.0.0
+
+### License
+
+This software is licensed under [GNU GPLv3](https://www.gnu.org/copyleft/gpl.html). See [LICENSE](LICENSE) for full text of the license.
+
+Before version 2.0.0, this extension was licensed under The MIT License. Since this exntension started to bundle some GPLv3 plugins, I decided to re-license the extension under GPLv3.

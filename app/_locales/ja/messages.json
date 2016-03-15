@@ -142,7 +142,7 @@
     "message": "ライセンス"
   },
   "aboutP3_1": {
-    "message": "この拡張機能およびソースコードは <a href=\"/LICENSE.txt\" target=\"_blank\">The MIT License</a> にてライセンスされています。"
+    "message": "この拡張機能およびソースコードは <a href=\"/LICENSE.txt\" target=\"_blank\">GNU GPLv3</a> にてライセンスされています。"
   },
   "bundledTextlintAndRules": {
     "message": "同梱されている textlint とルール類"
