@@ -79,7 +79,7 @@ gulp.task('scripts', ['bundle'], (cb) => {
             }
           },
           {
-            tesst: /node_modules\/prh\/lib\/index\.js/,
+            test: /node_modules\/prh\/lib\/index\.js/,
             loader: 'string-replace',
             query: {
               search: 'fs.readFileSync',
