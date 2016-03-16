@@ -70,42 +70,54 @@ export default class Badge {
   }
 
   updateForTabId(tabId) {
-    cutil.withTab(tabId, (tab) => this.updateForTab(tab));
+    return new Promise((resolve, reject) => {
+      cutil.withTab(tabId, (tab) => {
+        this.updateForTab(tab).then(resolve, reject);
+      });
+    });
   }
 
   updateForActiveTab() {
-    cutil.withActiveTab((tab) => this.updateForTab(tab));
+    return new Promise((resolve, reject) => {
+      cutil.withActiveTab((tab) => {
+        this.updateForTab(tab).then(resolve, reject);
+      });
+    });
   }
 
   updateForTab(tab) {
-    if (!tab.url || !/^https?:/.test(tab.url)) {
-      this.disable(tab.id);
-      return;
-    }
-    this.enable(tab.id);
+    return new Promise((resolve, reject) => {
+      if (!tab.url || !/^https?:/.test(tab.url)) {
+        this.disable(tab.id);
+        return resolve();
+      }
+      this.enable(tab.id);
 
-    const status = linters.getStatus(tab.id);
-    if (status.lastError) {
-      this.showError(tab.id);
-      return;
-    }
-
-    messages.getStatus(tab.id).then(({active, marks, counts}) => {
-      this.toggleActive(tab.id, active);
-
-      const showCount = !_.isEmpty(this.appOptions.badgeCountSeverity);
-      if (showCount && active && status.clientLinted && !status.waiting) {
-        this.showLintCount(tab.id, counts);
-      } else {
-        this.hideLintCount(tab.id);
+      const status = linters.getStatus(tab.id);
+      if (status.lastError) {
+        this.showError(tab.id);
+        return resolve();
       }
 
-      if (!active && linters.isActive(tab.id)) {
-        linters.deactivate(tab.id);
-      }
-    }).catch((err) => {
-      // Maybe not active
-      this.deactivate(tab.id);
+      messages.getStatus(tab.id).then(({active, marks, counts}) => {
+        this.toggleActive(tab.id, active);
+
+        const showCount = !_.isEmpty(this.appOptions.badgeCountSeverity);
+        if (showCount && active && status.clientLinted && !status.waiting) {
+          this.showLintCount(tab.id, counts);
+        } else {
+          this.hideLintCount(tab.id);
+        }
+
+        if (!active && linters.isActive(tab.id)) {
+          linters.deactivate(tab.id);
+        }
+        resolve();
+      }).catch((err) => {
+        // Maybe not active
+        this.deactivate(tab.id);
+        resolve();
+      });
     });
   }
 }
