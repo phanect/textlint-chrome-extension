@@ -10,7 +10,7 @@ import args from './lib/args';
 gulp.task('styles:css', function() {
   return gulp.src('app/styles/*.css')
     .pipe(gulpif(args.production, minifyCSS()))
-    .pipe(gulp.dest(`dist/${args.vendor}/styles`))
+    .pipe(gulp.dest('dist/styles'))
     .pipe(gulpif(args.watch, livereload()));
 });
 
@@ -23,7 +23,7 @@ gulp.task('styles:less', function() {
     }))
     .pipe(gulpif(args.production, minifyCSS()))
     .pipe(gulpif(args.sourcemaps, sourcemaps.write('.')))
-    .pipe(gulp.dest(`dist/${args.vendor}/styles`))
+    .pipe(gulp.dest('dist/styles'))
     .pipe(gulpif(args.watch, livereload()));
 });
 

@@ -36,7 +36,6 @@ gulp.task('scripts', ['bundle'], (cb) => {
       plugins: [
         new webpack.DefinePlugin({
           '__ENV__': JSON.stringify(args.production ? 'production' : 'development'),
-          '__VENDOR__': JSON.stringify(args.vendor),
           'DEBUG': !args.production,
         }),
         new webpack.IgnorePlugin(
@@ -118,7 +117,7 @@ gulp.task('scripts', ['bundle'], (cb) => {
         }
       }
     }))
-    .pipe(gulp.dest(`dist/${args.vendor}/scripts`))
+    .pipe(gulp.dest('dist/scripts'))
     .pipe(gulpif(args.watch, livereload()));
 });
 

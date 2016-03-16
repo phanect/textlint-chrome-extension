@@ -8,11 +8,11 @@ gulp.task('pack', ['build'], () => {
   let name = packageDetails.name;
   let version = packageDetails.version;
   let filename = `${name}-${version}.zip`;
-  return gulp.src(`dist/${args.vendor}/**/*`)
+  return gulp.src('dist/**/*')
     .pipe(zip(filename))
     .pipe(gulp.dest('./packages'))
     .on('end', () => {
-      let distStyled = colors.magenta(`dist/${args.vendor}`);
+      let distStyled = colors.magenta('dist');
       let filenameStyled = colors.magenta(`./packages/${filename}`);
       log(`Packed ${distStyled} to ${filenameStyled}`);
     });
