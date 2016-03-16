@@ -12,9 +12,9 @@
   },
   "scripts": {
     "prepublish": "bower install",
-    "pack": "gulp pack --production --vendor=chrome",
-    "build": "gulp --vendor=chrome",
-    "watch": "gulp --watch --vendor=chrome"
+    "pack": "gulp pack --production",
+    "build": "gulp build",
+    "watch": "gulp build --watch"
   },
   "devDependencies": {
     "babel-loader": "^6.2.4",
@@ -31,7 +31,6 @@
     "gulp-gunzip": "0.0.3",
     "gulp-if": "^2.0.0",
     "gulp-imagemin": "^2.4.0",
-    "gulp-json-transform": "^0.3.0",
     "gulp-less": "^3.0.5",
     "gulp-livereload": "^3.8.1",
     "gulp-minify-css": "^1.2.4",
@@ -76,7 +75,6 @@
     "textlint-rule-spellcheck-tech-word": "^4.2.0",
     "textlint-rule-unexpanded-acronym": "^1.2.1",
     "through2": "^2.0.1",
-    "vinyl-named": "^1.1.0",
     "webpack": "^1.12.14",
     "webpack-stream": "^3.1.0",
     "yargs": "^4.2.0"

@@ -6,5 +6,5 @@ import args from './lib/args';
 gulp.task('license', () => {
   return gulp.src('LICENSE')
     .pipe(rename('LICENSE.txt'))
-    .pipe(gulp.dest(`dist/${args.vendor}`))
+    .pipe(gulp.dest('dist'))
 });
