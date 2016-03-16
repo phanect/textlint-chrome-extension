@@ -1,6 +1,5 @@
 import gulp from 'gulp';
 import gulpif from 'gulp-if';
-import named from 'vinyl-named';
 import webpack from 'webpack';
 import gulpWebpack from 'webpack-stream';
 import livereload from 'gulp-livereload';

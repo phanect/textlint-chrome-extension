@@ -76,7 +76,6 @@
     "textlint-rule-spellcheck-tech-word": "^4.2.0",
     "textlint-rule-unexpanded-acronym": "^1.2.1",
     "through2": "^2.0.1",
-    "vinyl-named": "^1.1.0",
     "webpack": "^1.12.14",
     "webpack-stream": "^3.1.0",
     "yargs": "^4.2.0"
