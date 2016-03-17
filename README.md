@@ -1,6 +1,6 @@
 # textlint Chrome Extension
 
-[![GitHub license](https://img.shields.io/github/license/io-monad/textlint-chrome-extension.svg)](LICENSE)
+[![Build Status](https://travis-ci.org/io-monad/textlint-chrome-extension.svg?branch=master)](https://travis-ci.org/io-monad/textlint-chrome-extension) [![GitHub license](https://img.shields.io/github/license/io-monad/textlint-chrome-extension.svg)](LICENSE)
 
 Chrome Extension that proofreads textarea using [textlint](http://textlint.github.io/).
 
