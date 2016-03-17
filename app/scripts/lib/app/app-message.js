@@ -12,6 +12,7 @@ const MESSAGES = {
   LINT_RESULT: "LintResult",
   CORRECT_RESULT: "CorrectResult",
   SHOW_MARK: "ShowMark",
+  DISMISS_MARK: "DismissMark",
   TRIGGER_CORRECT: "TriggerCorrect",
   UNDO: "Undo",
   UPDATE_OPTIONS: "UpdateOptions",

@@ -5,9 +5,10 @@
 .icon-info { .fa-icon-info(); }
 .icon-warning { .fa-icon-warning(); }
 .icon-error { .fa-icon-error(); }
+.icon-dismissed { .fa-icon-dismissed(); }
 
 body {
-  width: 40em;
+  width: 45em;
   min-height: 25em;
   padding: 10px 0;
   overflow-y: auto;
@@ -24,7 +25,7 @@ body {
 }
 
 .settings-area {
-  margin: 30px;
+  margin: 30px 30px 30px 40%;
 
   #presets {
     margin-left: 20px;
@@ -46,6 +47,9 @@ body {
       margin: 0 3px;
       font-weight: bold;
     }
+    span {
+      text-transform: lowercase;
+    }
 
     .btn {
       min-width: 6em;
@@ -57,6 +61,7 @@ body {
       .icon-error:before { color: darken(@icon-error-color, 20%); }
       .icon-warning:before { color: darken(@icon-warning-color, 20%); }
       .icon-info:before { color: darken(@icon-info-color, 20%); }
+      .icon-dismissed:before { color: darken(@icon-dismissed-color, 20%); }
     }
   }
 
@@ -79,6 +84,7 @@ body {
     &.filter-error .mark-item-error { display: none; }
     &.filter-warning .mark-item-warning { display: none; }
     &.filter-info .mark-item-info { display: none; }
+    &.filter-dismissed .mark-item-dismissed { display: none; }
   }
 
   #no-marks {
@@ -125,13 +131,39 @@ body {
     }
   }
 
-  .mark-item-rule {
+  .mark-item-menu {
+    display: none;
     float: right;
-    font-size: 10px;
+    font-size: 12px;
     text-align: right;
-    margin-left: 10px;
+    margin-left: 7px;
     white-space: nowrap;
-    a { color: #999999; }
+
+    a.mark-item-menu-item {
+      color: #999999;
+      margin-left: 3px;
+    }
+    a.mark-item-menu-item:hover {
+      color: white;
+      text-decoration: none;
+    }
+  }
+  &:hover {
+    .mark-item-menu {
+      display: block;
+    }
+  }
+
+  .mark-undismiss {
+    display: none;
+  }
+  &.mark-item-dismissed {
+    .mark-dismiss {
+      display: none;
+    }
+    .mark-undismiss {
+      display: inline-block;
+    }
   }
 
   &:after {

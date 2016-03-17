@@ -5,6 +5,7 @@
 import _ from "lodash";
 import $ from "jquery";
 import "./textarea-marker";
+import DismissType from "./dismiss-type";
 
 const LINT_DELAY = 1000;
 const CLASS_PREFIX = "ext-textlint-";
@@ -102,6 +103,8 @@ export class TextareaLinter {
     this.options = _.extend({}, DEFAULT_OPTIONS, options);
     this.active = false;
     this.lintedTextArea = null;
+    this.lastLintResult = null;
+    this.dismisses = {};
     this.tooltip = new TextareaLinterTooltip();
   }
 
@@ -150,6 +153,7 @@ export class TextareaLinter {
       this.clearUndos(this.lintedTextArea);
       this._hideLintResult(this.lintedTextArea);
       this.lintedTextArea = null;
+      this.dismisses = {};
     }
   }
 
@@ -176,6 +180,7 @@ export class TextareaLinter {
     const $textarea = $(textarea);
     const text = $(this.lintedTextArea).val();
     const markers = this._buildMarkersFromLintMessages(text, lintResult.messages);
+    this.lastLintResult = lintResult;
 
     if ($textarea.textareaMarker("isActive")) {
       $textarea.textareaMarker("setMarkers", markers);
@@ -195,17 +200,24 @@ export class TextareaLinter {
         })
     }
 
+    const severities = _(markers).reject((m) => m.data.dismissed).map((m) => m.data.severity).uniq().value();
     const cls = `${CLASS_PREFIX}textarea`;
     $textarea
       .addClass(cls)
       .removeClass(this._prefixedClass(`${cls}-`))
-      .addClass(_.uniq(_.map(lintResult.messages, (m) => `${cls}-${m.severity}`)).join(" "))
-      .toggleClass(`${cls}-none`, lintResult.messages.length === 0)
+      .addClass(_.map(severities, (sev) => `${cls}-${sev}`).join(" "))
+      .toggleClass(`${cls}-none`, severities.length === 0)
       .textareaMarker(this.options.showMarks ? "show" : "hide")
       .toggleClass(`${cls}-show-border`, this.options.showBorder);
 
     this.tooltip.hide();
     this.options.onMarksChanged && this.options.onMarksChanged.call(textarea);
+  }
+
+  _refreshCurrentLintResult() {
+    if (this.lintedTextArea && this.lastLintResult) {
+      this._showLintResult(this.lintedTextArea, this.lastLintResult);
+    }
   }
 
   _hideLintResult(textarea) {
@@ -221,23 +233,36 @@ export class TextareaLinter {
   _buildMarkersFromLintMessages(text, messages) {
     return _.map(messages || [], (msg) => {
       msg.markId = msg.markId || _.uniqueId("mark");
+      msg.text = text.slice(msg.start, msg.end);
+      msg.dismissed = this._isDismissedMark(msg);
+
+      const classNames = [
+        `${CLASS_PREFIX}${msg.markId}`,
+        `${CLASS_PREFIX}${msg.severity}`,
+      ];
+      if (msg.dismissed) classNames.push(`${CLASS_PREFIX}dismissed`);
+
       return {
-        class: `${CLASS_PREFIX}${msg.markId} ${CLASS_PREFIX}${msg.severity}`,
+        class: classNames.join(" "),
         start: msg.start,
-        end:   msg.end,
-        data:  msg,
+        end: msg.end,
+        data: msg,
       };
     });
   }
 
-  getCurrentLintMarks() {
+  getCurrentLintMarks(markId = null) {
     if (!this.lintedTextArea) return [];
     const $textarea = $(this.lintedTextArea);
     if ($textarea.textareaMarker("isActive")) {
-      return _.map(
-        $textarea.textareaMarker("markers"),
-        (marker) => $(marker).data()
-      );
+      let $markers = $textarea.textareaMarker("markers");
+      if (markId) $markers = $markers.filter(`.${CLASS_PREFIX}${markId}`);
+      return _.map($markers, (marker) => {
+        const $marker = $(marker);
+        const mark = $marker.data();
+        mark.text = $marker.text();
+        return mark;
+      });
     } else {
       return [];
     }
@@ -253,6 +278,39 @@ export class TextareaLinter {
   showMark(markId) {
     $(this.lintedTextArea)
       .textareaMarker("scrollToMark", `.${CLASS_PREFIX}${markId}`);
+  }
+
+  dismissMark(markId, dismissType) {
+    if (!this.lintedTextArea) return;
+    _.each(this.getCurrentLintMarks(markId), (mark) => {
+      if (dismissType === DismissType.UNDISMISS) {
+        _.each([DismissType.ONLY_THIS, DismissType.ALL_SAME], (type) => {
+          const key = this._buildDismissKey(mark, type);
+          _.unset(this.dismisses, [type, key]);
+        });
+      } else {
+        const key = this._buildDismissKey(mark, dismissType);
+        _.set(this.dismisses, [dismissType, key], true);
+      }
+    });
+    this._refreshCurrentLintResult();
+  }
+
+  _isDismissedMark(mark) {
+    return _.some(this.dismisses, (dict, dismissType) => {
+      const key = this._buildDismissKey(mark, dismissType);
+      return dict[key];
+    });
+  }
+
+  _buildDismissKey(mark, dismissType) {
+    switch (dismissType) {
+      case DismissType.ONLY_THIS:
+        return `${mark.severity}:${mark.ruleId}:${mark.message}:${mark.text}`;
+      case DismissType.ALL_SAME:
+        return `${mark.severity}:${mark.ruleId}:${mark.message}`;
+    }
+    throw `Unknown dismissType: ${dismissType}`;
   }
 
   correct() {

@@ -84,6 +84,12 @@
                 <span class="stat-count" id="marks-count-info"></span>
                 <span data-i18n="info">Info</span>
               </label>
+              <label class="marks-filter-item btn btn-link btn-sm" id="marks-filter-dismissed">
+                <input type="checkbox" autocomplete="off" name="filter[]" value="dismissed">
+                <i class="icon-dismissed"></i>
+                <span class="stat-count" id="marks-count-dismissed">0</span>
+                <span data-i18n="dismissed">Dismissed</span>
+              </label>
             </div>
           </div>
           <div id="marks-correct">
@@ -97,11 +103,25 @@
             </button>
           </div>
         </div>
-        <div id="marks">
+        <div id="marks" class="filter-dismissed">
           <div class="mark-item clearfix template">
-            <div class="mark-item-text"><i class="mark-severity"></i><i class="mark-correctable fa fa-check"></i><span class="mark-message"></span></div>
-            <div class="mark-item-rule">
-              <a href="#" class="mark-rule mark-link" target="_blank"></a>
+            <div class="mark-item-text"><i class="mark-severity"></i><i class="mark-correctable fa fa-check" data-i18n-attr="title:correctable"></i><span class="mark-message"></span></div>
+            <div class="mark-item-menu">
+              <a href="#" class="mark-item-menu-item mark-rule mark-link" target="_blank">
+                <i class="fa fa-home"></i>
+              </a>
+              <div class="btn-group mark-dismiss">
+                <a href="#" class="mark-item-menu-item" data-i18n-attr="title:dismissIt" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="fa fa-bell-slash"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-right">
+                  <li><a href="#" class="mark-dismiss-this" data-i18n="dismissOnlyThis">Dismiss only this message</a></li>
+                  <li><a href="#" class="mark-dismiss-same" data-i18n="dismissAllSame">Dismiss all the same messages</a></li>
+                </ul>
+              </div>
+              <a href="#" class="mark-item-menu-item mark-undismiss" data-i18n-attr="title:undismissIt">
+                <i class="fa fa-bell"></i>
+              </a>
             </div>
           </div>
         </div>

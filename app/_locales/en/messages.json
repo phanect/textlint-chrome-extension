@@ -41,11 +41,29 @@
   "info": {
     "message": "Info"
   },
+  "dismissed": {
+    "message": "Dismissed"
+  },
   "correct": {
     "message": "Correct"
   },
   "undo": {
     "message": "Undo"
+  },
+  "correctable": {
+    "message": "This is correctable by Correct button above"
+  },
+  "dismissIt": {
+    "message": "Dismiss this message"
+  },
+  "dismissOnlyThis": {
+    "message": "Dismiss only this message"
+  },
+  "dismissAllSame": {
+    "message": "Dismiss all the same messages"
+  },
+  "undismissIt": {
+    "message": "Cancel dismissal of this message"
   },
   "linting": {
     "message": "Checking your text..."

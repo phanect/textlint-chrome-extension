@@ -9,6 +9,7 @@
 @icon-info-color: #C2F3F4;
 @icon-warning-color: #FFF53B;
 @icon-error-color: #F47D7C;
+@icon-dismissed-color: #EDEDED;
 @lint-passed-color: #74D94F;
 @lint-info-color: #A5E7FF;
 @lint-warning-color: #FFF571;
@@ -33,5 +34,12 @@
   &:before {
     content: @fa-var-times-circle;
     color: @icon-error-color;
+  }
+}
+.fa-icon-dismissed() {
+  .fa-icon();
+  &:before {
+    content: @fa-var-bell-slash;
+    color: @icon-dismissed-color;
   }
 }

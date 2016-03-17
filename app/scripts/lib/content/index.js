@@ -38,8 +38,8 @@ export default function () {
   messages.onGetStatus((msg, sender, sendResponse) => {
     const active = textareaLinter ? textareaLinter.active : false;
     const marks = textareaLinter ? textareaLinter.getCurrentLintMarks() : [];
-    const counts = { info: 0, warning: 0, error: 0 };
-    marks.forEach((mark) => { counts[mark.severity]++ });
+    const counts = { info: 0, warning: 0, error: 0, dismissed: 0 };
+    marks.forEach((mark) => { counts[mark.dismissed ? "dismissed" : mark.severity]++ });
     const undoCount = textareaLinter ? textareaLinter.getCurrentUndoCount() : 0;
     sendResponse({ active, marks, counts, undoCount });
   });
@@ -78,6 +78,11 @@ export default function () {
 
   messages.onShowMark(({markId}, sender, sendResponse) => {
     if (textareaLinter) textareaLinter.showMark(markId);
+    sendResponse();
+  });
+
+  messages.onDismissMark(({markId, dismissType}, sender, sendResponse) => {
+    if (textareaLinter) textareaLinter.dismissMark(markId, dismissType);
     sendResponse();
   });
 
