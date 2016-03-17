@@ -83,7 +83,7 @@ export default class AppOptions {
     }
   }
   set(options) {
-    _.defaultsDeep(options, this.options);
+    this.options = _.defaultsDeep(options, this.options);
   }
   overwrite(options) {
     this.options = _.defaultsDeep(options, DEFAULT_OPTIONS);
@@ -119,7 +119,7 @@ export default class AppOptions {
   get showBorder() {
     return this.options.showBorder;
   }
-  set showBorder(V) {
+  set showBorder(v) {
     this.options.showBorder = v;
   }
   get badgeCountSeverity() {

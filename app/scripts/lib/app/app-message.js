@@ -24,9 +24,10 @@ const MESSAGES = {
 };
 const VALID_MESSAGES = _.invert(MESSAGES);
 
-let eventHandlers = {};
+let eventHandlers;
+reset();
 
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+function listener(message, sender, sendResponse) {
   if (message.type && VALID_MESSAGES[message.type]) {
     if (eventHandlers[message.type]) {
       return eventHandlers[message.type].call(this, message, sender, sendResponse);
@@ -34,7 +35,13 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   } else {
     console.error("Unknown message:", message, ", sender: ", sender);
   }
-});
+}
+
+function reset() {
+  eventHandlers = {};
+  chrome.runtime.onMessage.removeListener(listener);
+  chrome.runtime.onMessage.addListener(listener);
+}
 
 function on(messageType, callback) {
   if (VALID_MESSAGES[messageType]) {
@@ -88,6 +95,7 @@ function send(messageType, message, tabId) {
 }
 
 export default _.extend({}, MESSAGES, {
+  reset: reset,
   on: on,
   onError: onError,
   tabSend: tabSend,

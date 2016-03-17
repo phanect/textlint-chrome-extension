@@ -19,7 +19,7 @@ const MESSAGES = {
 };
 const VALID_MESSAGES = _.invert(MESSAGES);
 
-const eventHandlers = {};
+let eventHandlers = {};
 const sandboxIframe = document.getElementById("sandbox");
 
 window.addEventListener("message", (event) => {
@@ -39,6 +39,10 @@ window.addEventListener("message", (event) => {
   }
 });
 
+function reset() {
+  eventHandlers = {};
+}
+
 function on(messageType, callback) {
   if (VALID_MESSAGES[messageType]) {
     if (eventHandlers[messageType]) {
@@ -57,6 +61,7 @@ function send(messageType, message) {
 }
 
 export default _.extend({}, MESSAGES, {
+  reset: reset,
   on: on,
   send: send
 });

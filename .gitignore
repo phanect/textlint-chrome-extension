@@ -6,6 +6,7 @@ npm-debug.log
 
 bower_components
 
+tmp/
 dist/
 packages/
 certs/*.pem
