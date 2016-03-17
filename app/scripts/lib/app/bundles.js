@@ -820,7 +820,7 @@ export default {
       {
         "name": "textlint-rule-preset-jtf-style",
         "key": "preset-jtf-style",
-        "version": "2.1.1",
+        "version": "2.1.2",
         "description": "JTF Style Guide for Translators Working into Japanese for textlint.",
         "author": "azu",
         "license": "MIT",
