@@ -138,9 +138,11 @@ export default class TextareaMarker {
     this.$textarea.scrollTop(Math.max(0, pos.top + bgY - centerY));
 
     // Blink the marks
-    for (let i = 0; i < 2; i++) {
-      $marks.animate({ "opacity": 0 }, 300).animate({ "opacity": 1 }, 100);
-    }
+    const blinkClass = `${this.options.classPrefix}blink`;
+    $marks.removeClass(blinkClass).addClass(blinkClass)
+      .one("webkitAnimationEnd animationend", () => {
+        $marks.removeClass(blinkClass);
+      });
   }
 
   _attachBackground() {

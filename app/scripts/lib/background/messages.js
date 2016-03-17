@@ -49,6 +49,10 @@ export default {
     return messages.tabSend(tabId, messages.SHOW_MARK, { markId });
   },
 
+  dismissMark(tabId, markId, dismissType) {
+    return messages.tabSend(tabId, messages.DISMISS_MARK, { markId, dismissType });
+  },
+
   triggerCorrect(tabId) {
     return messages.tabSend(tabId, messages.TRIGGER_CORRECT);
   },

@@ -41,11 +41,29 @@
   "info": {
     "message": "情報"
   },
+  "dismissed": {
+    "message": "非通知"
+  },
   "correct": {
     "message": "自動で修正する"
   },
   "undo": {
     "message": "修正を戻す"
+  },
+  "correctable": {
+    "message": "自動修正が可能です"
+  },
+  "dismissIt": {
+    "message": "このメッセージは通知しない"
+  },
+  "dismissOnlyThis": {
+    "message": "このメッセージのみ通知しない"
+  },
+  "dismissAllSame": {
+    "message": "同じ内容のメッセージを全て通知しない"
+  },
+  "undismissIt": {
+    "message": "このメッセージを通知するようにする"
   },
   "linting": {
     "message": "文書をチェックしています…"

@@ -7,6 +7,7 @@ import $ from "jquery";
 import messages from "../background/messages";
 import appStorage from "../app/app-storage";
 import bundles from "../app/bundles";
+import DismissType from "../content/dismiss-type";
 import textlintConfig from "../textlint/textlint-config";
 import cutil from "../util/chrome-util";
 import "../util/i18n-replace";
@@ -66,9 +67,25 @@ export default function () {
     cutil.withActiveTab((tab) => { messages.undo(tab.id) });
   });
 
-  $marks.on("click", ".mark-item", function () {
+  $marks.on("click", ".mark-item", function (ev) {
+    if ($(ev.target).parents(".mark-item-menu").length > 0) return;
     let markId = $(this).data("markId");
     cutil.withActiveTab((tab) => { messages.showMark(tab.id, markId) });
+  });
+
+  $marks.on("click", ".mark-dismiss-this", function () {
+    let markId = $(this).parents(".mark-item").data("markId");
+    cutil.withActiveTab((tab) => { messages.dismissMark(tab.id, markId, DismissType.ONLY_THIS) });
+  });
+
+  $marks.on("click", ".mark-dismiss-same", function () {
+    let markId = $(this).parents(".mark-item").data("markId");
+    cutil.withActiveTab((tab) => { messages.dismissMark(tab.id, markId, DismissType.ALL_SAME) });
+  });
+
+  $marks.on("click", ".mark-undismiss", function () {
+    let markId = $(this).parents(".mark-item").data("markId");
+    cutil.withActiveTab((tab) => { messages.dismissMark(tab.id, markId, DismissType.UNDISMISS) });
   });
 
   $("#refresh-button").on("click", function () {
@@ -124,14 +141,14 @@ export default function () {
       const rule = bundles.get(mark.ruleId);
       correctable = mark.correctable || correctable;
 
-      $item.data("markId", mark.markId)
-      $item.attr("title", `[${mark.severity}] ${mark.message} (${mark.ruleId})`)
-      $item.addClass(`mark-item-${mark.severity}`)
+      $item.data("markId", mark.markId);
+      $item.addClass(`mark-item-${mark.dismissed ? "dismissed" : mark.severity}`);
+      $item.toggleClass("mark-item-dismissed", mark.dismissed);
 
       $item.find(".mark-message").text(mark.message);
-      $item.find(".mark-severity").addClass(`icon-${mark.severity}`);
+      $item.find(".mark-severity").addClass(`icon-${mark.dismissed ? "dismissed" : mark.severity}`);
       $item.find(".mark-correctable").toggle(mark.correctable);
-      $item.find(".mark-rule").text(mark.ruleId);
+      $item.find(".mark-rule").attr("title", mark.ruleId);
       $item.find(".mark-link").attr("href", rule && rule.homepage ? rule.homepage : "#");
       $item.appendTo($marks);
     });

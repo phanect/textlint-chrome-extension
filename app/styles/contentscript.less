@@ -116,4 +116,30 @@
   &.ext-textlint-error {
     background-color: fade(darken(@lint-error-color, 10%), 60%);
   }
+  &.ext-textlint-dismissed {
+    background-color: transparent;
+    box-shadow: none;
+  }
+  &.ext-textlint-blink {
+    &.ext-textlint-info {
+      background-color: darken(@lint-info-color, 20%);
+    }
+    &.ext-textlint-warning {
+      background-color: darken(@lint-warning-color, 20%);
+    }
+    &.ext-textlint-error {
+      background-color: darken(@lint-error-color, 20%);
+    }
+    -webkit-animation: 0.2s ease-in 0s 6 alternate backwards blink;
+    animation: 0.2s ease-in 0s 6 alternate backwards blink;
+  }
+}
+
+@-webkit-keyframes blink {
+  0%   { opacity: 1; }
+  100% { opacity: 0; }
+}
+@keyframes blink {
+  0%   { opacity: 1; }
+  100% { opacity: 0; }
 }

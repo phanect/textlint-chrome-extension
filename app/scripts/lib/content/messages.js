@@ -33,6 +33,10 @@ export default {
     messages.on(messages.SHOW_MARK, callback);
   },
 
+  onDismissMark(callback) {
+    messages.on(messages.DISMISS_MARK, callback);
+  },
+
   onTriggerCorrect(callback) {
     messages.on(messages.TRIGGER_CORRECT, callback);
   },
