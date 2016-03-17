@@ -26,11 +26,8 @@ const args = yargs
 
   .argv
 
-// Use production flag for sourcemaps
-// as a fallback
-if(typeof args.sourcemaps === 'undefined'){
+if (typeof args.sourcemaps === 'undefined' && args.watch) {
   args.sourcemaps = !args.production;
 }
 
 export default args;
-

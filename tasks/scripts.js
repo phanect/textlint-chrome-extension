@@ -30,7 +30,8 @@ function getWebpackConfig(testing) {
       filename: '[name].js',
       publicPath: '/scripts/',
     },
-    devtool: testing ? '#inline-source-map' :
+    devtool: testing ?
+      (args.watch ? '#inline-source-map' : null) :
       (args.sourcemaps ? 'source-map' : null),
     watch: args.watch,
     plugins: [
@@ -138,10 +139,16 @@ gulp.task('scripts:test', ['bundle:test'], () => {
 });
 
 export function buildForTest() {
-  return gulp.src(['tests/entry.js'])
-    .pipe(gulpWebpack(getWebpackConfig(true)))
-    .pipe(sourcemaps.init({ loadMaps: true }))
-    .pipe(espower())
-    .pipe(sourcemaps.write())
-    .pipe(gulp.dest('tmp/scripts'));
+  if (args.watch) {
+    return gulp.src(['tests/entry.js'])
+      .pipe(gulpWebpack(getWebpackConfig(true)))
+      .pipe(sourcemaps.init({ loadMaps: true }))
+      .pipe(espower())
+      .pipe(sourcemaps.write())
+      .pipe(gulp.dest('tmp/scripts'));
+  } else {
+    return gulp.src(['tests/entry.js'])
+      .pipe(gulpWebpack(getWebpackConfig(true)))
+      .pipe(gulp.dest('tmp/scripts'));
+  }
 }
