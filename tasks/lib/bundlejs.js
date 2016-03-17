@@ -18,6 +18,9 @@ export default function bundlejs(fileName, options = {}) {
     }));
     stream.push(null); // EOF
   }).catch((err) => {
+    gutil.log(gutil.colors.red(
+      `Error while building ${fileName}:`, (err.message || err)
+    ));
     stream.emit("error", err);
   });
   return stream;
@@ -43,6 +46,10 @@ function renderTemplate(vars) {
   return template(vars);
 }
 
+function getBundledTextlint() {
+  return Promise.resolve(getPackageInfo('textlint'));
+}
+
 function getBundles() {
   return new Promise((resolve, reject) => {
     Promise.all([getBundledTextlint(), getBundledRules()])
@@ -56,30 +63,34 @@ function getBundles() {
   });
 }
 
-function getBundledTextlint() {
-  return Promise.resolve(getPackageInfo('textlint'));
+function getBundledRules() {
+  return new Promise((resolve, reject) => {
+    const rules = buildRulesFromPackageNames(getBundledRuleNames());
+    const promises = _.map(rules, rule => textlintRegistry.getSchema(rule.name));
+
+    Promise.all(promises).then((schemas) => {
+      _.each(schemas, (schema, index) => rules[index].schema = schema);
+      resolve(rules);
+    })
+    .catch(reject);
+  });
 }
 
-function getBundledRules(cb) {
-  return new Promise((resolve, reject) => {
-    exec('npm --json --depth=1 list', (error, stdout, stderr) => {
-      if (error) return reject(error);
+function getBundledRuleNames() {
+  const meta = require(`${__dirname}/../../package.json`);
+  return _.filter(_.keys(meta.devDependencies), (pkg) => /^textlint-rule-/.test(pkg));
+}
 
-      const list = JSON.parse(stdout);
-      const bundles = scanDependenciesForRules(list.dependencies);
-
-      Promise.all(_.map(bundles, rule => textlintRegistry.getSchema(rule.name)))
-      .then((schemas) => {
-        _.each(schemas, (schema, index) => bundles[index].schema = schema);
-        resolve(bundles);
-      })
-      .catch(reject);
-    });
-  });
+function buildRulesFromPackageNames(packageNames) {
+  return _(packageNames)
+    .filter((p) => /^textlint-rule-/.test(p) && p !== "textlint-rule-helper")
+    .map(getPackageInfo)
+    .value();
 }
 
 function getPackageInfo(packageName) {
   const info = require(`${packageName}/package.json`);
+  const isPreset = /^textlint-rule-preset-/.test(info.name);
   return {
     name: info.name,
     key: info.name.replace(/^textlint-rule-/, ""),
@@ -88,22 +99,8 @@ function getPackageInfo(packageName) {
     author: _.isObject(info.author) ? info.author.name : info.author,
     license: info.license,
     homepage: info.homepage,
-    isPreset: false,
-    rules: [],
+    isPreset: isPreset,
+    rules: isPreset ? buildRulesFromPackageNames(_.keys(info.dependencies)) : [],
     schema: /* Place holder for textlint-registry */ null,
   };
-}
-
-function scanDependenciesForRules(dependencies) {
-  return _.reduce(dependencies, (accum, meta, name) => {
-    if (/^textlint-rule-/.test(name)) {
-      const info = getPackageInfo(name);
-      if (/^textlint-rule-preset-/.test(name)) {
-        info.isPreset = true;
-        info.rules = scanDependenciesForRules(meta.dependencies);
-      }
-      accum.push(info);
-    }
-    return accum;
-  }, []);
 }
