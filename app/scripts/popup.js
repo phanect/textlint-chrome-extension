@@ -2,6 +2,6 @@
  * License: GNU GPLv3 http://www.gnu.org/licenses/gpl-3.0.html */
 "use strict";
 
-import popup from "./lib/popup/index";
+import PopupController from "./lib/popup/popup-controller";
 
-popup();
+(new PopupController()).start();

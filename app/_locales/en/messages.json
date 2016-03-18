@@ -23,7 +23,7 @@
   "deactivate": {
     "message": "Deactivate Linting"
   },
-  "choosePreset": {
+  "chooseRuleset": {
     "message": "Choose what type of text you write."
   },
   "checkAsMarkdown": {
@@ -68,7 +68,7 @@
   "linting": {
     "message": "Checking your text..."
   },
-  "noMarks": {
+  "passed": {
     "message": "Your text has passed all tests."
   },
   "ready": {
@@ -83,16 +83,16 @@
   "wentWrong": {
     "message": "Sorry, something went wrong..."
   },
-  "presetEnglish": {
+  "rulesetEnglish": {
     "message": "English text"
   },
-  "presetJapanese": {
+  "rulesetJapanese": {
     "message": "Japanese text"
   },
-  "presetJapaneseNovel": {
+  "rulesetJapaneseNovel": {
     "message": "Japanese novel text"
   },
-  "presetCustom": {
+  "rulesetCustom": {
     "message": "Custom rules in Options"
   },
   "menuRules": {

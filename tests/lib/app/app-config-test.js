@@ -9,7 +9,7 @@ describe("appConfig", () => {
   it("is an exported Object", () => {
     assert(_.isObject(appConfig));
   });
-  it("has presets", () => {
-    assert(_.isArray(appConfig.presets));
+  it("has rulesets", () => {
+    assert(_.isArray(appConfig.rulesets));
   });
 });

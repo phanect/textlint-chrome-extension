@@ -3,7 +3,7 @@
 "use strict";
 
 import _ from "lodash";
-import textlintConfig from "../textlint/textlint-config";
+import textlintRulesets from "../textlint/textlint-rulesets";
 import LinterStatus from "./linter-status";
 import sandboxClient from "./sandbox-client";
 import messages from "./messages";
@@ -22,10 +22,10 @@ function isActive(tabId) {
   return linterStatus[tabId] && linterStatus[tabId].active;
 }
 
-function activate(tabId, presetName, format) {
-  textlintConfig.getPresetOrDefault(presetName).then((preset) => {
-    getStatus(tabId).beforeActivating(preset, format);
-    sandboxClient.activate(tabId, preset.rules, preset.ruleOptions, format);
+function activate(tabId, rulesetName, format) {
+  textlintRulesets.getRulesetOrDefault(rulesetName).then((ruleset) => {
+    getStatus(tabId).beforeActivating(ruleset, format);
+    sandboxClient.activate(tabId, ruleset.rules, ruleset.ruleOptions, format);
   }).catch((error) => {
     getStatus(tabId).setLastError(error);
   });
@@ -48,7 +48,7 @@ sandboxClient.onReturnDeactivate(({tabId, error}) => {
 
 function reload(tabId) {
   const status = linterStatus[tabId];
-  if (status) activate(tabId, status.preset.name, status.format);
+  if (status) activate(tabId, status.ruleset.name, status.format);
 }
 
 function lintText(tabId, lintId, text) {

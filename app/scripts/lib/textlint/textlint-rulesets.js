@@ -7,10 +7,7 @@ import appConfig from "../app/app-config";
 import AppOptions from "../app/app-options";
 
 export default {
-  presets: appConfig.presets,
-  defaultPreset: appConfig.defaultPreset,
-
-  getPreset(name) {
+  getRuleset(name) {
     return new Promise((resolve, reject) => {
       if (name === "Custom") {
         this.getCustom().then((ruleOptions) => {
@@ -21,23 +18,28 @@ export default {
           });
         }).catch(reject);
       } else {
-        resolve(_.find(this.presets, ["name", name]));
+        resolve(_.find(appConfig.rulesets, ["name", name]));
       }
     });
   },
 
-  getDefaultPreset(lang = null) {
+  getDefaultRulesetName(lang = null) {
     if (!lang && chrome && chrome.i18n) lang = chrome.i18n.getUILanguage();
-    return this.getPreset(this.defaultPreset[lang] || this.defaultPreset["en"]);
+    return appConfig.defaultRuleset[lang] || appConfig.defaultRuleset["en"];
   },
 
-  getPresetOrDefault(name) {
+  getDefaultRuleset(lang = null) {
+    const name = this.getDefaultRulesetName(lang);
+    return this.getRuleset(name);
+  },
+
+  getRulesetOrDefault(name) {
     return new Promise((resolve, reject) => {
-      this.getPreset(name).then((preset) => {
-        if (preset) {
-          resolve(preset);
+      this.getRuleset(name).then((ruleset) => {
+        if (ruleset) {
+          resolve(ruleset);
         } else {
-          this.getDefaultPreset().then(resolve, reject);
+          this.getDefaultRuleset().then(resolve, reject);
         }
       }).catch(reject);
     });

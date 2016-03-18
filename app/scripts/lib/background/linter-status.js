@@ -9,7 +9,7 @@ export default class LinterStatus {
   }
 
   _reset() {
-    this.preset = null;
+    this.ruleset = null;
     this.format = null;
     this.lastError = null;
     this.serverActive = false;
@@ -40,9 +40,9 @@ export default class LinterStatus {
     }
   }
 
-  beforeActivating(preset, format) {
+  beforeActivating(ruleset, format) {
     this._reset();
-    this.preset = preset;
+    this.ruleset = ruleset;
     this.format = format;
   }
 
@@ -97,6 +97,6 @@ export default class LinterStatus {
   }
 
   isUsingCustomRule() {
-    return this.preset && this.preset.name === "Custom";
+    return this.ruleset && this.ruleset.name === "Custom";
   }
 }

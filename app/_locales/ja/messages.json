@@ -23,7 +23,7 @@
   "deactivate": {
     "message": "文書のチェックを終了"
   },
-  "choosePreset": {
+  "chooseRuleset": {
     "message": "チェックする文書のタイプを指定できます"
   },
   "checkAsMarkdown": {
@@ -68,7 +68,7 @@
   "linting": {
     "message": "文書をチェックしています…"
   },
-  "noMarks": {
+  "passed": {
     "message": "文書に問題は見つかりませんでした"
   },
   "ready": {
@@ -83,16 +83,16 @@
   "wentWrong": {
     "message": "申し訳ございません。問題が発生しました。"
   },
-  "presetEnglish": {
+  "rulesetEnglish": {
     "message": "英語の文書"
   },
-  "presetJapanese": {
+  "rulesetJapanese": {
     "message": "日本語の文書"
   },
-  "presetJapaneseNovel": {
+  "rulesetJapaneseNovel": {
     "message": "日本語の小説の文書"
   },
-  "presetCustom": {
+  "rulesetCustom": {
     "message": "カスタム設定 (オプションで設定)"
   },
   "menuRules": {
