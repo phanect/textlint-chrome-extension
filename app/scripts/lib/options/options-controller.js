@@ -8,6 +8,7 @@ import ReactDOM from "react-dom";
 import AppOptions from "../app/app-options";
 import bundles from "../app/bundles";
 import OptionsView from "./view/options-view";
+import RuleOptionsFixer from "./rule-options-fixer";
 
 export default class OptionsController {
   constructor() {
@@ -52,6 +53,7 @@ export default class OptionsController {
   getRules() {
     return _.map(bundles.bundles, (rule) => {
       const options = this.appOptions.getRuleOption(rule.key);
+      const fixedOptions = RuleOptionsFixer.fixOptionsForEditor(options);
 
       let severity;
       if (rule.isPreset) {
@@ -62,19 +64,24 @@ export default class OptionsController {
       }
 
       return _.defaults({
-        enabled: !!options,
+        enabled: !!fixedOptions,
         severity: severity,
-        options: options,
+        options: fixedOptions,
       }, rule)
     });
   }
 
-  save(ruleOptions, visualOptions) {
+  save(ruleSettings, visualOptions) {
+    const ruleOptions = {};
+    _.each(ruleSettings, ({options, severity}, ruleKey) => {
+      ruleOptions[ruleKey] = RuleOptionsFixer.fixOptionsForStorage(options, ruleKey, severity);
+    });
+
     this.appOptions.ruleOptions = ruleOptions;
     this.appOptions.visualOptions = visualOptions;
     this.appOptions.save().then(() => {
       DEBUG && console.log("Saved ", this.appOptions.toObject());
-      window.close();
+      // window.close();
     });
   }
 }

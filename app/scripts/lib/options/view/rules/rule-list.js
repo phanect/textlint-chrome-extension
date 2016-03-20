@@ -26,6 +26,10 @@ const RuleList = React.createClass({
   isRuleEnabled(rule) {
     return this.state.rulesEnabled[rule.key ? rule.key : rule];
   },
+  getRuleSeverity(rule) {
+    return this.state.rulesSeverity[rule.key ? rule.key : rule];
+  },
+
   handleFilterChange(filter) {
     const match = filter ? ((rule) =>
       filter.test(rule.key) || filter.test(rule.author) || filter.test(rule.description) ||

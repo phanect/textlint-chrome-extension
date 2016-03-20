@@ -60,7 +60,6 @@ const RuleItem = React.createClass({
           <div className="rule-item-options">
             <RuleEditor
               rule={rule}
-              severity={severity}
               onReady={this.props.onEditorReady}
             />
           </div>

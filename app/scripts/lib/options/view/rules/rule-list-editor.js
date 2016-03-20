@@ -21,10 +21,7 @@ const RuleListEditor = React.createClass({
     this.editors[ruleKey] = editor;
     this.editorCount++;
     if (this.editorCount === this.props.rules.length) {
-      this.props.onReady({
-        validate: this.validate,
-        serialize: this.serialize,
-      });
+      this.props.onReady(this);
     }
   },
 
@@ -42,13 +39,17 @@ const RuleListEditor = React.createClass({
     return errors;
   },
   serialize() {
-    const ruleOptions = {};
+    const serialized = {};
+    const ruleList = this.refs.ruleList;
     _.each(this.editors, (editor, ruleKey) => {
-      if (this.refs.ruleList.isRuleEnabled(ruleKey)) {
-        ruleOptions[ruleKey] = editor.serialize();
+      if (ruleList.isRuleEnabled(ruleKey)) {
+        serialized[ruleKey] = {
+          options: editor.serialize(),
+          severity: ruleList.getRuleSeverity(ruleKey),
+        };
       }
     });
-    return ruleOptions;
+    return serialized;
   },
 
   render() {

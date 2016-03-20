@@ -29,7 +29,7 @@ export default {
     return options;
   },
 
-  fixOptionsForStorage(options, rule, severity) {
+  fixOptionsForStorage(options, ruleKey, severity) {
     if (options === true) {
       // Change it to an empty Object to set `severity` field
       options = {};
@@ -39,7 +39,7 @@ export default {
       options = _.mapKeys(options, (val, key) => key.replace(/．/g, "."));
 
       // If rule is a preset, we should set severity to each subrule options
-      if (/^preset-/.test(rule.key)) {
+      if (/^preset-/.test(ruleKey)) {
         options = _.mapValues(options, (val, key) => {
           if (val === true) {
             val = {};

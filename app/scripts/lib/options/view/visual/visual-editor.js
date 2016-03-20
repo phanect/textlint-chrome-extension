@@ -14,16 +14,7 @@ const VisualEditor = React.createClass({
     onReady: React.PropTypes.func.isRequired,
   },
   handleEditorReady() {
-    this.props.onReady({
-      validate: this.validate,
-      serialize: this.serialize,
-    });
-  },
-  validate() {
-    return this.refs.editor.validate();
-  },
-  serialize() {
-    return this.refs.editor.serialize();
+    this.props.onReady(this.refs.editor);
   },
   render() {
     return (
