@@ -7,57 +7,94 @@
 .icon-error { .fa-icon-error(); }
 .icon-dismissed { .fa-icon-dismissed(); }
 
-body {
+#container {
   width: 45em;
   min-height: 25em;
-  padding: 10px 0;
+  padding: 10px;
   overflow-y: auto;
   font-family: @app-font-family;
   -webkit-font-smoothing: antialiased;
 }
 
-.toggle-area {
-  text-align: right;
+// common/message-box
+.message-box {
+  text-align: center;
+  margin: 20px 10px;
 
-  button {
+  .message-mark {
+    font-size: 12em;
+    color: #CCCCCC;
+    margin: 10px;
+  }
+  .message-text {
+    padding: 0;
+    margin: 10px 0;
+  }
+  .message-details {
+    font-size: 90%;
+    color: #999999;
+  }
+}
+
+// common/icon-button
+.icon-button {
+  i {
+    margin-right: 3px;
+  }
+}
+
+// header
+.header-panel {
+  .header-panel-right {
+    text-align: right;
+  }
+
+  // header/activate-toggle
+  .activate-toggle button {
     width: 16em;
   }
 }
 
-.settings-area {
+// settings
+.settings-panel {
   margin: 30px 30px 30px 40%;
 
-  #presets {
+  // settings/ruleset-list
+  .ruleset-list {
     margin-left: 20px;
   }
 
-  #formats {
+  // settings/format-select
+  .format-select {
     margin-left: 25px;
     margin-top: 15px;
   }
 }
 
-.marks-area {
+// marks
+.marks-panel {
   margin-top: 10px;
 
-  #marks-filter {
+  // marks/filter-list
+  .filter-list {
     float: left;
 
-    .stat-count {
-      margin: 0 3px;
-      font-weight: bold;
-    }
-    span {
-      text-transform: lowercase;
-    }
-
-    .btn {
+    // marks/filter-item
+    .filter-item {
       min-width: 6em;
       color: #CCCCCC;
+      outline: none;
+      text-transform: lowercase;
 
       &.active {
         color: #666666;
       }
+
+      .filter-item-count {
+        margin: 0 3px;
+        font-weight: bold;
+      }
+
       .icon-error:before { color: darken(@icon-error-color, 20%); }
       .icon-warning:before { color: darken(@icon-warning-color, 20%); }
       .icon-info:before { color: darken(@icon-info-color, 20%); }
@@ -65,114 +102,72 @@ body {
     }
   }
 
-  #marks-correct {
+  // marks/correct-buttons
+  .correct-buttons {
     text-align: right;
 
-    i { margin-right: 3px; }
+    .undo-button {
+      margin-right: 5px;
+    }
   }
 
-  #marks {
+  // marks/mark-list
+  .mark-list {
+    // marks/mark-item
     .mark-item {
       margin-top: 5px;
+      padding: 8px 12px;
+      border-radius: 5px;
+      background-color: #505050;
+      line-height: 120%;
       cursor: pointer;
 
       &:hover {
         background-color: #232323;
       }
-    }
 
-    &.filter-error .mark-item-error { display: none; }
-    &.filter-warning .mark-item-warning { display: none; }
-    &.filter-info .mark-item-info { display: none; }
-    &.filter-dismissed .mark-item-dismissed { display: none; }
-  }
+      .mark-item-text {
+        float: left;
+        color: white;
+        font-size: 12px;
+        text-shadow: 0 1px black;
+        white-space: pre-wrap;
+        i { margin-right: 5px; }
 
-  #no-marks {
-    .notice-mark {
-      color: #67C147;
+        .mark-item-correctable {
+          color: #A5FF92;
+        }
+      }
+
+      .mark-item-menu {
+        display: none;
+        float: right;
+        font-size: 12px;
+        text-align: right;
+        margin-left: 7px;
+        white-space: nowrap;
+
+        a.mark-item-menu-item {
+          color: #999999;
+          margin-left: 3px;
+        }
+        a.mark-item-menu-item:hover {
+          color: white;
+          text-decoration: none;
+        }
+      }
+      &:hover {
+        .mark-item-menu {
+          display: block;
+        }
+      }
     }
   }
 }
 
-.notice {
-  text-align: center;
-
-  .notice-mark {
-    font-size: 12em;
-    color: #CCCCCC;
-    margin: 10px;
+// messages/passed-message
+.passed-message {
+  .message-mark {
+    color: #67C147;
   }
-  p {
-    padding: 0;
-    margin: 10px 0;
-  }
-  p.notice-details {
-    font-size: 90%;
-    color: #999999;
-  }
-}
-
-.mark-item {
-  border-radius: 5px;
-  background-color: #505050;
-  padding: 8px 12px;
-  line-height: 120%;
-
-  .mark-item-text {
-    float: left;
-    color: white;
-    font-size: 12px;
-    text-shadow: 0 1px black;
-    white-space: pre-wrap;
-    i { margin-right: 5px; }
-
-    .mark-correctable {
-      color: #A5FF92;
-    }
-  }
-
-  .mark-item-menu {
-    display: none;
-    float: right;
-    font-size: 12px;
-    text-align: right;
-    margin-left: 7px;
-    white-space: nowrap;
-
-    a.mark-item-menu-item {
-      color: #999999;
-      margin-left: 3px;
-    }
-    a.mark-item-menu-item:hover {
-      color: white;
-      text-decoration: none;
-    }
-  }
-  &:hover {
-    .mark-item-menu {
-      display: block;
-    }
-  }
-
-  .mark-undismiss {
-    display: none;
-  }
-  &.mark-item-dismissed {
-    .mark-dismiss {
-      display: none;
-    }
-    .mark-undismiss {
-      display: inline-block;
-    }
-  }
-
-  &:after {
-    content: "";
-    display: block;
-    clear: both;
-  }
-}
-
-.default-hidden {
-  display: none;
 }

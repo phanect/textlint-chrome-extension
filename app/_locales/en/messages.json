@@ -23,7 +23,7 @@
   "deactivate": {
     "message": "Deactivate Linting"
   },
-  "choosePreset": {
+  "chooseRuleset": {
     "message": "Choose what type of text you write."
   },
   "checkAsMarkdown": {
@@ -68,7 +68,7 @@
   "linting": {
     "message": "Checking your text..."
   },
-  "noMarks": {
+  "passed": {
     "message": "Your text has passed all tests."
   },
   "ready": {
@@ -83,16 +83,16 @@
   "wentWrong": {
     "message": "Sorry, something went wrong..."
   },
-  "presetEnglish": {
+  "rulesetEnglish": {
     "message": "English text"
   },
-  "presetJapanese": {
+  "rulesetJapanese": {
     "message": "Japanese text"
   },
-  "presetJapaneseNovel": {
+  "rulesetJapaneseNovel": {
     "message": "Japanese novel text"
   },
-  "presetCustom": {
+  "rulesetCustom": {
     "message": "Custom rules in Options"
   },
   "menuRules": {
@@ -135,37 +135,34 @@
     "message": "Show messages as information"
   },
 
-  "aboutP1_1": {
+  "aboutS1P1": {
     "message": "This extension provides you with <a href=\"http://textlint.github.io/\" target=\"_blank\">textlint</a> on Chrome. textlint is a tool that can check your texts with various rules in plug-in way."
   },
-  "aboutP1_2": {
+  "aboutS1P2": {
     "message": "While the original textlint can apply extra rules as plug-ins, this extension only supports bundled rules for usability and localization."
   },
-  "aboutP1_3": {
+  "aboutS1P3": {
     "message": "If you want some rule to be supported by this extension, please contact me for a feature request. However, note that some rules may not work on Chrome properly."
   },
   "contact": {
     "message": "Contact"
   },
-  "notice": {
-    "message": "Notice"
-  },
-  "aboutP2_1": {
+  "aboutS2P1": {
     "message": "Feel free to send me (IRIDE Monad) any requests, reviews, or bug report for this extension."
   },
-  "aboutP2_2": {
-    "message": "I am <strong>NOT the author of textlint</strong>, azu-san. So never send any message about this extension to azu-san. If you are not sure which you should send message to, textlint or this extension, just send it to following account or address."
+  "aboutS2P2": {
+    "message": "<span class=\"label label-warning\">Notice</span> I am <strong>NOT the author of textlint</strong>, azu-san. So never send any message about this extension to azu-san. If you are not sure which you should send message to, textlint or this extension, just send it to following account or address."
   },
   "license": {
     "message": "License"
   },
-  "aboutP3_1": {
+  "aboutS3P1": {
     "message": "This extension and its source code are licensed under <a href=\"/LICENSE.txt\" target=\"_blank\">GNU GPLv3</a>."
   },
   "bundledTextlintAndRules": {
     "message": "Bundled textlint and rules"
   },
-  "aboutP4_1": {
+  "aboutS4P1": {
     "message": "This extension bundles the textlint core and some rules. Their versions and licenses are following."
   },
   "name": {

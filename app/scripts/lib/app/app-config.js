@@ -12,11 +12,11 @@ export default {
     "38": "/images/icon-black-38.png"
   },
 
-  defaultPreset: {
+  defaultRuleset: {
     en: "English",
     ja: "Japanese",
   },
-  presets: [
+  rulesets: [
     {
       name: "English",
       rules: [

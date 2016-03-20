@@ -32,7 +32,7 @@ function getWebpackConfig(testing) {
     },
     devtool: testing ?
       (args.watch ? '#inline-source-map' : null) :
-      (args.sourcemaps ? 'source-map' : null),
+      (args.sourcemaps ? 'inline-source-map' : null),
     watch: args.watch,
     plugins: [
       new webpack.IgnorePlugin(
@@ -42,6 +42,9 @@ function getWebpackConfig(testing) {
         '__ENV__': JSON.stringify(args.production ? 'production' : 'development'),
         'DEBUG': !args.production && !testing,
         'LIVERELOAD': args.watch && !testing,
+        'process.env': {
+          'NODE_ENV': JSON.stringify(args.production ? 'production' : 'development')
+        }
       }),
     ].concat(!testing ? [
       new webpack.optimize.CommonsChunkPlugin({

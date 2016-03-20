@@ -16,7 +16,7 @@ function promised(callback) {
   });
 }
 
-export default {
+module.exports = {
 
   withActiveTab(fn) {
     chrome.tabs.query(
