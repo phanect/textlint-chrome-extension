@@ -2,6 +2,6 @@
  * License: GNU GPLv3 http://www.gnu.org/licenses/gpl-3.0.html */
 "use strict";
 
-import options from "./lib/options/index";
+import OptionsController from "./lib/options/options-controller";
 
-options();
+(new OptionsController()).start();

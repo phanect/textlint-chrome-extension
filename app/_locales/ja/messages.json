@@ -135,37 +135,34 @@
     "message": "チェック結果を情報として表示"
   },
 
-  "aboutP1_1": {
+  "aboutS1P1": {
     "message": "この拡張機能は <a href=\"http://textlint.github.io/\" target=\"_blank\">textlint</a> を Chrome 上で利用するためのものです。textlint とは、文章をプラグイン方式の様々なルールによって検証するためのツールです。"
   },
-  "aboutP1_2": {
+  "aboutS1P2": {
     "message": "本来の textlint ではプラグイン方式のルールを追加することができますが、この拡張機能ではインストールの簡略化と日本語対応のために、あらかじめ対応済みのルールしかご利用になれません。"
   },
-  "aboutP1_3": {
+  "aboutS1P3": {
     "message": "対応ルールを増やしたい場合は、要望として作者までご連絡ください。なお、全てのルールが拡張機能として利用できるとは限りませんので、あらかじめご了承ください。"
   },
   "contact": {
     "message": "連絡先"
   },
-  "notice": {
-    "message": "注意"
-  },
-  "aboutP2_1": {
+  "aboutS2P1": {
     "message": "この拡張機能についての意見・要望・バグ報告等は下記まで入出もなど宛にお送りください。"
   },
-  "aboutP2_2": {
-    "message": "textlint の作者である azu 様とは<strong>別人です</strong>ので、この拡張機能についての問い合わせを azu 様に宛てて送らないようご注意ください。textlint と拡張機能のどちらについての問い合わせかわからない場合でも、下記の連絡先にお送りください。"
+  "aboutS2P2": {
+    "message": "<span class=\"label label-warning\">注意</span> textlint の作者である azu 様とは<strong>別人です</strong>ので、この拡張機能についての問い合わせを azu 様に宛てて送らないようご注意ください。textlint と拡張機能のどちらについての問い合わせかわからない場合でも、下記の連絡先にお送りください。"
   },
   "license": {
     "message": "ライセンス"
   },
-  "aboutP3_1": {
+  "aboutS3P1": {
     "message": "この拡張機能およびソースコードは <a href=\"/LICENSE.txt\" target=\"_blank\">GNU GPLv3</a> にてライセンスされています。"
   },
   "bundledTextlintAndRules": {
     "message": "同梱されている textlint とルール類"
   },
-  "aboutP4_1": {
+  "aboutS4P1": {
     "message": "この拡張機能には textlint 本体とルール類があらかじめ同梱されています。同梱されているもののバージョン及びライセンス情報は以下の通りです。（敬称略）"
   },
   "name": {
