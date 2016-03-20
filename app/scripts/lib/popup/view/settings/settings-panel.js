@@ -12,35 +12,25 @@ const SettingsPanel = React.createClass({
     rulesets: React.PropTypes.arrayOf(React.PropTypes.shape({
       name: React.PropTypes.string.isRequired,
     })).isRequired,
-    settings: React.PropTypes.shape({
-      ruleset: React.PropTypes.string,
-      format: React.PropTypes.string,
-    }).isRequired,
-  },
-  getInitialState() {
-    return {
-      selectedRuleset: this.props.settings.ruleset,
-      selectedFormat: this.props.settings.format,
-    };
+    ruleset: React.PropTypes.string,
+    format: React.PropTypes.string,
+    onChange: React.PropTypes.func.isRequired,
   },
   handleRulesetSelect(rulesetName) {
-    this.props.settings.ruleset = rulesetName;
-    this.setState({ selectedRuleset: rulesetName });
+    this.props.onChange({ ruleset: rulesetName });
   },
   handleFormatSelect(formatName) {
-    this.props.settings.format = formatName;
-    this.setState({ selectedFormat: formatName });
+    this.props.onChange({ format: formatName });
   },
   render() {
-    const {rulesets} = this.props;
-    const {selectedRuleset, selectedFormat} = this.state;
+    const {rulesets, ruleset, format} = this.props;
     return (
       <div className="settings-panel">
         <p>{translate("chooseRuleset")}</p>
         <form>
-          <RulesetList rulesets={rulesets} selected={selectedRuleset}
+          <RulesetList rulesets={rulesets} selected={ruleset}
             onRulesetSelect={this.handleRulesetSelect} />
-          <FormatSelect selected={selectedFormat}
+          <FormatSelect selected={format}
             onFormatSelect={this.handleFormatSelect} />
         </form>
       </div>

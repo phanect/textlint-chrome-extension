@@ -10,12 +10,8 @@ const HeaderPanel = React.createClass({
   propTypes: {
     controller: React.PropTypes.any.isRequired,
     active: React.PropTypes.bool.isRequired,
-  },
-  handleClickActivate() {
-    this.props.controller.activate();
-  },
-  handleClickDeactivate() {
-    this.props.controller.deactivate();
+    onActivate: React.PropTypes.func.isRequired,
+    onDeactivate: React.PropTypes.func.isRequired,
   },
   render() {
     const {active} = this.props;
@@ -27,8 +23,8 @@ const HeaderPanel = React.createClass({
         <div className="col-xs-6 header-panel-right">
           <ActivateToggle
             active={active}
-            onClickActivate={this.handleClickActivate}
-            onClickDeactivate={this.handleClickDeactivate}
+            onClickActivate={this.props.onActivate}
+            onClickDeactivate={this.props.onDeactivate}
           />
         </div>
       </div>

@@ -95,7 +95,8 @@ export default class PopupController {
     );
   }
 
-  activate() {
+  activate(settings) {
+    this.settings.overwrite(settings);
     this.settings.save().then(() => {
       this.withLinters((linters) => {
         cutil.withActiveTab((tab) => {

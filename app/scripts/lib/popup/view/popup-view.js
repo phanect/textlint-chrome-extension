@@ -28,6 +28,21 @@ const PopupView = React.createClass({
       clientLinted: React.PropTypes.bool.isRequired,
     }).isRequired,
   },
+  getInitialState() {
+    return {
+      ruleset: this.props.settings.ruleset || this.props.settings.preset, /* Backward-compat */
+      format: this.props.settings.format,
+    };
+  },
+  handleActivate() {
+    this.props.controller.activate(this.state);
+  },
+  handleDeactivate() {
+    this.props.controller.deactivate();
+  },
+  handleSettingsChange(changes) {
+    this.setState(changes);
+  },
   handleUndo() {
     this.props.controller.undo();
   },
@@ -39,7 +54,12 @@ const PopupView = React.createClass({
 
     return (
       <div className="popup-view">
-        <HeaderPanel controller={controller} active={contentStatus.active} />
+        <HeaderPanel
+          controller={controller}
+          active={contentStatus.active}
+          onActivate={this.handleActivate}
+          onDeactivate={this.handleDeactivate}
+        />
         {this.renderContent()}
       </div>
     );
@@ -47,8 +67,14 @@ const PopupView = React.createClass({
   renderContent() {
     const {controller, settings, rulesets, contentStatus, linterStatus} = this.props;
 
-    if (!contentStatus.active)
-      return <SettingsPanel rulesets={rulesets} settings={settings} />;
+    if (!contentStatus.active) {
+      return <SettingsPanel
+        {...this.state}
+        rulesets={rulesets}
+        onChange={this.handleSettingsChange}
+      />;
+    }
+
     if (!linterStatus.active || linterStatus.waiting)
       return <LintingMessage />;
     if (!linterStatus.clientLinted)
