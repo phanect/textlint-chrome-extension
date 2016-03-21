@@ -1,6 +1,9 @@
 /* Copyright (C) 2016  IRIDE Monad <iride.monad@gmail.com>
  * License: GNU GPLv3 http://www.gnu.org/licenses/gpl-3.0.html */
-JSONEditor.defaults.default_language = (chrome.i18n.getUILanguage() === "ja" ? "ja" : "en");
+JSONEditor.defaults.default_language = ((
+  typeof chrome.i18n.getUILanguage === 'function' &&
+  chrome.i18n.getUILanguage() === "ja"
+) ? "ja" : "en");
 JSONEditor.defaults.language = JSONEditor.defaults.default_language;
 JSONEditor.defaults.languages.ja = {
   /**
