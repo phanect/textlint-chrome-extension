@@ -51,5 +51,10 @@
     "fonts/font-awesome/*",
     "dict/*"
   ],
-  "content_security_policy": "script-src 'self' https://www.brcdn.org https://brcdn.org; object-src 'self'"
+  "content_security_policy": "script-src 'self' https://www.brcdn.org https://brcdn.org; object-src 'self'",
+  "applications": {
+    "gecko": {
+      "id": "textlint@example.com"
+    }
+  }
 }
