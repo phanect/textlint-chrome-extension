@@ -18,7 +18,7 @@
 export default function applyBrowserPrefixesFor(vendor){
   return function(manifest){
     Object.keys(manifest).forEach((key)=>{
-      let match = key.match(/^__(chrome|firefox|opera)__(.*)/);
+      let match = key.match(/^__(chrome|moz|opera)__(.*)/);
 
       if(!match){
         return;
