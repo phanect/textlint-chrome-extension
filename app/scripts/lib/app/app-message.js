@@ -68,7 +68,7 @@ function send(messageType, message, tabId) {
     const callback = (response) => {
       let error = chrome.runtime.lastError;
 
-      DEBUG && console.log(location.protocol === "chrome-extension"
+      DEBUG && console.log(location.protocol === `${__VENDOR__}-extension:`
         ?  "C -> B      :" : "C <- B      :", error || response);
 
       if (_.isUndefined(response) && error) {
@@ -84,7 +84,7 @@ function send(messageType, message, tabId) {
     } else {
       chrome.runtime.sendMessage(message, callback);
     }
-    DEBUG && console.log(location.protocol === "chrome-extension"
+    DEBUG && console.log(location.protocol === `${__VENDOR__}-extension:`
       ?  "C <- B      :" : "C -> B      :", message);
   });
 

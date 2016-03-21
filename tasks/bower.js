@@ -7,6 +7,6 @@ import path from 'path';
 
 gulp.task('bower', function () {
   return gulp.src(mainBowerFiles(), { base: path.join(__dirname, '..', 'bower_components') })
-    .pipe(gulp.dest('dist/bower'))
+    .pipe(gulp.dest(`dist/${args.vendor}/bower`))
     .pipe(gulpif(args.watch, livereload()));
 });
