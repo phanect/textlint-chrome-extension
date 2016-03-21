@@ -46,8 +46,9 @@ module.exports = {
         try {
           cb(items.hasOwnProperty(key) ? items[key] : undefined);
         } catch (err) {
-          // Firefox sometimes causes an security error.
-          // Perhaps this hack can be removed when storage.sync is officially supported?
+          // Firefox causes an security error when storage.local is accessed from popup scripts.
+          // https://bugzilla.mozilla.org/show_bug.cgi?id=1258139
+          // Perhaps this hack can be removed when storage.sync is officially supported, or the above bug is resolved.
           console.error(err);
           cb(undefined);
         }
