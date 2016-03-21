@@ -4,6 +4,12 @@
 
 import _ from "lodash";
 
+// chrome.storage.sync polyfill
+// Firefox currently does not support the sync storage API.
+if (!chrome.storage.sync) {
+  chrome.storage.sync = chrome.storage.local;
+}
+
 function promised(callback) {
   return new Promise((resolve, reject) => {
     callback.call(null, (response) => {
