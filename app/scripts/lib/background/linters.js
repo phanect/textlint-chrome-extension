@@ -8,7 +8,19 @@ import LinterStatus from "./linter-status";
 import sandboxClient from "./sandbox-client";
 import messages from "./messages";
 
-const linterStatus = {};
+let linterStatus = {};
+bindSandboxClient();
+
+function reset() {
+  linterStatus = {};
+}
+
+function bindSandboxClient() {
+  sandboxClient.onReturnActivate(onReturnActivate);
+  sandboxClient.onReturnDeactivate(onReturnDeactivate);
+  sandboxClient.onReturnLintText(onReturnLintText);
+  sandboxClient.onReturnCorrectText(onReturnCorrectText);
+}
 
 function getStatus(tabId) {
   return linterStatus[tabId] || (linterStatus[tabId] = new LinterStatus(tabId));
@@ -19,7 +31,7 @@ function getAllActives() {
 }
 
 function isActive(tabId) {
-  return linterStatus[tabId] && linterStatus[tabId].active;
+  return (linterStatus[tabId] && linterStatus[tabId].active) || false;
 }
 
 function activate(tabId, rulesetName, format) {
@@ -30,21 +42,21 @@ function activate(tabId, rulesetName, format) {
     getStatus(tabId).setLastError(error);
   });
 }
-sandboxClient.onReturnActivate(({tabId, error}) => {
+function onReturnActivate({tabId, error}) {
   if (getStatus(tabId).afterServerActivating(error)) {
     messages.activateLinter(tabId).then(() => {
       getStatus(tabId).afterClientActivating();
     });
   }
-});
+}
 
 function deactivate(tabId) {
   delete linterStatus[tabId];
   sandboxClient.deactivate(tabId);
 }
-sandboxClient.onReturnDeactivate(({tabId, error}) => {
+function onReturnDeactivate({tabId, error}) {
   messages.deactivateLinter(tabId);
-});
+}
 
 function reload(tabId) {
   const status = linterStatus[tabId];
@@ -55,27 +67,29 @@ function lintText(tabId, lintId, text) {
   getStatus(tabId).beforeLintingText();
   sandboxClient.lintText(tabId, lintId, text);
 }
-sandboxClient.onReturnLintText(({tabId, lintId, lintResult, error}) => {
+function onReturnLintText({tabId, lintId, lintResult, error}) {
   if (getStatus(tabId).afterServerLintingText(error)) {
     messages.sendLintResult(tabId, lintId, lintResult).then(() => {
       getStatus(tabId).afterClientLintingText();
     });
   }
-});
+}
 
 function correctText(tabId, correctId, text) {
   getStatus(tabId).beforeCorrectingText();
   sandboxClient.correctText(tabId, correctId, text);
 }
-sandboxClient.onReturnCorrectText(({tabId, correctId, correctResult, error}) => {
+function onReturnCorrectText({tabId, correctId, correctResult, error}) {
   if (getStatus(tabId).afterServerCorrectingText(error)) {
     messages.sendCorrectResult(tabId, correctId, correctResult).then(() => {
       getStatus(tabId).afterClientCorrectingText();
     });
   }
-});
+}
 
 export default {
+  reset: reset,
+  bindSandboxClient: bindSandboxClient,
   getStatus: getStatus,
   getAllActives: getAllActives,
   isActive: isActive,
