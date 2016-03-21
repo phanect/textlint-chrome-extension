@@ -80,9 +80,9 @@ function send(messageType, message, tabId) {
 
     message = _.extend({ type: messageType }, message);
     if (tabId) {
-      chrome.tabs.sendMessage(tabId, message, {}, callback);
+      chrome.tabs.sendMessage(tabId, message, callback);
     } else {
-      chrome.runtime.sendMessage(message, {}, callback);
+      chrome.runtime.sendMessage(message, callback);
     }
     DEBUG && console.log(location.protocol === "chrome-extension"
       ?  "C <- B      :" : "C -> B      :", message);
