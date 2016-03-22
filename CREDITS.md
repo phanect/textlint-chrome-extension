@@ -1,5 +1,12 @@
 # Credits
 
+## Contributors
+
+The following people have contibuted their work to this project. Many thanks for the great contribution!
+
+- [@nodaguti](https://github.com/nodaguti)
+    - Add (partially) support for Firefox and Opera [#21](https://github.com/io-monad/textlint-chrome-extension/pull/21)
+
 ## textlint
 
 [textlint](https://github.com/textlint/textlint/) is developed and maintenanced by [@azu](https://github.com/azu). Thanks for the great work!
