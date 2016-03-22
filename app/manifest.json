@@ -25,6 +25,10 @@
     "default_popup": "pages/popup.html"
   },
   "options_page": "pages/options.html",
+  "options_ui": {
+    "page": "pages/options.html",
+    "open_in_tab": true
+  },
   "content_scripts": [
     {
       "matches": [
@@ -51,5 +55,10 @@
     "fonts/font-awesome/*",
     "dict/*"
   ],
-  "content_security_policy": "script-src 'self' https://www.brcdn.org https://brcdn.org; object-src 'self'"
+  "content_security_policy": "script-src 'self' https://www.brcdn.org https://brcdn.org; object-src 'self'",
+  "__moz__applications": {
+    "gecko": {
+      "id": "textlint@example.com"
+    }
+  }
 }

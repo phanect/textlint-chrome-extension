@@ -20,6 +20,6 @@ gulp.task('dict', () => {
   return gulp.src(`${dictDir}/**/*.dat.gz`)
     .pipe(gunzip())
     .pipe(addBase(dictDir))
-    .pipe(gulp.dest('dist/dict'))
+    .pipe(gulp.dest(`dist/${args.vendor}/dict`))
     .pipe(gulpif(args.watch, livereload()));
 });

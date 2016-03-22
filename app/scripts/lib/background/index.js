@@ -15,12 +15,18 @@ export default function () {
 
   appOptions.load();
 
-  chrome.runtime.onStartup.addListener(() => {
-    badge.updateForActiveTab();
-  });
-  chrome.runtime.onInstalled.addListener(() => {
-    badge.updateForActiveTab();
-  });
+  // runtime.onStartup and onInstalled are not supported yet on Firefox.
+  // http://arewewebextensionsyet.com/#runtime
+  if (chrome.runtime.onStartup) {
+    chrome.runtime.onStartup.addListener(() => {
+      badge.updateForActiveTab();
+    });
+  }
+  if (chrome.runtime.onInstalled) {
+    chrome.runtime.onInstalled.addListener(() => {
+      badge.updateForActiveTab();
+    });
+  }
 
   chrome.tabs.onActivated.addListener((activeInfo) => {
     badge.updateForTabId(activeInfo.tabId);

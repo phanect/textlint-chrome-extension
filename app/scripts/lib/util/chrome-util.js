@@ -4,6 +4,13 @@
 
 import _ from "lodash";
 
+// chrome.storage.sync polyfill
+// Firefox currently does not support the sync storage API.
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1220494
+if (!chrome.storage.sync) {
+  chrome.storage.sync = chrome.storage.local;
+}
+
 function promised(callback) {
   return new Promise((resolve, reject) => {
     callback.call(null, (response) => {
@@ -35,7 +42,17 @@ module.exports = {
 
   syncGetValue(key) {
     return promised((cb) => {
-      chrome.storage.sync.get(key, (items) => cb(items.hasOwnProperty(key) ? items[key] : undefined));
+      chrome.storage.sync.get(key, (items) => {
+        try {
+          cb(items.hasOwnProperty(key) ? items[key] : undefined);
+        } catch (err) {
+          // Firefox causes an security error when storage.local is accessed from popup scripts.
+          // https://bugzilla.mozilla.org/show_bug.cgi?id=1258139
+          // Perhaps this hack can be removed when storage.sync is officially supported, or the above bug is resolved.
+          console.error(err);
+          cb(undefined);
+        }
+      });
     });
   },
 

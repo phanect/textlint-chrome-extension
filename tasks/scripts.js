@@ -40,6 +40,7 @@ function getWebpackConfig(testing) {
       ),
       new webpack.DefinePlugin({
         '__ENV__': JSON.stringify(args.production ? 'production' : 'development'),
+        '__VENDOR__': JSON.stringify(args.vendor),
         'DEBUG': !args.production && !testing,
         'LIVERELOAD': args.watch && !testing,
         'process.env': {
@@ -133,7 +134,7 @@ gulp.task('scripts', ['bundle'], () => {
       errorHandler: notify.onError("Error: <%= error.message %>")
     }))
     .pipe(gulpWebpack(getWebpackConfig(false)))
-    .pipe(gulp.dest('dist/scripts'))
+    .pipe(gulp.dest(`dist/${args.vendor}/scripts`))
     .pipe(gulpif(args.watch, livereload()));
 });
 

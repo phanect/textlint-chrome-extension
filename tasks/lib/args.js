@@ -20,6 +20,13 @@ const args = yargs
     describe: 'Log additional data'
   })
 
+  .option('vendor', {
+    string: true,
+    default: 'chrome',
+    describe: 'Compile the extension for different vendors',
+    choices: ['chrome', 'moz', 'opera']
+  })
+
   .option('sourcemaps', {
     describe: 'Force the creation of sourcemaps'
   })

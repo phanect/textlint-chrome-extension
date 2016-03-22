@@ -68,7 +68,7 @@ function send(messageType, message, tabId) {
     const callback = (response) => {
       let error = chrome.runtime.lastError;
 
-      DEBUG && console.log(location.protocol === "chrome-extension"
+      DEBUG && console.log(location.protocol === `${__VENDOR__}-extension:`
         ?  "C -> B      :" : "C <- B      :", error || response);
 
       if (_.isUndefined(response) && error) {
@@ -80,11 +80,11 @@ function send(messageType, message, tabId) {
 
     message = _.extend({ type: messageType }, message);
     if (tabId) {
-      chrome.tabs.sendMessage(tabId, message, {}, callback);
+      chrome.tabs.sendMessage(tabId, message, callback);
     } else {
-      chrome.runtime.sendMessage(message, {}, callback);
+      chrome.runtime.sendMessage(message, callback);
     }
-    DEBUG && console.log(location.protocol === "chrome-extension"
+    DEBUG && console.log(location.protocol === `${__VENDOR__}-extension:`
       ?  "C <- B      :" : "C -> B      :", message);
   });
 

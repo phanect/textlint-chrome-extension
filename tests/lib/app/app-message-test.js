@@ -37,7 +37,7 @@ describe("appMessage", () => {
       return appMessage.send(appMessage.GET_STATUS);
     }
     function getCallback() {
-      return chrome.runtime.sendMessage.firstCall.args[2];
+      return chrome.runtime.sendMessage.firstCall.args[1];
     }
 
     it("returns Promise", () => {
@@ -110,7 +110,7 @@ describe("appMessage", () => {
       return appMessage.tabSend(tabId, appMessage.GET_STATUS);
     }
     function getCallback() {
-      return chrome.tabs.sendMessage.firstCall.args[3];
+      return chrome.tabs.sendMessage.firstCall.args[2];
     }
 
     it("returns Promise", () => {

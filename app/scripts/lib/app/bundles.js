@@ -63,7 +63,7 @@ export default {
     {
       "name": "textlint",
       "key": "textlint",
-      "version": "6.0.1",
+      "version": "6.0.2",
       "description": "The pluggable linting tool for text and markdown.",
       "author": "azu",
       "license": "MIT",
@@ -1009,7 +1009,7 @@ export default {
       {
         "name": "textlint-rule-rousseau",
         "key": "rousseau",
-        "version": "1.3.2",
+        "version": "1.4.1",
         "description": "textlint rule check english sentence using rousseau",
         "author": "azu",
         "license": "MIT",

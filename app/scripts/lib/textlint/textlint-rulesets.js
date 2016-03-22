@@ -24,7 +24,9 @@ export default {
   },
 
   getDefaultRulesetName(lang = null) {
-    if (!lang && chrome && chrome.i18n) lang = chrome.i18n.getUILanguage();
+    if (!lang && chrome && chrome.i18n && typeof chrome.i18n.getUILanguage === 'function') {
+      lang = chrome.i18n.getUILanguage();
+    }
     return appConfig.defaultRuleset[lang] || appConfig.defaultRuleset["en"];
   },
 
