@@ -1175,7 +1175,7 @@ export default {
       {
         "name": "textlint-rule-spellcheck-tech-word",
         "key": "spellcheck-tech-word",
-        "version": "4.2.0",
+        "version": "5.0.0",
         "description": "textlint rule: spell check technical word for japanese.",
         "author": "azu",
         "license": "MIT",
