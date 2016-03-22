@@ -1,6 +1,5 @@
 import glob from 'glob';
 import _ from 'lodash';
-import path from 'path';
 
 /**
  * Expand glob expressions into individual path strings.
@@ -21,14 +20,13 @@ import path from 'path';
  * @param  {Object} manifest
  * @return {Object}
  */
-export default function expandGlobsFor(keys){
+export default function expandGlobsFor(keys, cwd){
   return function(manifest){
     keys.forEach((key)=>{
       if (!manifest[key] || !Array.isArray(manifest[key])) {
         return;
       }
 
-      const cwd = path.join(process.cwd(), 'dist');
       const expanded = _
         .chain(manifest[key])
         .map((pattern) => glob.sync(pattern, { cwd }))
