@@ -3,7 +3,7 @@
 "use strict";
 
 import React from "react";
-import {translate} from "../../../util/chrome-util";
+import { translate } from "../../../util/chrome-util";
 
 const RulesetItem = React.createClass({
   propTypes: {
@@ -12,7 +12,7 @@ const RulesetItem = React.createClass({
     onClick: React.PropTypes.func.isRequired,
   },
   render() {
-    const {name, selected, onClick} = this.props;
+    const { name, selected, onClick } = this.props;
     return (
       <div className="ruleset-item radio">
         <label>
@@ -25,7 +25,7 @@ const RulesetItem = React.createClass({
         </label>
       </div>
     );
-  }
+  },
 });
 
 export default RulesetItem;

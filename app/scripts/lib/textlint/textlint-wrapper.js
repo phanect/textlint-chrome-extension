@@ -3,7 +3,7 @@
 "use strict";
 
 import _ from "lodash";
-import {TextLintCore} from "textlint";
+import { TextLintCore } from "textlint";
 import TextCaretScanner from "../util/text-caret-scanner";
 import TextlintRulePackage from "./textlint-rule-package";
 
@@ -11,7 +11,7 @@ const PRESET_PREFIX_RE = /^preset-/;
 const SEVERITY_NAMES = {
   0: "info",
   1: "warning",
-  2: "error"
+  2: "error",
 };
 
 export default class TextlintWrapper {
@@ -83,7 +83,7 @@ export default class TextlintWrapper {
       if (PRESET_PREFIX_RE.test(key)) {
         _.each(
           isRule ? value.rules : value,
-          (subValue, subKey) => { accum[`${key}/${subKey}`] = subValue }
+          (subValue, subKey) => { accum[`${key}/${subKey}`] = subValue; }
         );
       } else {
         accum[key] = value;

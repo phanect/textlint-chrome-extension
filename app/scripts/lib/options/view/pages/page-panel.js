@@ -3,16 +3,17 @@
 "use strict";
 
 import React from "react";
-import {translate} from "../../../util/chrome-util";
+import { translate } from "../../../util/chrome-util";
 
 const PagePanel = React.createClass({
   propTypes: {
     active: React.PropTypes.bool,
     title: React.PropTypes.string.isRequired,
     icon: React.PropTypes.string.isRequired,
+    children: React.PropTypes.any,
   },
   render() {
-    const {active, title, icon} = this.props;
+    const { active, title, icon } = this.props;
     return (
       <div className={`tab-pane page-panel fade ${active ? "in active" : ""}`}>
         <h1>
@@ -22,7 +23,7 @@ const PagePanel = React.createClass({
         {this.props.children}
       </div>
     );
-  }
+  },
 });
 
 export default PagePanel;

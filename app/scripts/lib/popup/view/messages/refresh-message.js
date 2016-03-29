@@ -18,14 +18,15 @@ const RefreshMessage = React.createClass({
     this.props.onRefresh();
   },
   render() {
-    const {refreshing} = this.state;
+    const { refreshing } = this.state;
     return (
       <MessageBox text="requireRefresh" mark="refresh">
         <IconButton label="refresh" icon="refresh" btn="primary"
-          disabled={refreshing} onClick={this.handleRefreshClick} />
+          disabled={refreshing} onClick={this.handleRefreshClick}
+        />
       </MessageBox>
     );
-  }
+  },
 });
 
 export default RefreshMessage;

@@ -2,14 +2,13 @@
  * License: GNU GPLv3 http://www.gnu.org/licenses/gpl-3.0.html */
 "use strict";
 
-import _ from "lodash";
 import React from "react";
-import {translate} from "../../../util/chrome-util";
+import { translate } from "../../../util/chrome-util";
 
 const Severities = [
   { name: "error", title: "showAsErrors" },
   { name: "warning", title: "showAsWarnings" },
-  { name: "info", title: "showAsInfo" }
+  { name: "info", title: "showAsInfo" },
 ];
 
 const SeveritySwitch = React.createClass({
@@ -18,10 +17,10 @@ const SeveritySwitch = React.createClass({
     onSelect: React.PropTypes.func.isRequired,
   },
   render() {
-    const {selected, onSelect} = this.props;
+    const { selected, onSelect } = this.props;
     return (
       <div className="severity-switch btn-group">
-        {Severities.map(({name, title}) =>
+        {Severities.map(({ name, title }) =>
           <button
             key={name}
             className={[
@@ -30,14 +29,14 @@ const SeveritySwitch = React.createClass({
               "btn btn-link btn-xs",
             ].join(" ")}
             title={translate(title)}
-            onClick={(e) => { e.preventDefault(); onSelect(name) }}
+            onClick={(e) => { e.preventDefault(); onSelect(name); }}
           >
             <i className={`icon-${name}`}></i>
           </button>
         )}
       </div>
     );
-  }
+  },
 });
 
 export default SeveritySwitch;

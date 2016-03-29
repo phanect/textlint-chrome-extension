@@ -4,44 +4,29 @@
 
 import _ from "lodash";
 
-export default function fixSchema(root) {
-  root = _.clone(root);
-
-  // Strip root oneOf for enability since it is switched by a toggle.
-  if (root.oneOf && root.oneOf.length === 2 && root.oneOf[0].type === "boolean") {
-    root = root.oneOf[1];
+function fixOne(schema) {
+  if (schema.type === "boolean" && !schema.format) {
+    schema.format = "checkbox";
   }
-  // Return constant schema of `true` if there is only enability setting.
-  if (root.type === "boolean") {
-    return { type: "boolean", enum: [true] };
+  if (schema.type === "array") {
+    schema.options = _.extend(schema.options, {
+      "disable_array_reorder": true,
+    });
   }
-
-  if (root.type === "object" && root.properties) {
-    // Strip severity property since it is switched by selector.
-    if (root.properties["severity"]) {
-      delete root.properties["severity"];
-      if (_.isEmpty(root.properties)) {
-        // There was only severity property.
-        return { type: "boolean", enum: [true] };
-      }
-    }
-    // Replace "." (dot) in property name to full-width.
-    if (_.some(root.properties, (v, k) => /\./.test(k))) {
-      root.properties = _.reduce(
-        _.keys(root.properties).sort(),
-        (accum, key, index) => {
-          // Replace dots to full-width in property keys because json-editor can't handle them
-          const newKey = key.replace(/\./g, "．");
-          // Add propertyOrder to sort properties by key
-          accum[newKey] = _.extend({ propertyOrder: index }, root.properties[key]);
-          return accum;
-        },
-        {}
-      );
-    }
+  if (schema.type === "object") {
+    schema.options = _.extend(schema.options, {
+      "disable_edit_json": true,
+      "disable_properties": true,
+    });
   }
-
-  return walk(root);
+  if (schema.type === "array" || schema.type === "object") {
+    schema.options = _.extend(schema.options, {
+      "disable_collapse": true,
+    });
+  }
+  if ((schema.type === "integer" || schema.type === "number") && !schema.format) {
+    schema.format = schema.type;
+  }
 }
 
 function walk(schema) {
@@ -79,27 +64,42 @@ function walk(schema) {
   return schema;
 }
 
-function fixOne(schema) {
-  if (schema.type === "boolean" && !schema.format) {
-    schema.format = "checkbox";
+export default function fixSchema(root) {
+  root = _.clone(root);
+
+  // Strip root oneOf for enability since it is switched by a toggle.
+  if (root.oneOf && root.oneOf.length === 2 && root.oneOf[0].type === "boolean") {
+    root = root.oneOf[1];
   }
-  if (schema.type === "array") {
-    schema.options = _.extend(schema.options, {
-      "disable_array_reorder": true,
-    });
+  // Return constant schema of `true` if there is only enability setting.
+  if (root.type === "boolean") {
+    return { type: "boolean", enum: [true] };
   }
-  if (schema.type === "object") {
-    schema.options = _.extend(schema.options, {
-      "disable_edit_json": true,
-      "disable_properties": true,
-    });
+
+  if (root.type === "object" && root.properties) {
+    // Strip severity property since it is switched by selector.
+    if (root.properties.severity) {
+      delete root.properties.severity;
+      if (_.isEmpty(root.properties)) {
+        // There was only severity property.
+        return { type: "boolean", enum: [true] };
+      }
+    }
+    // Replace "." (dot) in property name to full-width.
+    if (_.some(root.properties, (v, k) => /\./.test(k))) {
+      root.properties = _.reduce(
+        _.keys(root.properties).sort(),
+        (accum, key, index) => {
+          // Replace dots to full-width in property keys because json-editor can't handle them
+          const newKey = key.replace(/\./g, "．");
+          // Add propertyOrder to sort properties by key
+          accum[newKey] = _.extend({ propertyOrder: index }, root.properties[key]);
+          return accum;
+        },
+        {}
+      );
+    }
   }
-  if (schema.type === "array" || schema.type === "object") {
-    schema.options = _.extend(schema.options, {
-      "disable_collapse": true,
-    });
-  }
-  if ((schema.type === "integer" || schema.type === "number") && !schema.format) {
-    schema.format = schema.type;
-  }
+
+  return walk(root);
 }

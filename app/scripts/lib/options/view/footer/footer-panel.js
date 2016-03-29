@@ -3,11 +3,7 @@
 "use strict";
 
 import React from "react";
-import {translate} from "../../../util/chrome-util";
-
-const TWITTER_URL = "https://twitter.com/io_monad";
-const GITHUB_URL = "https://github.com/io-monad";
-const GITHUB_PROJECT_URL = "https://github.com/io-monad/textlint-chrome-extension";
+import { translate } from "../../../util/chrome-util";
 
 const FooterLinks = [
   { icon: "twitter", title: "@io_monad", url: "https://twitter.com/io_monad" },
@@ -23,7 +19,7 @@ const FooterPanel = React.createClass({
     onSaveClick: React.PropTypes.func.isRequired,
   },
   render() {
-    const {appVersion, appStoreURL, saveEnabled} = this.props;
+    const { appVersion, appStoreURL, saveEnabled } = this.props;
     return (
       <div className="footer-panel container-fluid">
         <div className="row">
@@ -36,7 +32,10 @@ const FooterPanel = React.createClass({
               Rate me!
             </a>
             {FooterLinks.map(link =>
-              <a key={link.icon} href={link.url} target="_blank" className="btn btn-link btn-sm icon-button">
+              <a
+                key={link.icon} href={link.url} target="_blank"
+                className="btn btn-link btn-sm icon-button"
+              >
                 <i className={`fa fa-${link.icon} fa-lg`}></i>
                 {link.title}
               </a>
@@ -54,7 +53,7 @@ const FooterPanel = React.createClass({
         </div>
       </div>
     );
-  }
+  },
 });
 
 export default FooterPanel;

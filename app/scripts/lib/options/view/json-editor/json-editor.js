@@ -2,9 +2,10 @@
  * License: GNU GPLv3 http://www.gnu.org/licenses/gpl-3.0.html */
 "use strict";
 
+import _ from "lodash";
 import $ from "jquery";
 import React from "react";
-import {translate} from "../../../util/chrome-util";
+import { translate } from "../../../util/chrome-util";
 import fixSchema from "./fix-schema";
 import "./editor-multiselectize";
 import "./editor-enumconstant";
@@ -46,7 +47,7 @@ const JsonEditor = React.createClass({
         return this.nodeType === 3 && !/^\s*$/.test(this.nodeValue);
       })
       .each(function () {
-        const key = _.camelCase("label-" + this.nodeValue).replace(/[^a-zA-Z0-9]+/g, "");
+        const key = _.camelCase(`label-${this.nodeValue}`).replace(/[^a-zA-Z0-9]+/g, "");
         if (/^label[A-Z][a-zA-Z0-9]+$/.test(key)) {
           this.nodeValue = translate(key, this.nodeValue);
         }
@@ -63,7 +64,7 @@ const JsonEditor = React.createClass({
       <div className="json-editor" ref="editor">
       </div>
     );
-  }
+  },
 });
 
 export default JsonEditor;

@@ -4,7 +4,6 @@
 
 import _ from "lodash";
 import React from "react";
-import {translate} from "../../../util/chrome-util";
 import RuleList from "./rule-list";
 
 const RuleListEditor = React.createClass({
@@ -26,7 +25,8 @@ const RuleListEditor = React.createClass({
   },
 
   validate() {
-    let errors = [], location;
+    let errors = [];
+    let location;
     _.each(this.editors, (editor, ruleKey) => {
       if (this.refs.ruleList.isRuleEnabled(ruleKey)) {
         errors = errors.concat(editor.validate());
@@ -60,7 +60,7 @@ const RuleListEditor = React.createClass({
         onEditorReady={this.handleEditorReady}
       />
     );
-  }
+  },
 });
 
 export default RuleListEditor;

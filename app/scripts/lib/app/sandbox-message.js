@@ -28,8 +28,8 @@ window.addEventListener("message", (event) => {
     if (eventHandlers[messageType]) {
       const sendResponse = (data) => {
         data = data || {};
-        data.type = "Return" + messageType;
-        DEBUG && console.log("     B <- S :", data);
+        data.type = `Return${messageType}`;
+        if (DEBUG) console.log("     B <- S :", data);
         event.source.postMessage(data, event.origin);
       };
       return eventHandlers[messageType].call(this, event.data, sendResponse);
@@ -37,6 +37,7 @@ window.addEventListener("message", (event) => {
   } else {
     console.error("Unknown message:", event.data);
   }
+  return null;
 });
 
 function reset() {
@@ -56,12 +57,12 @@ function on(messageType, callback) {
 
 function send(messageType, message) {
   message = _.extend({ type: messageType }, message);
-  DEBUG && console.log("     B -> S :", message);
-  sandboxIframe.contentWindow.postMessage(message, '*');
+  if (DEBUG) console.log("     B -> S :", message);
+  sandboxIframe.contentWindow.postMessage(message, "*");
 }
 
 export default _.extend({}, MESSAGES, {
-  reset: reset,
-  on: on,
-  send: send
+  reset,
+  on,
+  send,
 });

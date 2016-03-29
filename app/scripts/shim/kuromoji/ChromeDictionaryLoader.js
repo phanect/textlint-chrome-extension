@@ -27,6 +27,6 @@ ChromeDictionaryLoader.prototype.loadArrayBuffer = function (url, callback) {
     callback(err, null);
   };
   xhr.send();
-}
+};
 
 module.exports = ChromeDictionaryLoader;

@@ -40,7 +40,7 @@ export default {
 
       // If rule is a preset, we should set severity to each subrule options
       if (/^preset-/.test(ruleKey)) {
-        options = _.mapValues(options, (val, key) => {
+        options = _.mapValues(options, (val) => {
           if (val === true) {
             val = {};
           }
@@ -55,4 +55,4 @@ export default {
     }
     return options;
   },
-}
+};

@@ -2,21 +2,21 @@
 //
 // [!] You should run "gulp test" for running karma
 //
-module.exports = function(config) {
+module.exports = function (config) {
   config.set({
     // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: '',
+    basePath: "",
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['mocha'],
+    frameworks: ["mocha"],
 
     // list of files / patterns to load in the browser
     files: [
-      'node_modules/power-assert/build/power-assert.js',
-      'node_modules/sinon/pkg/sinon.js',
-      'node_modules/sinon-chrome/dist/sinon-chrome.latest.js',
-      'tmp/scripts/tests.js'
+      "node_modules/power-assert/build/power-assert.js",
+      "node_modules/sinon/pkg/sinon.js",
+      "node_modules/sinon-chrome/dist/sinon-chrome.latest.js",
+      "tmp/scripts/tests.js",
     ],
 
     // list of files to exclude
@@ -29,7 +29,7 @@ module.exports = function(config) {
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress'],
+    reporters: ["progress"],
 
     // web server port
     port: 9876,
@@ -38,7 +38,8 @@ module.exports = function(config) {
     colors: true,
 
     // level of logging
-    // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
+    // possible values: config.LOG_DISABLE || config.LOG_ERROR ||
+    //    config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
     logLevel: config.LOG_INFO,
 
     // enable / disable watching file and executing tests whenever any file changes
@@ -46,7 +47,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome', 'PhantomJS'],
+    browsers: ["Chrome", "PhantomJS"],
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
@@ -54,6 +55,6 @@ module.exports = function(config) {
 
     // Concurrency level
     // how many browser should be started simultaneous
-    concurrency: Infinity
-  })
-}
+    concurrency: Infinity,
+  });
+};

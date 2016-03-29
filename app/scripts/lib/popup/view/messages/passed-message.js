@@ -12,7 +12,7 @@ const PassedMessage = React.createClass({
     onUndo: React.PropTypes.func.isRequired,
   },
   render() {
-    const {hasUndo, onUndo} = this.props;
+    const { hasUndo, onUndo } = this.props;
     return (
       <MessageBox text="passed" mark="check-circle">
         {hasUndo ?
@@ -20,7 +20,7 @@ const PassedMessage = React.createClass({
         : ""}
       </MessageBox>
     );
-  }
+  },
 });
 
 export default PassedMessage;

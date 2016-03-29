@@ -3,7 +3,7 @@
 "use strict";
 
 import React from "react";
-import {translate} from "../../../util/chrome-util";
+import { translate } from "../../../util/chrome-util";
 import SeveritySwitch from "./severity-switch";
 import RuleToggle from "./rule-toggle";
 import RuleEditor from "./rule-editor";
@@ -27,7 +27,7 @@ const RuleItem = React.createClass({
     onEditorReady: React.PropTypes.func.isRequired,
   },
   render() {
-    const {rule, enabled, severity, filtered} = this.props;
+    const { rule, enabled, severity, filtered } = this.props;
     const className = [
       "rule-item",
       filtered ? "filtered" : "",
@@ -54,7 +54,7 @@ const RuleItem = React.createClass({
         <div className="rule-item-body">
           <div className="rule-item-description"
             dangerouslySetInnerHTML={{
-              __html: translate(`rule-${rule.key}-description`, rule.description)
+              __html: translate(`rule-${rule.key}-description`, rule.description),
             }}
           ></div>
           <div className="rule-item-options">
@@ -66,7 +66,7 @@ const RuleItem = React.createClass({
         </div>
       </form>
     );
-  }
+  },
 });
 
 export default RuleItem;

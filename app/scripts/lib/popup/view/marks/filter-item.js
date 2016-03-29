@@ -3,7 +3,7 @@
 "use strict";
 
 import React from "react";
-import {translate} from "../../../util/chrome-util";
+import { translate } from "../../../util/chrome-util";
 
 const FilterItem = React.createClass({
   propTypes: {
@@ -13,7 +13,7 @@ const FilterItem = React.createClass({
     onChange: React.PropTypes.func.isRequired,
   },
   render() {
-    const {severity, count, active} = this.props;
+    const { severity, count, active } = this.props;
     return (
       <button
         className={`filter-item btn btn-link btn-sm ${active ? "active" : ""}`}
@@ -24,7 +24,7 @@ const FilterItem = React.createClass({
         <span>{translate(severity)}</span>
       </button>
     );
-  }
+  },
 });
 
 export default FilterItem;

@@ -9,6 +9,7 @@ JSONEditor.defaults.resolvers.unshift((schema) => {
   if (schema.type === "array" && schema.items && _.isArray(schema.items.enum)) {
     return "multiSelectize";
   }
+  return undefined;
 });
 
 JSONEditor.defaults.editors.multiSelectize = JSONEditor.AbstractEditor.extend({
@@ -17,14 +18,14 @@ JSONEditor.defaults.editors.multiSelectize = JSONEditor.AbstractEditor.extend({
     this.optionValues = [];
     this.valueDict = {};
 
-    let items_schema = this.jsoneditor.expandRefs(this.schema.items || {});
-    let enums = items_schema["enum"] || [];
-    this.optionValues = _.map(enums, (opt) => "" + opt);
-    this.valueDict = _.fromPairs(_.map(enums, (opt) => ["" + opt, opt]));
+    const itemsSchema = this.jsoneditor.expandRefs(this.schema.items || {});
+    const enums = itemsSchema.enum || [];
+    this.optionValues = _.map(enums, (opt) => `${opt}`);
+    this.valueDict = _.fromPairs(_.map(enums, (opt) => [`${opt}`, opt]));
   },
   build() {
     this.title = this.theme.getFormInputLabel(this.getTitle());
-    this.errorHolder = document.createElement('div');
+    this.errorHolder = document.createElement("div");
 
     if (this.schema.description) {
       this.description = this.theme.getDescription(this.schema.description);
@@ -32,7 +33,7 @@ JSONEditor.defaults.editors.multiSelectize = JSONEditor.AbstractEditor.extend({
 
     this.input_type = "select";
     this.input = this.theme.getSelectInput(this.optionValues);
-    this.input.setAttribute('multiple', 'multiple');
+    this.input.setAttribute("multiple", "multiple");
 
     const group = this.theme.getFormControl(this.title, this.input, this.description);
     this.container.appendChild(group);
@@ -41,11 +42,11 @@ JSONEditor.defaults.editors.multiSelectize = JSONEditor.AbstractEditor.extend({
     $(this.input).selectize({
       delimiter: false,
       createOnBlur: true,
-      create: true
+      create: true,
     });
   },
   postBuild() {
-    this.input.selectize.on("change", (ev) => {
+    this.input.selectize.on("change", () => {
       this.refreshValue();
       this.onChange(true);
     });
@@ -56,14 +57,14 @@ JSONEditor.defaults.editors.multiSelectize = JSONEditor.AbstractEditor.extend({
   },
   setValue(value, initial) {
     value = _.castArray(value || []);
-    value = _.filter(value, (val) => this.valueDict["" + val]);
+    value = _.filter(value, (val) => this.valueDict[`${val}`]);
     if (this.schema.uniqueItems) {
       value = _.uniq(value);
     }
     this.input.selectize.setValue(value);
     this.refreshValue(initial);
   },
-  refreshValue(force) {
+  refreshValue() {
     const selected = this.input.selectize.getValue();
     this.value = _.values(_.pick(this.valueDict, selected));
   },
@@ -72,7 +73,7 @@ JSONEditor.defaults.editors.multiSelectize = JSONEditor.AbstractEditor.extend({
     $holder.empty();
     _.each(errors, (err) => {
       if (err.path === this.path) {
-        $holder.append(this.theme.getErrorMessage(error.message));
+        $holder.append(this.theme.getErrorMessage(err.message));
       }
     });
   },

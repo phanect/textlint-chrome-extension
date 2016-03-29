@@ -64,4 +64,4 @@ export default {
   updateOptions(tabId, options, ruleChanged) {
     return messages.tabSend(tabId, messages.UPDATE_OPTIONS, { options, ruleChanged });
   },
-}
+};

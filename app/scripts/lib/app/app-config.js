@@ -5,11 +5,11 @@
 export default {
   activeIcon: {
     "19": "/images/icon-19.png",
-    "38": "/images/icon-38.png"
+    "38": "/images/icon-38.png",
   },
   deactiveIcon: {
     "19": "/images/icon-black-19.png",
-    "38": "/images/icon-black-38.png"
+    "38": "/images/icon-black-38.png",
   },
 
   defaultRuleset: {
@@ -22,13 +22,13 @@ export default {
       rules: [
         "common-misspellings",
         "rousseau",
-        "alex"
+        "alex",
       ],
       ruleOptions: {
         "common-misspellings": true,
         "rousseau": true,
         "alex": true,
-      }
+      },
     },
     {
       name: "Japanese",
@@ -49,7 +49,7 @@ export default {
         "no-start-duplicated-conjunction": true,
         "spellcheck-tech-word": true,
         "no-mix-dearu-desumasu": true,
-      }
+      },
     },
     {
       name: "JapaneseNovel",
@@ -58,7 +58,7 @@ export default {
         "no-doubled-joshi",
         "sentence-length",
         "no-start-duplicated-conjunction",
-        "general-novel-style-ja"
+        "general-novel-style-ja",
       ],
       ruleOptions: {
         "max-ten": true,
@@ -66,14 +66,14 @@ export default {
         "sentence-length": true,
         "no-start-duplicated-conjunction": true,
         "general-novel-style-ja": true,
-      }
+      },
     },
     {
       name: "Custom",
       rules: [
       ],
       ruleOptions: {
-      }
-    }
+      },
+    },
   ],
-}
+};

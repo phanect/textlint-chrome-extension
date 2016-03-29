@@ -14,16 +14,16 @@ export default function () {
       } else {
         messages.getOptions().then((options) => {
           // Delay load to avoid initial impact
-          let TextareaLinter = require("./textarea-linter").TextareaLinter;
+          const TextareaLinter = require("./textarea-linter").TextareaLinter;
           textareaLinter = new TextareaLinter({
-            lintText: (lintId, text) => { messages.lintText(lintId, text) },
-            correctText: (correctId, text) => { messages.correctText(correctId, text) },
-            onMarksChanged: () => { messages.updateStatus() },
+            lintText: (lintId, text) => { messages.lintText(lintId, text); },
+            correctText: (correctId, text) => { messages.correctText(correctId, text); },
+            onMarksChanged: () => { messages.updateStatus(); },
             showMarks: options.showMarks,
             showBorder: options.showBorder,
           });
           resolve(textareaLinter);
-        });
+        }).catch(reject);
       }
     });
   }
@@ -39,7 +39,7 @@ export default function () {
     const active = textareaLinter ? textareaLinter.active : false;
     const marks = textareaLinter ? textareaLinter.getCurrentLintMarks() : [];
     const counts = { info: 0, warning: 0, error: 0, dismissed: 0 };
-    marks.forEach((mark) => { counts[mark.dismissed ? "dismissed" : mark.severity]++ });
+    marks.forEach((mark) => { counts[mark.dismissed ? "dismissed" : mark.severity]++; });
     const undoCount = textareaLinter ? textareaLinter.getCurrentUndoCount() : 0;
     sendResponse({ active, marks, counts, undoCount });
   });
@@ -76,12 +76,12 @@ export default function () {
     sendResponse();
   });
 
-  messages.onShowMark(({markId}, sender, sendResponse) => {
+  messages.onShowMark(({ markId }, sender, sendResponse) => {
     if (textareaLinter) textareaLinter.showMark(markId);
     sendResponse();
   });
 
-  messages.onDismissMark(({markId, dismissType}, sender, sendResponse) => {
+  messages.onDismissMark(({ markId, dismissType }, sender, sendResponse) => {
     if (textareaLinter) textareaLinter.dismissMark(markId, dismissType);
     sendResponse();
   });
@@ -96,7 +96,7 @@ export default function () {
     sendResponse();
   });
 
-  messages.onUpdateOptions(({options, ruleChanged}, sender, sendResponse) => {
+  messages.onUpdateOptions(({ options, ruleChanged }, sender, sendResponse) => {
     if (textareaLinter) {
       textareaLinter.setOptions(options);
     }

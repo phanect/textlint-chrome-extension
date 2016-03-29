@@ -30,21 +30,25 @@ export default class Badge {
   }
 
   activate(tabId) {
-    chrome.browserAction.setIcon({ tabId: tabId, path: appConfig.activeIcon });
+    chrome.browserAction.setIcon({ tabId, path: appConfig.activeIcon });
   }
 
   deactivate(tabId) {
-    chrome.browserAction.setIcon({ tabId: tabId, path: appConfig.deactiveIcon });
+    chrome.browserAction.setIcon({ tabId, path: appConfig.deactiveIcon });
   }
 
   toggleActive(tabId, active) {
-    active ? this.activate(tabId) : this.deactivate(tabId);
+    if (active) {
+      this.activate(tabId);
+    } else {
+      this.deactivate(tabId);
+    }
   }
 
   showError(tabId) {
     this.deactivate(tabId);
-    chrome.browserAction.setBadgeBackgroundColor({ tabId: tabId, color: "#F00" });
-    chrome.browserAction.setBadgeText({ tabId: tabId, text: "Err" });
+    chrome.browserAction.setBadgeBackgroundColor({ tabId, color: "#F00" });
+    chrome.browserAction.setBadgeText({ tabId, text: "Err" });
   }
 
   showLintCount(tabId, counts) {
@@ -56,17 +60,17 @@ export default class Badge {
     });
 
     chrome.browserAction.setBadgeText({
-      tabId: tabId,
+      tabId,
       text: sum > 0 ? sum.toString() : "OK",
     });
     chrome.browserAction.setBadgeBackgroundColor({
-      tabId: tabId,
+      tabId,
       color: BACKGROUND_COLORS[maxSeverity || "passed"],
     });
   }
 
   hideLintCount(tabId) {
-    chrome.browserAction.setBadgeText({ tabId: tabId, text: "" });
+    chrome.browserAction.setBadgeText({ tabId, text: "" });
   }
 
   updateForTabId(tabId) {
@@ -86,20 +90,22 @@ export default class Badge {
   }
 
   updateForTab(tab) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       if (!tab.url || !/^https?:/.test(tab.url)) {
         this.disable(tab.id);
-        return resolve();
+        resolve();
+        return;
       }
       this.enable(tab.id);
 
       const status = linters.getStatus(tab.id);
       if (status.lastError) {
         this.showError(tab.id);
-        return resolve();
+        resolve();
+        return;
       }
 
-      messages.getStatus(tab.id).then(({active, marks, counts}) => {
+      messages.getStatus(tab.id).then(({ active, counts }) => {
         this.toggleActive(tab.id, active);
 
         const showCount = !_.isEmpty(this.appOptions.badgeCountSeverity);
@@ -113,7 +119,7 @@ export default class Badge {
           linters.deactivate(tab.id);
         }
         resolve();
-      }).catch((err) => {
+      }).catch(() => {
         // Maybe not active
         this.deactivate(tab.id);
         resolve();

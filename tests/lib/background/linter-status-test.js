@@ -2,7 +2,6 @@
  * License: GNU GPLv3 http://www.gnu.org/licenses/gpl-3.0.html */
 "use strict";
 
-import _ from "lodash";
 import LinterStatus from "../../../app/scripts/lib/background/linter-status";
 
 describe("LinterStatus", () => {

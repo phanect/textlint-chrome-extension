@@ -31,8 +31,6 @@ describe("appMessage", () => {
   });
 
   describe("#send()", () => {
-    let promise;
-
     function send() {
       return appMessage.send(appMessage.GET_STATUS);
     }
@@ -83,10 +81,10 @@ describe("appMessage", () => {
       function sendError() {
         handler = sinon.spy();
         appMessage.onError(handler);
-        const promise = send();
+        const promised = send();
         chrome.runtime.lastError = error;
         getCallback().call(null, undefined);
-        return promise;
+        return promised;
       }
 
       it("rejects a promise with error message", () => {
@@ -96,7 +94,7 @@ describe("appMessage", () => {
       });
 
       it("calls error handler when error occurred", () => {
-        return withRejected(sendError(), (passed) => {
+        return withRejected(sendError(), () => {
           assert(handler.calledOnce);
         });
       });
@@ -175,7 +173,7 @@ describe("appMessage", () => {
       });
 
       it("calls error handler when error occurred", () => {
-        return withRejected(sendError(), (passed) => {
+        return withRejected(sendError(), () => {
           assert(handler.calledOnce);
         });
       });

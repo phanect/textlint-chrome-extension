@@ -64,4 +64,4 @@ export default {
   updateStatus() {
     return messages.send(messages.UPDATE_STATUS);
   },
-}
+};

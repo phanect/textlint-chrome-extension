@@ -6,18 +6,18 @@
 //  Since "\b" only represents boundary of English words,
 //  Japanese sentences would always be treated as one word.
 //  To avoid this, we want to match Japanese words first.
-let wordRegexp = new RegExp([
-  '[\\u3040-\\u309F]{1,10}',   // Hiragana
-  '[\\u30A0-\\u30FF]{1,10}',   // Katakana
-  '[\\uFF65-\\uFF9F]{1,10}',   // Half-width Katakana
-  '[\\uFF01-\\uFF60]{1,10}',   // Full-width ASCII
-  '(?:' +                      // Kanji
-    '[々〇〻\\u3400-\\u9FFF\\uF900-\\uFAFF]' +
-    '|[\\uD840-\\uD87F][\\uDC00-\\uDFFF]' +
-  '){1,10}',
-  '\\w{1,20}',                 // English word
-  '.{1,20}?(?:\\b|$)'          // Any characters to word boundary
-].join('|'), 'gm');
+const wordRegexp = new RegExp([
+  "[\\u3040-\\u309F]{1,10}",   // Hiragana
+  "[\\u30A0-\\u30FF]{1,10}",   // Katakana
+  "[\\uFF65-\\uFF9F]{1,10}",   // Half-width Katakana
+  "[\\uFF01-\\uFF60]{1,10}",   // Full-width ASCII
+  "(?:" +                      // Kanji
+    "[々〇〻\\u3400-\\u9FFF\\uF900-\\uFAFF]" +
+    "|[\\uD840-\\uD87F][\\uDC00-\\uDFFF]" +
+  "){1,10}",
+  "\\w{1,20}",                 // English word
+  ".{1,20}?(?:\\b|$)",         // Any characters to word boundary
+].join("|"), "gm");
 
 // Utility class to get a word at caret in textarea.
 // It can convert (line, column) coordinates into index of string.
@@ -31,7 +31,7 @@ export default class TextCaretScanner {
   _buildLineToIndex(text) {
     const lines = text.split(/\n/);
     let index = 0;
-    let lineToIndex = new Array(lines.length);
+    const lineToIndex = new Array(lines.length);
     for (let i = 0, l = lines.length; i < l; i++) {
       lineToIndex[i] = index;
       index += lines[i].length + 1;  // 1 = "\n".length
@@ -41,7 +41,7 @@ export default class TextCaretScanner {
 
   getWordAtIndex(index) {
     wordRegexp.lastIndex = index;
-    let match = wordRegexp.exec(this.text);
+    const match = wordRegexp.exec(this.text);
     return match ? match[0] : "";
   }
 
@@ -57,9 +57,9 @@ export default class TextCaretScanner {
   }
 
   getWordRangeFromLineColumn(line, column) {
-    let index = this.getIndexFromLineColumn(line, column);
+    const index = this.getIndexFromLineColumn(line, column);
     if (index >= 0) {
-      let word = this.getWordAtIndex(index) || "?";  // Minimum +1 range
+      const word = this.getWordAtIndex(index) || "?";  // Minimum +1 range
       return [index, index + word.length];
     } else {
       return [0, 1];
@@ -67,7 +67,7 @@ export default class TextCaretScanner {
   }
 
   getWordFromLineColumn(line, column) {
-    let range = this.getWordRangeFromLineColumn(line, column);
+    const range = this.getWordRangeFromLineColumn(line, column);
     return this.text.slice(range[0], range[1]);
   }
 }

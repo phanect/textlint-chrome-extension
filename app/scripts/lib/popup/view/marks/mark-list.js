@@ -4,7 +4,6 @@
 
 import _ from "lodash";
 import React from "react";
-import {translate} from "../../../util/chrome-util";
 import MarkItem from "./mark-item";
 
 const MarkList = React.createClass({
@@ -20,7 +19,7 @@ const MarkList = React.createClass({
     onDismissSameClick: React.PropTypes.func.isRequired,
   },
   getFilteredMarks() {
-    const {actives} = this.props;
+    const { actives } = this.props;
     return _.filter(this.props.marks, m => actives[m.dismissed ? "dismissed" : m.severity]);
   },
   render() {
@@ -39,7 +38,7 @@ const MarkList = React.createClass({
         )}
       </div>
     );
-  }
+  },
 });
 
 export default MarkList;

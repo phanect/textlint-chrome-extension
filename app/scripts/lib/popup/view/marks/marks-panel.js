@@ -4,7 +4,6 @@
 
 import _ from "lodash";
 import React from "react";
-import {translate} from "../../../util/chrome-util";
 import FilterList from "./filter-list";
 import MarkList from "./mark-list";
 import CorrectButtons from "./correct-buttons";
@@ -46,8 +45,8 @@ const MarksPanel = React.createClass({
     this.props.controller.dismissSameMarks(markId);
   },
   render() {
-    const {counts, marks, hasUndo} = this.props;
-    const {actives} = this.state;
+    const { counts, marks, hasUndo } = this.props;
+    const { actives } = this.state;
     return (
       <div className="marks-panel">
         <div className="marks-panel-header clearfix">
@@ -67,7 +66,7 @@ const MarksPanel = React.createClass({
         />
       </div>
     );
-  }
+  },
 });
 
 export default MarksPanel;

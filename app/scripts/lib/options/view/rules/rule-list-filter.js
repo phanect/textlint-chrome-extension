@@ -5,7 +5,7 @@
 import _ from "lodash";
 import React from "react";
 import escapeStringRegexp from "escape-string-regexp";
-import {translate} from "../../../util/chrome-util";
+import { translate } from "../../../util/chrome-util";
 
 const RuleListFilter = React.createClass({
   propTypes: {
@@ -32,7 +32,7 @@ const RuleListFilter = React.createClass({
         </div>
       </div>
     );
-  }
+  },
 });
 
 export default RuleListFilter;

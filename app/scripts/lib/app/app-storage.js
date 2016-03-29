@@ -22,10 +22,12 @@ export default {
   },
 
   observeOptionsUpdate(callback) {
-    chrome.storage.onChanged.addListener((changes, areaName) => {
-      DEBUG && console.log("Storage updated: ", changes);
-      if (changes["options"]) {
-        callback(changes["options"]);
+    chrome.storage.onChanged.addListener((changes) => {
+      if (DEBUG) {
+        console.log("Storage updated: ", changes);
+      }
+      if (changes.options) {
+        callback(changes.options);
       }
     });
   },

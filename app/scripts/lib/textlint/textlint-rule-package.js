@@ -45,13 +45,13 @@ export default class TextlintRulePackage {
           .done((info) => {
             this.infoCache = {
               timestamp: $.now(),
-              info: info
+              info,
             };
             chrome.storage.local.set({ [cacheKey]: this.infoCache }, () => {
               resolve(info);
             });
           })
-          .fail((xhr, status, error) => { reject(error) })
+          .fail((xhr, status, error) => { reject(error); });
       });
     });
   }
@@ -59,8 +59,8 @@ export default class TextlintRulePackage {
   getLatestVersion() {
     return new Promise((resolve, reject) => {
       this.getInfo().then((info) => {
-        if (info["dist-tags"] && info["dist-tags"]["latest"]) {
-          resolve(info["dist-tags"]["latest"]);
+        if (info["dist-tags"] && info["dist-tags"].latest) {
+          resolve(info["dist-tags"].latest);
         } else {
           reject("No latest version on package info");
         }
@@ -73,7 +73,7 @@ export default class TextlintRulePackage {
       $.ajax({
         url: `${BROWSERIFY_CDN_URL}${this.packageName}/${version}`,
         dataType: "script",
-        cache: true
+        cache: true,
       }).done(() => {
         resolve(stripDefault(window.require(this.packageName)));
       }).fail((xhr, status, error) => {

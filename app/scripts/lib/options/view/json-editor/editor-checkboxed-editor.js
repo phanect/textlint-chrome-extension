@@ -6,10 +6,11 @@ import _ from "lodash";
 import $ from "jquery";
 
 JSONEditor.defaults.resolvers.unshift((schema) => {
-  if (!schema.oneOf || schema.oneOf.length !== 2) return;
+  if (!schema.oneOf || schema.oneOf.length !== 2) return undefined;
   if (_.find(schema.oneOf, (s) => s.type === "boolean" && s.enum && s.enum.length === 1)) {
     return "checkboxedEditor";
   }
+  return undefined;
 });
 
 JSONEditor.defaults.editors.checkboxedEditor = JSONEditor.AbstractEditor.extend({
@@ -32,8 +33,11 @@ JSONEditor.defaults.editors.checkboxedEditor = JSONEditor.AbstractEditor.extend(
     this.editor = null;
     this.editorValidator = null;
 
-    this.checkboxIndex = _.findIndex(this.schema.oneOf, (s) => s.type === "boolean" && s.enum && s.enum.length === 1);
-    if (this.checkboxIndex < 0) throw "no constant boolean found in schema.oneOf";
+    this.checkboxIndex = _.findIndex(
+      this.schema.oneOf,
+      (s) => s.type === "boolean" && s.enum && s.enum.length === 1
+    );
+    if (this.checkboxIndex < 0) throw new Error("no constant boolean found in schema.oneOf");
     this.editorIndex = 1 - this.checkboxIndex;
     this.checkboxSchema = this.schema.oneOf[this.checkboxIndex];
     this.checkboxValue = this.checkboxSchema.enum[0];
@@ -44,7 +48,9 @@ JSONEditor.defaults.editors.checkboxedEditor = JSONEditor.AbstractEditor.extend(
     if (!this.options.compact) {
       this.header = this.label = this.theme.getCheckboxLabel(this.getTitle());
     }
-    if (this.schema.description) this.description = this.theme.getFormInputDescription(this.schema.description);
+    if (this.schema.description) {
+      this.description = this.theme.getFormInputDescription(this.schema.description);
+    }
     if (this.options.compact) $(this.container).addClass("compact");
 
     this.buildLabeledCheckbox();
@@ -71,7 +77,7 @@ JSONEditor.defaults.editors.checkboxedEditor = JSONEditor.AbstractEditor.extend(
       schema = _.clone(this.editorSchema);
     }
 
-    this.editorHolder = document.createElement('div');
+    this.editorHolder = document.createElement("div");
     this.container.appendChild(this.editorHolder);
 
     const holder = this.theme.getChildEditorHolder();
@@ -80,11 +86,11 @@ JSONEditor.defaults.editors.checkboxedEditor = JSONEditor.AbstractEditor.extend(
     const editorClass = this.jsoneditor.getEditorClass(schema);
     this.editor = this.jsoneditor.createEditor(editorClass, {
       jsoneditor: this.jsoneditor,
-      schema: schema,
+      schema,
       container: holder,
       path: this.path,
       parent: this,
-      required: true
+      required: true,
     });
     this.editor.preBuild();
     this.editor.build();
@@ -116,7 +122,7 @@ JSONEditor.defaults.editors.checkboxedEditor = JSONEditor.AbstractEditor.extend(
     this._super();
   },
 
-  onChildEditorChange(editor) {
+  onChildEditorChange() {
     if (this.editor) this.refreshValue();
     this._super();
   },

@@ -7,7 +7,9 @@ plugins:
 globals:
   __ENV__: true
   __VENDOR__: true
+  DEBUG: true
   LIVERELOAD: true
+  JSONEditor: true
 rules:
   strict: 0
   arrow-body-style: 0
@@ -15,6 +17,9 @@ rules:
   no-param-reassign: 0
   func-names: 0
   quote-props: 0
+  no-else-return: 0
+  react/prefer-es6-class: 0
+  react/prefer-stateless-function: 0
   quotes:
     - error
     - double

@@ -185,7 +185,7 @@ describe("AppOptions", () => {
       showMarks: false,
       showBorder: false,
       badgeCountSeverity: "none",
-      ruleOptions: { alex: { severity: "info" } }
+      ruleOptions: { alex: { severity: "info" } },
     };
 
     beforeEach(() => {
@@ -216,7 +216,8 @@ describe("AppOptions", () => {
   });
 
   describe("#observeUpdate()", () => {
-    let storageMethod, callback;
+    let storageMethod;
+    let callback;
     beforeEach(() => {
       storageMethod = sinonsb.stub(appStorage, "observeOptionsUpdate");
       callback = sinon.spy();

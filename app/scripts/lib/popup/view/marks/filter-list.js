@@ -13,7 +13,7 @@ const FilterList = React.createClass({
     onFilterChange: React.PropTypes.func.isRequired,
   },
   render() {
-    const {counts, actives, onFilterChange} = this.props;
+    const { counts, actives, onFilterChange } = this.props;
     return (
       <div className="filter-list btn-group">
         {_.map(counts, (count, severity) =>
@@ -27,7 +27,7 @@ const FilterList = React.createClass({
         )}
       </div>
     );
-  }
+  },
 });
 
 export default FilterList;

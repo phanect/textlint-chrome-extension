@@ -3,7 +3,7 @@
 "use strict";
 
 import React from "react";
-import {translate} from "../../../util/chrome-util";
+import { translate } from "../../../util/chrome-util";
 
 const PageSwitch = React.createClass({
   propTypes: {
@@ -16,7 +16,7 @@ const PageSwitch = React.createClass({
     onPageChange: React.PropTypes.func,
   },
   render() {
-    const {pages, activePage, onPageChange} = this.props;
+    const { pages, activePage, onPageChange } = this.props;
     return (
       <ul className="tab-switch nav nav-pills nav-stacked">
         {pages.map(page =>
@@ -29,7 +29,7 @@ const PageSwitch = React.createClass({
         )}
       </ul>
     );
-  }
+  },
 });
 
 export default PageSwitch;

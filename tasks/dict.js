@@ -1,10 +1,9 @@
-import gulp from 'gulp';
-import gulpif from 'gulp-if';
-import gunzip from 'gulp-gunzip';
-import livereload from 'gulp-livereload';
-import args from './lib/args';
-import path from 'path';
-import through from 'through2';
+import gulp from "gulp";
+import gulpif from "gulp-if";
+import gunzip from "gulp-gunzip";
+import livereload from "gulp-livereload";
+import args from "./lib/args";
+import through from "through2";
 
 // Quickfix for gulp-gunzip does not add base to piped files
 function addBase(base) {
@@ -15,8 +14,8 @@ function addBase(base) {
   });
 }
 
-gulp.task('dict', () => {
-  const dictDir = 'node_modules/kuromoji/dist/dict';
+gulp.task("dict", () => {
+  const dictDir = "node_modules/kuromoji/dist/dict";
   return gulp.src(`${dictDir}/**/*.dat.gz`)
     .pipe(gunzip())
     .pipe(addBase(dictDir))

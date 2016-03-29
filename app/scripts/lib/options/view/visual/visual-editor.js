@@ -2,9 +2,7 @@
  * License: GNU GPLv3 http://www.gnu.org/licenses/gpl-3.0.html */
 "use strict";
 
-import _ from "lodash";
 import React from "react";
-import {translate} from "../../../util/chrome-util";
 import JsonEditor from "../json-editor/json-editor";
 
 const VisualEditor = React.createClass({
@@ -25,7 +23,7 @@ const VisualEditor = React.createClass({
         onReady={this.handleEditorReady}
       />
     );
-  }
+  },
 });
 
 export default VisualEditor;

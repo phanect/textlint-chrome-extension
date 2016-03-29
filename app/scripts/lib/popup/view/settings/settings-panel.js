@@ -3,7 +3,7 @@
 "use strict";
 
 import React from "react";
-import {translate} from "../../../util/chrome-util";
+import { translate } from "../../../util/chrome-util";
 import RulesetList from "./ruleset-list";
 import FormatSelect from "./format-select";
 
@@ -23,19 +23,21 @@ const SettingsPanel = React.createClass({
     this.props.onChange({ format: formatName });
   },
   render() {
-    const {rulesets, ruleset, format} = this.props;
+    const { rulesets, ruleset, format } = this.props;
     return (
       <div className="settings-panel">
         <p>{translate("chooseRuleset")}</p>
         <form>
           <RulesetList rulesets={rulesets} selected={ruleset}
-            onRulesetSelect={this.handleRulesetSelect} />
+            onRulesetSelect={this.handleRulesetSelect}
+          />
           <FormatSelect selected={format}
-            onFormatSelect={this.handleFormatSelect} />
+            onFormatSelect={this.handleFormatSelect}
+          />
         </form>
       </div>
     );
-  }
+  },
 });
 
 export default SettingsPanel;

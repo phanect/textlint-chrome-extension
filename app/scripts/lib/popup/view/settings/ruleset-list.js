@@ -3,7 +3,6 @@
 "use strict";
 
 import React from "react";
-import {translate} from "../../../util/chrome-util";
 import RulesetItem from "./ruleset-item";
 
 const RulesetList = React.createClass({
@@ -15,7 +14,7 @@ const RulesetList = React.createClass({
     onRulesetSelect: React.PropTypes.func.isRequired,
   },
   render() {
-    const {rulesets, selected, onRulesetSelect} = this.props;
+    const { rulesets, selected, onRulesetSelect } = this.props;
     return (
       <div className="ruleset-list">
         {rulesets.map(ruleset =>
@@ -28,7 +27,7 @@ const RulesetList = React.createClass({
         )}
       </div>
     );
-  }
+  },
 });
 
 export default RulesetList;

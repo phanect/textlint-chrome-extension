@@ -29,7 +29,7 @@ const DEFAULT_OPTIONS = {
   activate: true,
 
   // Hide markers on textarea input event
-  hideOnInput: false
+  hideOnInput: false,
 };
 
 // List of styles to be synchronized from textarea to background div.
@@ -125,7 +125,7 @@ export default class TextareaMarker {
     if (!this.$background) return;
 
     const $marks = this.$background.find(selector);
-    if ($marks.length == 0) return;
+    if ($marks.length === 0) return;
 
     const $mark = $marks.first();
     const pos = $mark.position();
@@ -180,7 +180,7 @@ export default class TextareaMarker {
   _bindEvents() {
     this.$textarea
       .on(`scroll.${PLUGIN_NAME}`, _.throttle(
-        () => { this._syncScrollPositions() },
+        () => { this._syncScrollPositions(); },
         this.options.throttle
       ))
       .on(`input.${PLUGIN_NAME}`, _.throttle(
@@ -194,10 +194,10 @@ export default class TextareaMarker {
         this.options.throttle
       ))
       .on(`mousemove.${PLUGIN_NAME}`, _.throttle(
-        (ev) => { this._detectMouseMoveOnMarker(ev) },
+        (ev) => { this._detectMouseMoveOnMarker(ev); },
         this.options.throttle
       ))
-      .on(`focus.${PLUGIN_NAME} blur.${PLUGIN_NAME}`, () => this._syncAll())
+      .on(`focus.${PLUGIN_NAME} blur.${PLUGIN_NAME}`, () => this._syncAll());
 
     this.positionTimer = setInterval(() => {
       this._syncSizeAndPosition();
@@ -225,7 +225,7 @@ export default class TextareaMarker {
 
   _syncStyles() {
     if (!this.$background) return;
-    let styles = this.$textarea.css(SYNCED_STYLES);
+    const styles = this.$textarea.css(SYNCED_STYLES);
     this.$background.css(styles);
     if (styles["line-height"]) {
       // Quickfix for relative line-height
@@ -262,7 +262,8 @@ export default class TextareaMarker {
     _.each(_.sortBy(markers || [], ["start", "end"]), (marker) => {
       if (prev && marker.start < prev.end && marker.end > prev.env) {
         // Overlapped. We have to split it into two markers
-        const inner = _.clone(marker), outer = _.clone(marker);
+        const inner = _.clone(marker);
+        const outer = _.clone(marker);
         inner.end = prev.end;
         outer.start = prev.end;
         newMarkers.push(inner);
@@ -287,11 +288,11 @@ export default class TextareaMarker {
   _markupTextToNode(text) {
     let currentNode = document.createDocumentFragment();
     let currentIndex = 0;
-    let endIndexStack = [];
+    const endIndexStack = [];
 
     const skipTextUntilIndex = (index) => {
-      if (currentIndex != index) {
-        let sliced = text.slice(currentIndex, index);
+      if (currentIndex !== index) {
+        const sliced = text.slice(currentIndex, index);
         currentNode.appendChild(document.createTextNode(sliced));
         currentIndex = index;
       }
@@ -309,7 +310,7 @@ export default class TextareaMarker {
     _.each(this.options.markers, (marker) => {
       forwardUntilIndex(marker.start);
 
-      let markElement = this._createMarkElement(marker);
+      const markElement = this._createMarkElement(marker);
       currentNode.appendChild(markElement);
       currentNode = markElement;
       endIndexStack.unshift(Math.min(marker.end, text.length));
@@ -335,12 +336,12 @@ export default class TextareaMarker {
 
   _detectMouseMoveOnMarker(event) {
     if (!this.$background) return;
-    let $marks = $(document.elementsFromPoint(event.clientX, event.clientY))
+    const $marks = $(document.elementsFromPoint(event.clientX, event.clientY))
       .filter(`mark.${this.options.classPrefix}mark`);
     if ($marks.length > 0) {
-      let ev = $.Event("markmousemove", {
+      const ev = $.Event("markmousemove", {  // eslint-disable-line
         pageX: event.pageX,
-        pageY: event.pageY
+        pageY: event.pageY,
       });
       this.$textarea.trigger(ev, [$marks]);
     } else {
@@ -349,21 +350,21 @@ export default class TextareaMarker {
   }
 }
 
-$.fn.textareaMarker = function (methodNameOrOptions) {
-  let args = arguments;
-  let method, options;
-  if (_.isString(methodNameOrOptions)) {
-    method = methodNameOrOptions;
+$.fn.textareaMarker = function (...args) {
+  let method;
+  let options;
+  if (_.isString(args[0])) {
+    method = args.shift();
   } else {
-    options = methodNameOrOptions;
+    options = args.shift();
   }
 
-  let execute = function () {
-    let $this = $(this);
+  const execute = function () {
+    const $this = $(this);
     let instance = $this.data(PLUGIN_NAME);
 
     if (!instance && method === "destroy") {
-      return;
+      return undefined;
     }
     if (!instance && method === "isActive") {
       return false;
@@ -376,12 +377,13 @@ $.fn.textareaMarker = function (methodNameOrOptions) {
     }
 
     if (method) {
-      return instance[method].apply(instance, _.slice(args, 1));
+      return instance[method].apply(instance, args);
     }
+    return undefined;
   };
 
   if (method === "background" || method === "markers") {
-    return _.reduce(this, (jq, el) => jq.add(execute.call(el)), $([]))
+    return _.reduce(this, (jq, el) => jq.add(execute.call(el)), $([]));
   }
   if (method === "isActive") {
     return this.length && execute.call(this[0]);

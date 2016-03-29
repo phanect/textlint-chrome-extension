@@ -1,7 +1,7 @@
 /* Copyright (C) 2016  IRIDE Monad <iride.monad@gmail.com>
  * License: GNU GPLv3 http://www.gnu.org/licenses/gpl-3.0.html */
 JSONEditor.defaults.default_language = ((
-  typeof chrome.i18n.getUILanguage === 'function' &&
+  typeof chrome.i18n.getUILanguage === "function" &&
   chrome.i18n.getUILanguage() === "ja"
 ) ? "ja" : "en");
 JSONEditor.defaults.language = JSONEditor.defaults.default_language;
@@ -26,7 +26,7 @@ JSONEditor.defaults.languages.ja = {
    * When a value doesn't validate
    * @variables This key takes one variable: The number of schemas the value does not validate
    */
-  error_oneOf: '指定された値は無効です',
+  error_oneOf: "指定された値は無効です",
   /**
    * When a value does not validate a 'not' schema
    */
@@ -174,5 +174,5 @@ JSONEditor.defaults.languages.ja = {
   /**
     * Title on Collapse buttons
     */
-  button_collapse: "折り畳み"
+  button_collapse: "折り畳み",
 };

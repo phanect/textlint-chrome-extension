@@ -12,7 +12,7 @@ const ActivateToggle = React.createClass({
     onClickDeactivate: React.PropTypes.func.isRequired,
   },
   render() {
-    const {active, onClickActivate, onClickDeactivate} = this.props;
+    const { active, onClickActivate, onClickDeactivate } = this.props;
     return (
       <div className="activate-toggle">
         <IconButton icon="flash"
@@ -23,7 +23,7 @@ const ActivateToggle = React.createClass({
         />
       </div>
     );
-  }
+  },
 });
 
 export default ActivateToggle;

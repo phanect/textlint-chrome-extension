@@ -3,7 +3,7 @@
 "use strict";
 
 import React from "react";
-import {translate} from "../../../util/chrome-util";
+import { translate } from "../../../util/chrome-util";
 import Paragraph from "./paragraph";
 
 const BundlesSection = React.createClass({
@@ -43,7 +43,7 @@ const BundlesSection = React.createClass({
         </table>
       </div>
     );
-  }
+  },
 });
 
 export default BundlesSection;

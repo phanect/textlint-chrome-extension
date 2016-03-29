@@ -55,9 +55,9 @@ const VISUAL_OPTIONS_SCHEMA = {
           chrome.i18n.getMessage("labelErrors"),
           chrome.i18n.getMessage("labelErrorsAndWarnings"),
           chrome.i18n.getMessage("labelEverything"),
-          chrome.i18n.getMessage("labelNone")
-        ]
-      }
+          chrome.i18n.getMessage("labelNone"),
+        ],
+      },
     },
   },
 };
@@ -76,11 +76,7 @@ export default class AppOptions {
   }
 
   get(keys) {
-    if (_.isArray(keys)) {
-      return _.pick(this.options, keys);
-    } else {
-      return this.options[keys];
-    }
+    return _.isArray(keys) ? _.pick(this.options, keys) : this.options[keys];
   }
   set(options) {
     this.options = _.defaultsDeep(options, this.options);
@@ -129,7 +125,7 @@ export default class AppOptions {
   }
   set badgeCountSeverity(v) {
     if (_.isArray(v) && v.length === 0) v = "none";
-    this.options.badgeCountSeverity = _.isArray(v) ? v.join(',') : v;
+    this.options.badgeCountSeverity = _.isArray(v) ? v.join(",") : v;
   }
 
   getRuleOption(ruleName) {
@@ -156,7 +152,7 @@ export default class AppOptions {
   }
 
   observeUpdate(callback) {
-    appStorage.observeOptionsUpdate(({oldValue, newValue}) => {
+    appStorage.observeOptionsUpdate(({ oldValue, newValue }) => {
       this.overwrite(newValue);
       callback.call(this, { oldValue, newValue });
     });
