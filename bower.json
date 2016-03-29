@@ -32,6 +32,9 @@
     "bootswatch-dist": {
       "main": "**/*.min.{css,js}"
     },
+    "font-awesome": {
+      "main": []
+    },
     "selectize": {
       "main": [
         "dist/js/standalone/selectize.min.js",
