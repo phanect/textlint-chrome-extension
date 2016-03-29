@@ -63,7 +63,7 @@ export default {
     {
       "name": "textlint",
       "key": "textlint",
-      "version": "6.0.2",
+      "version": "6.0.4",
       "description": "The pluggable linting tool for text and markdown.",
       "author": "azu",
       "license": "MIT",
