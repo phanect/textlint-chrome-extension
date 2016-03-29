@@ -28,7 +28,7 @@ module.exports = {
   withActiveTab(fn) {
     chrome.tabs.query(
       { active: true, currentWindow: true },
-      (tabs) => { _.each(tabs, fn) }
+      (tabs) => { _.each(tabs, fn); }
     );
   },
 
@@ -48,7 +48,8 @@ module.exports = {
         } catch (err) {
           // Firefox causes an security error when storage.local is accessed from popup scripts.
           // https://bugzilla.mozilla.org/show_bug.cgi?id=1258139
-          // Perhaps this hack can be removed when storage.sync is officially supported, or the above bug is resolved.
+          // Perhaps this hack can be removed when storage.sync is
+          // officially supported, or the above bug is resolved.
           console.error(err);
           cb(undefined);
         }
@@ -74,7 +75,10 @@ module.exports = {
 
   localGetValue(key) {
     return promised((cb) => {
-      chrome.storage.local.get(key, (items) => cb(items.hasOwnProperty(key) ? items[key] : undefined));
+      chrome.storage.local.get(
+        key,
+        (items) => cb(items.hasOwnProperty(key) ? items[key] : undefined)
+      );
     });
   },
 
@@ -109,9 +113,9 @@ module.exports = {
     key = _.camelCase(key);
     const translated = chrome.i18n.getMessage(key);
     if (DEBUG && !translated) {
-      console.log(`Missing translation: "${key}" (with fallback "${fallback}")`)
+      console.log(`Missing translation: "${key}" (with fallback "${fallback}")`);
     }
     return translated || fallback;
   },
 
-}
+};

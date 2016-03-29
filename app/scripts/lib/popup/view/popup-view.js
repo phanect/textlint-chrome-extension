@@ -46,11 +46,44 @@ const PopupView = React.createClass({
   handleUndo() {
     this.props.controller.undo();
   },
-  render() {
-    const {controller, contentStatus, linterStatus} = this.props;
 
-    if (linterStatus.lastError)
+  renderContent() {
+    const { controller, rulesets, contentStatus, linterStatus } = this.props;
+
+    if (!contentStatus.active) {
+      return (<SettingsPanel
+        {...this.state}
+        rulesets={rulesets}
+        onChange={this.handleSettingsChange}
+      />);
+    }
+
+    if (!linterStatus.active || linterStatus.waiting) {
+      return <LintingMessage />;
+    }
+    if (!linterStatus.clientLinted) {
+      return <ReadyMessage />;
+    }
+    if (contentStatus.marks.length === 0) {
+      return <PassedMessage hasUndo={contentStatus.undoCount > 0} onUndo={this.handleUndo} />;
+    }
+
+    return (
+      <MarksPanel
+        controller={controller}
+        counts={contentStatus.counts}
+        marks={contentStatus.marks}
+        hasUndo={contentStatus.undoCount > 0}
+      />
+    );
+  },
+
+  render() {
+    const { controller, contentStatus, linterStatus } = this.props;
+
+    if (linterStatus.lastError) {
       return <ErrorMessage reason={linterStatus.lastError} />;
+    }
 
     return (
       <div className="popup-view">
@@ -64,33 +97,6 @@ const PopupView = React.createClass({
       </div>
     );
   },
-  renderContent() {
-    const {controller, settings, rulesets, contentStatus, linterStatus} = this.props;
-
-    if (!contentStatus.active) {
-      return <SettingsPanel
-        {...this.state}
-        rulesets={rulesets}
-        onChange={this.handleSettingsChange}
-      />;
-    }
-
-    if (!linterStatus.active || linterStatus.waiting)
-      return <LintingMessage />;
-    if (!linterStatus.clientLinted)
-      return <ReadyMessage />;
-    if (contentStatus.marks.length === 0)
-      return <PassedMessage hasUndo={contentStatus.undoCount > 0} onUndo={this.handleUndo} />;
-
-    return (
-      <MarksPanel
-        controller={controller}
-        counts={contentStatus.counts}
-        marks={contentStatus.marks}
-        hasUndo={contentStatus.undoCount > 0}
-      />
-    );
-  }
 });
 
 export default PopupView;

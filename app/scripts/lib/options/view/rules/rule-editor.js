@@ -2,9 +2,7 @@
  * License: GNU GPLv3 http://www.gnu.org/licenses/gpl-3.0.html */
 "use strict";
 
-import _ from "lodash";
 import React from "react";
-import {translate} from "../../../util/chrome-util";
 import JsonEditor from "../json-editor/json-editor";
 
 const RuleEditor = React.createClass({
@@ -20,7 +18,7 @@ const RuleEditor = React.createClass({
     this.props.onReady(this.refs.editor);
   },
   render() {
-    const {rule} = this.props;
+    const { rule } = this.props;
     return (
       <JsonEditor
         ref="editor"
@@ -29,7 +27,7 @@ const RuleEditor = React.createClass({
         onReady={this.handleEditorReady}
       />
     );
-  }
+  },
 });
 
 export default RuleEditor;

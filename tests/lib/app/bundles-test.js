@@ -6,7 +6,6 @@ import _ from "lodash";
 import bundles from "../../../tmp/bundle/bundles";
 
 describe("bundles", () => {
-
   describe("#get()", () => {
     const testInfo = { name: "textlint-rule-test", key: "test" };
     before(() => {
@@ -54,5 +53,4 @@ describe("bundles", () => {
       assert(_.isString(bundles.textlint.homepage));
     });
   });
-
 });

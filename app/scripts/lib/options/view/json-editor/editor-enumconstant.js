@@ -2,13 +2,11 @@
  * License: GNU GPLv3 http://www.gnu.org/licenses/gpl-3.0.html */
 "use strict";
 
-import _ from "lodash";
-import $ from "jquery";
-
 JSONEditor.defaults.resolvers.unshift((schema) => {
   if (schema.enum && schema.enum.length === 1) {
     return "enumConstant";
   }
+  return undefined;
 });
 
 JSONEditor.defaults.editors.enumConstant = JSONEditor.AbstractEditor.extend({
@@ -23,7 +21,7 @@ JSONEditor.defaults.editors.enumConstant = JSONEditor.AbstractEditor.extend({
       this.description = this.theme.getDescription(this.schema.description);
     }
 
-    this.container.appendChild(this.theme.getDescription("" + this.value));
+    this.container.appendChild(this.theme.getDescription(`${this.value}`));
 
     this.input_type = "hidden";
     this.input = this.theme.getFormInputField(this.input_type);
@@ -37,7 +35,7 @@ JSONEditor.defaults.editors.enumConstant = JSONEditor.AbstractEditor.extend({
   getValue() {
     return this.value;
   },
-  setValue(value, initial) {
+  setValue() {
     this.onChange();
   },
 });

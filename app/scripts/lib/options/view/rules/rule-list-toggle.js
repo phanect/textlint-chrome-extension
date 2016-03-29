@@ -3,7 +3,7 @@
 "use strict";
 
 import React from "react";
-import {translate} from "../../../util/chrome-util";
+import { translate } from "../../../util/chrome-util";
 
 const RuleListToggle = React.createClass({
   propTypes: {
@@ -23,7 +23,7 @@ const RuleListToggle = React.createClass({
         </button>
       </div>
     );
-  }
+  },
 });
 
 export default RuleListToggle;

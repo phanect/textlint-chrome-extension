@@ -3,7 +3,6 @@
 "use strict";
 
 import _ from "lodash";
-import appConfig from "../app/app-config";
 import AppOptions from "../app/app-options";
 import Badge from "./badge";
 import linters from "./linters";
@@ -34,11 +33,11 @@ export default function () {
   chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     if (changeInfo.url) badge.updateForTab(tab);
   });
-  chrome.tabs.onRemoved.addListener((tabId, removeInfo) => {
+  chrome.tabs.onRemoved.addListener((tabId) => {
     linters.deactivate(tabId);
   });
 
-  appOptions.observeUpdate(({oldValue, newValue}) => {
+  appOptions.observeUpdate(({ oldValue, newValue }) => {
     const ruleChanged = oldValue ? !_.isEqual(oldValue.ruleOptions, newValue.ruleOptions) : true;
     _.each(linters.getAllActives(), (linter) => {
       if (ruleChanged && linter.isUsingCustomRule()) {
@@ -56,11 +55,11 @@ export default function () {
     }
     console.error("Error on sending message:", reason);
   });
-  messages.onLintText(({lintId, text}, sender, sendResponse) => {
+  messages.onLintText(({ lintId, text }, sender, sendResponse) => {
     if (sender.tab) linters.lintText(sender.tab.id, lintId, text);
     sendResponse();
   });
-  messages.onCorrectText(({correctId, text}, sender, sendResponse) => {
+  messages.onCorrectText(({ correctId, text }, sender, sendResponse) => {
     if (sender.tab) linters.correctText(sender.tab.id, correctId, text);
     sendResponse();
   });

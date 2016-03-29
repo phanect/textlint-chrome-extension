@@ -16,20 +16,22 @@ const CorrectButtons = React.createClass({
     onCorrectClick: React.PropTypes.func.isRequired,
   },
   render() {
-    const {marks, hasUndo, onUndoClick, onCorrectClick} = this.props;
+    const { marks, hasUndo, onUndoClick, onCorrectClick } = this.props;
     return (
       <div className="correct-buttons">
         {hasUndo ?
           <IconButton label="undo" icon="undo" size="sm"
-            onClick={onUndoClick} />
+            onClick={onUndoClick}
+          />
         : ""}
         {_.some(marks, "correctable") ?
           <IconButton label="correct" icon="check-circle" btn="success" size="sm"
-            onClick={onCorrectClick} />
+            onClick={onCorrectClick}
+          />
         : ""}
       </div>
     );
-  }
+  },
 });
 
 export default CorrectButtons;

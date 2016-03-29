@@ -3,14 +3,14 @@
 "use strict";
 
 import React from "react";
-import {translate} from "../../../util/chrome-util";
+import { translate } from "../../../util/chrome-util";
 import Paragraph from "./paragraph";
 
 const AuthorSection = React.createClass({
   handleMailClick(e) {
     e.preventDefault();
     chrome.tabs.create({ url: e.target.href }, (tab) => {
-      setTimeout(() => { chrome.tabs.remove(tab.id) }, 500);
+      setTimeout(() => { chrome.tabs.remove(tab.id); }, 500);
     });
   },
   render() {
@@ -41,7 +41,7 @@ const AuthorSection = React.createClass({
         </ul>
       </div>
     );
-  }
+  },
 });
 
 export default AuthorSection;

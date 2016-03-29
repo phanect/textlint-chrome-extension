@@ -65,22 +65,22 @@ export default class OptionsController {
 
       return _.defaults({
         enabled: !!fixedOptions,
-        severity: severity,
+        severity,
         options: fixedOptions,
-      }, rule)
+      }, rule);
     });
   }
 
   save(ruleSettings, visualOptions) {
     const ruleOptions = {};
-    _.each(ruleSettings, ({options, severity}, ruleKey) => {
+    _.each(ruleSettings, ({ options, severity }, ruleKey) => {
       ruleOptions[ruleKey] = RuleOptionsFixer.fixOptionsForStorage(options, ruleKey, severity);
     });
 
     this.appOptions.ruleOptions = ruleOptions;
     this.appOptions.visualOptions = visualOptions;
     this.appOptions.save().then(() => {
-      DEBUG && console.log("Saved ", this.appOptions.toObject());
+      if (DEBUG) console.log("Saved ", this.appOptions.toObject());
       // window.close();
     });
   }

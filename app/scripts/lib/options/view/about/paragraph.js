@@ -3,7 +3,7 @@
 "use strict";
 
 import React from "react";
-import {translate} from "../../../util/chrome-util";
+import { translate } from "../../../util/chrome-util";
 
 const Pargraph = React.createClass({
   propTypes: {
@@ -13,7 +13,7 @@ const Pargraph = React.createClass({
     return (
       <p dangerouslySetInnerHTML={{ __html: translate(this.props.text) }}></p>
     );
-  }
+  },
 });
 
 export default Pargraph;

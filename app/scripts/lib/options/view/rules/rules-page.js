@@ -3,7 +3,6 @@
 "use strict";
 
 import React from "react";
-import {translate} from "../../../util/chrome-util";
 import RuleListEditor from "./rule-list-editor";
 
 const RulesPage = React.createClass({
@@ -20,7 +19,7 @@ const RulesPage = React.createClass({
         />
       </div>
     );
-  }
+  },
 });
 
 export default RulesPage;

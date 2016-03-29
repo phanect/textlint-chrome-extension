@@ -4,7 +4,7 @@
 
 import _ from "lodash";
 import React from "react";
-import {translate} from "../../../util/chrome-util";
+import { translate } from "../../../util/chrome-util";
 import RuleListFilter from "./rule-list-filter";
 import RuleListToggle from "./rule-list-toggle";
 import RuleItem from "./rule-item";
@@ -20,21 +20,21 @@ const RuleList = React.createClass({
       rulesFiltered: _.mapValues(ruleMap, _.constant(false)),
       rulesEnabled: _.mapValues(ruleMap, "enabled"),
       rulesSeverity: _.mapValues(ruleMap, "severity"),
-    }
+    };
   },
 
-  isRuleEnabled(rule) {
-    return this.state.rulesEnabled[rule.key ? rule.key : rule];
-  },
   getRuleSeverity(rule) {
     return this.state.rulesSeverity[rule.key ? rule.key : rule];
   },
+  isRuleEnabled(rule) {
+    return this.state.rulesEnabled[rule.key ? rule.key : rule];
+  },
 
   handleFilterChange(filter) {
-    const match = filter ? ((rule) =>
+    const match = filter ? (rule) =>
       filter.test(rule.key) || filter.test(rule.author) || filter.test(rule.description) ||
       filter.test(translate(`rule-${rule.key}-description`, ""))
-    ) : _.constant(true);
+    : _.constant(true);
 
     const newFiltered = _.reduce(this.props.rules, (a, r) => (a[r.key] = !match(r), a), {});
     this.setState({ rulesFiltered: newFiltered });
@@ -56,13 +56,16 @@ const RuleList = React.createClass({
     this.setState({ rulesEnabled: newEnabled });
   },
   render() {
-    const {rules} = this.props;
-    const {rulesFiltered, rulesEnabled, rulesSeverity} = this.state;
+    const { rules } = this.props;
+    const { rulesFiltered, rulesEnabled, rulesSeverity } = this.state;
     return (
       <div className="rule-list">
         <div className="rule-list-header clearfix">
           <RuleListFilter onFilterChange={this.handleFilterChange} />
-          <RuleListToggle onTurnOnClick={this.handleTurnOnClick} onTurnOffClick={this.handleTurnOffClick} />
+          <RuleListToggle
+            onTurnOnClick={this.handleTurnOnClick}
+            onTurnOffClick={this.handleTurnOffClick}
+          />
         </div>
         <div className="rule-list-items f16">
           {rules.map(rule =>
@@ -80,7 +83,7 @@ const RuleList = React.createClass({
         </div>
       </div>
     );
-  }
+  },
 });
 
 export default RuleList;

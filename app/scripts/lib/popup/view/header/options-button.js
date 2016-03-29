@@ -14,7 +14,7 @@ const OptionsButton = React.createClass({
     return (
       <IconButton icon="cog" label="options" onClick={this.handleClick} />
     );
-  }
+  },
 });
 
 export default OptionsButton;

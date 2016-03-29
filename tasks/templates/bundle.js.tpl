@@ -3,12 +3,13 @@
 // This is auto-generated file by `gulp bundle`
 "use strict";
 
+/* eslint-disable */
 export default {
-  get: function (name) {
+  get(name) {
     name = "textlint-rule-" + name.replace(/^textlint-rule-/, "");
     return this.bundles[name];
   },
-  load: function (name, cb) {
+  load(name, cb) {
     name = "textlint-rule-" + name.replace(/^textlint-rule-/, "");
     this.loaders[name].call(null, cb);
   },
@@ -29,3 +30,4 @@ export default {
 <% }); %>
   }
 }
+/* eslint-enable */

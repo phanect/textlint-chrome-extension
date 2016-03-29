@@ -4,7 +4,6 @@
 
 import $ from "jquery";
 import React from "react";
-import {translate} from "../../../util/chrome-util";
 
 const RuleToggle = React.createClass({
   propTypes: {
@@ -25,11 +24,13 @@ const RuleToggle = React.createClass({
   render() {
     return (
       <div className="rule-toggle">
-        <input type="checkbox" ref="checkbox" name="enabled" value="true"
-          defaultChecked={this.props.enabled} />
+        <input
+          type="checkbox" ref="checkbox" name="enabled" value="true"
+          defaultChecked={this.props.enabled}
+        />
       </div>
     );
-  }
+  },
 });
 
 export default RuleToggle;

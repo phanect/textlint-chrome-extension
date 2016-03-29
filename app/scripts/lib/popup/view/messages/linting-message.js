@@ -8,9 +8,9 @@ import MessageBox from "../common/message-box";
 const LintingMessage = React.createClass({
   render() {
     return (
-      <MessageBox text="linting" mark="circle-o-notch" spin={true} />
+      <MessageBox text="linting" mark="circle-o-notch" spin />
     );
-  }
+  },
 });
 
 export default LintingMessage;

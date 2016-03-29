@@ -20,4 +20,4 @@ export default {
   onCorrectText(callback) {
     messages.on(messages.CORRECT_TEXT, callback);
   },
-}
+};

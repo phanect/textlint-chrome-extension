@@ -3,7 +3,7 @@
 "use strict";
 
 import React from "react";
-import {translate} from "../../../util/chrome-util";
+import { translate } from "../../../util/chrome-util";
 
 const MessageBox = React.createClass({
   propTypes: {
@@ -14,7 +14,7 @@ const MessageBox = React.createClass({
     children: React.PropTypes.element,
   },
   render() {
-    const {text, details, mark, spin} = this.props;
+    const { text, details, mark, spin } = this.props;
     return (
       <div className={`message-box ${text}-message`}>
         <i className={`message-mark fa fa-${mark} ${spin ? "fa-spin" : ""}`}></i>
@@ -23,7 +23,7 @@ const MessageBox = React.createClass({
         {this.props.children}
       </div>
     );
-  }
+  },
 });
 
 export default MessageBox;

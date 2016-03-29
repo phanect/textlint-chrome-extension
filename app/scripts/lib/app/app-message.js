@@ -26,7 +26,6 @@ const MESSAGES = {
 const VALID_MESSAGES = _.invert(MESSAGES);
 
 let eventHandlers;
-reset();
 
 function listener(message, sender, sendResponse) {
   if (message.type && VALID_MESSAGES[message.type]) {
@@ -36,6 +35,7 @@ function listener(message, sender, sendResponse) {
   } else {
     console.error("Unknown message:", message, ", sender: ", sender);
   }
+  return false;
 }
 
 function reset() {
@@ -43,6 +43,7 @@ function reset() {
   chrome.runtime.onMessage.removeListener(listener);
   chrome.runtime.onMessage.addListener(listener);
 }
+reset();
 
 function on(messageType, callback) {
   if (VALID_MESSAGES[messageType]) {
@@ -56,20 +57,18 @@ function on(messageType, callback) {
 }
 
 function onError(callback) {
-  eventHandlers["error"] = callback;
-}
-
-function tabSend(tabId, messageType, message) {
-  return send(messageType, message, tabId);
+  eventHandlers.error = callback;
 }
 
 function send(messageType, message, tabId) {
   const p = new Promise((resolve, reject) => {
     const callback = (response) => {
-      let error = chrome.runtime.lastError;
+      const error = chrome.runtime.lastError;
 
-      DEBUG && console.log(location.protocol === `${__VENDOR__}-extension:`
-        ?  "C -> B      :" : "C <- B      :", error || response);
+      if (DEBUG) {
+        console.log(location.protocol === `${__VENDOR__}-extension:`
+          ? "C -> B      :" : "C <- B      :", error || response);
+      }
 
       if (_.isUndefined(response) && error) {
         reject(error.message);
@@ -84,21 +83,28 @@ function send(messageType, message, tabId) {
     } else {
       chrome.runtime.sendMessage(message, callback);
     }
-    DEBUG && console.log(location.protocol === `${__VENDOR__}-extension:`
-      ?  "C <- B      :" : "C -> B      :", message);
+
+    if (DEBUG) {
+      console.log(location.protocol === `${__VENDOR__}-extension:`
+        ? "C <- B      :" : "C -> B      :", message);
+    }
   });
 
-  if (eventHandlers["error"]) {
-    p.catch(eventHandlers["error"]);
+  if (eventHandlers.error) {
+    p.catch(eventHandlers.error);
   }
 
   return p;
 }
 
+function tabSend(tabId, messageType, message) {
+  return send(messageType, message, tabId);
+}
+
 export default _.extend({}, MESSAGES, {
-  reset: reset,
-  on: on,
-  onError: onError,
-  tabSend: tabSend,
-  send: send
+  reset,
+  on,
+  onError,
+  tabSend,
+  send,
 });

@@ -14,7 +14,7 @@ const HeaderPanel = React.createClass({
     onDeactivate: React.PropTypes.func.isRequired,
   },
   render() {
-    const {active} = this.props;
+    const { active } = this.props;
     return (
       <div className="header-panel row">
         <div className="col-xs-6 header-panel-left">
@@ -29,7 +29,7 @@ const HeaderPanel = React.createClass({
         </div>
       </div>
     );
-  }
+  },
 });
 
 export default HeaderPanel;

@@ -4,6 +4,6 @@
 
 export default {
   ONLY_THIS: "this",
-  ALL_SAME:  "same",
+  ALL_SAME: "same",
   UNDISMISS: "undismiss",
-}
+};

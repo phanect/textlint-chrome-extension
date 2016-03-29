@@ -10,7 +10,7 @@ const ReadyMessage = React.createClass({
     return (
       <MessageBox text="ready" mark="rocket" />
     );
-  }
+  },
 });
 
 export default ReadyMessage;

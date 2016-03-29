@@ -3,7 +3,6 @@
 "use strict";
 
 import React from "react";
-import {translate} from "../../../util/chrome-util";
 import AboutSection from "./about-section";
 import AuthorSection from "./author-section";
 import LicenseSection from "./license-section";
@@ -26,7 +25,7 @@ const AboutPage = React.createClass({
         <BundlesSection bundles={this.props.bundles} />
       </div>
     );
-  }
+  },
 });
 
 export default AboutPage;

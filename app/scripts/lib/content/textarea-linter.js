@@ -27,9 +27,11 @@ class TextareaLinterTooltip {
 
   show(pageX, pageY) {
     if (!this.$tooltip) return;
-    let tx = pageX + 20, ty = pageY + 20;
-    let tw = this.$tooltip.outerWidth(), th = this.$tooltip.outerHeight();
-    let $w = $(window);
+    let tx = pageX + 20;
+    let ty = pageY + 20;
+    const tw = this.$tooltip.outerWidth();
+    const th = this.$tooltip.outerHeight();
+    const $w = $(window);
     if (tx + tw + 60 > $w.scrollLeft() + $w.width()) {
       tx = pageX - tw - 20;
     }
@@ -47,8 +49,8 @@ class TextareaLinterTooltip {
 
   update(marks) {
     this.init();
-    let combinedMarkId = _.map(marks, "markId").join("-");
-    if (this.$tooltip.data("markId") != combinedMarkId) {
+    const combinedMarkId = _.map(marks, "markId").join("-");
+    if (this.$tooltip.data("markId") !== combinedMarkId) {
       this.$tooltip.data("markId", combinedMarkId);
       this.$tooltip.html(
         _.map(marks, (mark) => this._buildItemByMark(mark))
@@ -80,10 +82,10 @@ class TextareaLinterTooltip {
 
 const DEFAULT_OPTIONS = {
   // Actual linting text method
-  lintText: (lintId, text) => {},
+  lintText: (lintId, text) => {},  // eslint-disable-line
 
   // Actual correcting text method
-  correctText: (correctId, text) => {},
+  correctText: (correctId, text) => {}, // eslint-disable-line
 
   // Event handler called when lint marks is changed.
   onMarksChanged: null,
@@ -128,7 +130,7 @@ export class TextareaLinter {
     this.active = true;
 
     // Set global event handlers for textarea
-    let self = this;
+    const self = this;
     $(document).on(
       "input.textareaLinter", "textarea",
       _.debounce(function () {
@@ -138,7 +140,7 @@ export class TextareaLinter {
     );
     $(document).on(
       "focusin.textareaLinter", "textarea",
-      function () { self.lintTextArea(this) }
+      function () { self.lintTextArea(this); }
     );
   }
 
@@ -170,7 +172,7 @@ export class TextareaLinter {
     this.options.lintText(textareaId, text);
   }
 
-  receiveLintResult({lintId, lintResult}) {
+  receiveLintResult({ lintId, lintResult }) {
     if (this._getTextAreaId(this.lintedTextArea) === lintId) {
       this._showLintResult(this.lintedTextArea, lintResult);
     }
@@ -187,20 +189,20 @@ export class TextareaLinter {
     } else {
       $textarea
         .textareaMarker({
-          markers: markers,
+          markers,
           hideOnInput: true,
-          classPrefix: CLASS_PREFIX
+          classPrefix: CLASS_PREFIX,
         })
         .on("markmousemove.extTextlint", (event, $marks) => {
           this.tooltip.update(_.map($marks, (el) => $(el).data()));
           this.tooltip.show(event.pageX, event.pageY);
         })
-        .on("markmouseout.extTextlint",  () => {
+        .on("markmouseout.extTextlint", () => {
           this.tooltip.hide();
-        })
+        });
     }
 
-    const severities = _(markers).reject((m) => m.data.dismissed).map((m) => m.data.severity).uniq().value();
+    const severities = _(markers).reject("data.dismissed").map("data.severity").uniq().value();
     const cls = `${CLASS_PREFIX}textarea`;
     $textarea
       .addClass(cls)
@@ -211,7 +213,7 @@ export class TextareaLinter {
       .toggleClass(`${cls}-show-border`, this.options.showBorder);
 
     this.tooltip.hide();
-    this.options.onMarksChanged && this.options.onMarksChanged.call(textarea);
+    if (this.options.onMarksChanged) this.options.onMarksChanged.call(textarea);
   }
 
   _refreshCurrentLintResult() {
@@ -227,7 +229,7 @@ export class TextareaLinter {
       .off("markmouseout.extTextlint")
       .removeClass(this._prefixedClass(CLASS_PREFIX));
     this.tooltip.hide();
-    this.options.onMarksChanged && this.options.onMarksChanged.call(textarea);
+    if (this.options.onMarksChanged) this.options.onMarksChanged.call(textarea);
   }
 
   _buildMarkersFromLintMessages(text, messages) {
@@ -309,8 +311,9 @@ export class TextareaLinter {
         return `${mark.severity}:${mark.ruleId}:${mark.message}:${mark.text}`;
       case DismissType.ALL_SAME:
         return `${mark.severity}:${mark.ruleId}:${mark.message}`;
+      default:
+        throw new Error(`Unknown dismissType: ${dismissType}`);
     }
-    throw `Unknown dismissType: ${dismissType}`;
   }
 
   correct() {
@@ -332,7 +335,7 @@ export class TextareaLinter {
     this.options.correctText(textareaId, text);
   }
 
-  receiveCorrectResult({correctId, correctResult}) {
+  receiveCorrectResult({ correctId, correctResult }) {
     if (this._getTextAreaId(this.lintedTextArea) === correctId) {
       this.applyCorrectResult(this.lintedTextArea, correctResult);
     }
@@ -376,7 +379,7 @@ export class TextareaLinter {
   }
 
   _getTextAreaId(textarea) {
-    let $textarea = $(textarea);
+    const $textarea = $(textarea);
     let textareaId = $textarea.data("textarea-id");
     if (!textareaId) {
       textareaId = _.uniqueId();

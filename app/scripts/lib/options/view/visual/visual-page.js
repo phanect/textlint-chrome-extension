@@ -3,7 +3,6 @@
 "use strict";
 
 import React from "react";
-import {translate} from "../../../util/chrome-util";
 import VisualEditor from "./visual-editor";
 
 const VisualPage = React.createClass({
@@ -12,7 +11,7 @@ const VisualPage = React.createClass({
     onReady: React.PropTypes.func.isRequired,
   },
   render() {
-    const {appOptions} = this.props;
+    const { appOptions } = this.props;
     return (
       <div className="visual-page">
         <VisualEditor
@@ -22,7 +21,7 @@ const VisualPage = React.createClass({
         />
       </div>
     );
-  }
+  },
 });
 
 export default VisualPage;

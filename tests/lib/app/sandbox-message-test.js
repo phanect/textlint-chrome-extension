@@ -2,7 +2,6 @@
  * License: GNU GPLv3 http://www.gnu.org/licenses/gpl-3.0.html */
 "use strict";
 
-import $ from "jquery";
 import sandboxMessage from "../../../app/scripts/lib/app/sandbox-message";
 
 describe("sandboxMessage", () => {
@@ -29,7 +28,7 @@ describe("sandboxMessage", () => {
     });
 
     it("registers event handler", (done) => {
-      const handler = (received, sendResponse) => {
+      const handler = (received) => {
         assert.deepEqual(received, typedMessage);
         done();
       };
@@ -61,8 +60,8 @@ describe("sandboxMessage", () => {
     });
 
     function send() {
-      return new Promise((resolve, reject) => {
-        messageListener = (event) => { resolve(event.data) };
+      return new Promise((resolve) => {
+        messageListener = (event) => { resolve(event.data); };
         sandboxWindow.addEventListener("message", messageListener, false);
         sandboxMessage.send(messageType, message);
       });

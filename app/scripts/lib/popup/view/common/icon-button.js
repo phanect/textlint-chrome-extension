@@ -3,7 +3,7 @@
 "use strict";
 
 import React from "react";
-import {translate} from "../../../util/chrome-util";
+import { translate } from "../../../util/chrome-util";
 
 const IconButton = React.createClass({
   propTypes: {
@@ -16,7 +16,7 @@ const IconButton = React.createClass({
     onClick: React.PropTypes.func.isRequired,
   },
   render() {
-    const {icon, label, btn, size, active, disabled} = this.props;
+    const { icon, label, btn, size, active, disabled } = this.props;
 
     const btnClass = [
       "icon-button",
@@ -33,7 +33,7 @@ const IconButton = React.createClass({
         <span>{translate(label)}</span>
       </button>
     );
-  }
+  },
 });
 
 export default IconButton;

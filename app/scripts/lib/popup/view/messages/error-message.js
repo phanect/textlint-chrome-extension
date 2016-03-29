@@ -10,12 +10,12 @@ const ErrorMessage = React.createClass({
     reason: React.PropTypes.string,
   },
   render() {
-    const {reason} = this.props;
+    const { reason } = this.props;
     const details = DEBUG ? reason : null;
     return (
       <MessageBox text="wentWrong" details={details} mark="exclamation-triangle" />
     );
-  }
+  },
 });
 
 export default ErrorMessage;

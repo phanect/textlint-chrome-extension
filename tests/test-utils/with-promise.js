@@ -3,14 +3,14 @@
 "use strict";
 
 global.withResolved = function (promise, fn) {
-  const self = this;
   return new Promise((resolve, reject) => {
     promise
-    .then(function () {
+    .then((...args) => {
       try {
-        fn.apply(self, arguments);
+        fn.apply(this, args);
       } catch (e) {
-        return reject(e);
+        reject(e);
+        return;
       }
       resolve();
     })
@@ -19,17 +19,17 @@ global.withResolved = function (promise, fn) {
 };
 
 global.withRejected = function (promise, fn) {
-  const self = this;
   return new Promise((resolve, reject) => {
     promise
-    .then(function () {
-      reject('Promise expected to be rejected has been resolved');
+    .then(() => {
+      reject("Promise expected to be rejected has been resolved");
     })
-    .catch(function () {
+    .catch((...args) => {
       try {
-        fn.apply(self, arguments);
+        fn.apply(this, args);
       } catch (e) {
-        return reject(e);
+        reject(e);
+        return;
       }
       resolve();
     });

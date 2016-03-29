@@ -2,21 +2,20 @@
  * License: GNU GPLv3 http://www.gnu.org/licenses/gpl-3.0.html */
 "use strict";
 
-import _ from "lodash";
 import appStorage from "../../../app/scripts/lib/app/app-storage";
 
 describe("appStorage", () => {
   const storageOptions = {
     popupSettings: {
       preset: "english",
-      format: "md"
+      format: "md",
     },
     options: {
       showMarks: false,
       showBorder: true,
       badgeCountSeverity: "error,warning",
-      ruleOptions: {}
-    }
+      ruleOptions: {},
+    },
   };
 
   beforeEach(() => {

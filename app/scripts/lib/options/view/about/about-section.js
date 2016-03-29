@@ -3,7 +3,7 @@
 "use strict";
 
 import React from "react";
-import {translate} from "../../../util/chrome-util";
+import { translate } from "../../../util/chrome-util";
 import Paragraph from "./paragraph";
 
 const AboutSection = React.createClass({
@@ -16,7 +16,7 @@ const AboutSection = React.createClass({
         <Paragraph text="aboutS1P3" />
       </div>
     );
-  }
+  },
 });
 
 export default AboutSection;

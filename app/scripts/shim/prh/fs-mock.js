@@ -22,7 +22,7 @@ export function readFileSync(file, options) {
   } else {
     const err = new Error(`ENOENT: no such file or directory, open '${file}'`);
     err.errno = -2;
-    err.code = 'ENOENT';
+    err.code = "ENOENT";
     err.path = file;
     throw err;
   }
@@ -38,8 +38,9 @@ export function readFile(file, options, callback) {
     let content;
     try {
       content = readFileSync(file, options);
-    } catch(e) {
-      return callback(e);
+    } catch (e) {
+      callback(e);
+      return;
     }
     if (callback) callback(null, content);
   }, 0);

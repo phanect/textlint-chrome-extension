@@ -3,7 +3,7 @@
 "use strict";
 
 import React from "react";
-import {translate} from "../../../util/chrome-util";
+import { translate } from "../../../util/chrome-util";
 
 const FormatSelect = React.createClass({
   propTypes: {
@@ -11,7 +11,7 @@ const FormatSelect = React.createClass({
     onFormatSelect: React.PropTypes.func.isRequired,
   },
   render() {
-    const {selected, onFormatSelect} = this.props;
+    const { selected, onFormatSelect } = this.props;
     return (
       <div className="format-select">
         <label className="checkbox">
@@ -23,7 +23,7 @@ const FormatSelect = React.createClass({
         </label>
       </div>
     );
-  }
+  },
 });
 
 export default FormatSelect;

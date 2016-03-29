@@ -87,11 +87,11 @@ describe("linters", () => {
 
   describe("#onReturnActivate()", () => {
     it("sends activate message to content script", (done) => {
-      const stubActivate = sinonsb.stub(backgroundMessages, "activateLinter", (givenTabId) => {
+      sinonsb.stub(backgroundMessages, "activateLinter", (givenTabId) => {
         assert(givenTabId === tabId);
         done();
       });
-      window.postMessage({ type: sandboxMessage.RETURN_ACTIVATE, tabId: tabId }, "*");
+      window.postMessage({ type: sandboxMessage.RETURN_ACTIVATE, tabId }, "*");
     });
   });
 
@@ -111,11 +111,11 @@ describe("linters", () => {
 
   describe("#onReturnDeactivate()", () => {
     it("sends deactivate message to content script", (done) => {
-      const stubDeactivate = sinonsb.stub(backgroundMessages, "deactivateLinter", (givenTabId) => {
+      sinonsb.stub(backgroundMessages, "deactivateLinter", (givenTabId) => {
         assert(givenTabId === tabId);
         done();
       });
-      window.postMessage({ type: sandboxMessage.RETURN_DEACTIVATE, tabId: tabId }, "*");
+      window.postMessage({ type: sandboxMessage.RETURN_DEACTIVATE, tabId }, "*");
     });
   });
 
@@ -160,7 +160,7 @@ describe("linters", () => {
     const lintResult = { foo: "bar" };
 
     it("sends lint result to content script", (done) => {
-      const stubSendLintText = sinonsb.stub(backgroundMessages, "sendLintResult",
+      sinonsb.stub(backgroundMessages, "sendLintResult",
         (aTabId, aLintId, aResult) => {
           assert(aTabId === tabId);
           assert(aLintId === lintId);
@@ -199,7 +199,7 @@ describe("linters", () => {
     const correctResult = { foo: "bar" };
 
     it("sends correct result to content script", (done) => {
-      const stubSendcorrectText = sinonsb.stub(backgroundMessages, "sendCorrectResult",
+      sinonsb.stub(backgroundMessages, "sendCorrectResult",
         (aTabId, aCorrectId, aResult) => {
           assert(aTabId === tabId);
           assert(aCorrectId === correctId);

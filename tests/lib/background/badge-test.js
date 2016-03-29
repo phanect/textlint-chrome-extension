@@ -34,7 +34,7 @@ describe("Badge", () => {
   }
 
   describe("#enable()", () => {
-    beforeEach(() => { badge.enable(tabId) });
+    beforeEach(() => { badge.enable(tabId); });
     it("enables badge", () => {
       assert(chrome.browserAction.enable.calledOnce);
       assert(chrome.browserAction.enable.firstCall.args[0] === tabId);
@@ -42,7 +42,7 @@ describe("Badge", () => {
   });
 
   describe("#disable()", () => {
-    beforeEach(() => { badge.disable(tabId) });
+    beforeEach(() => { badge.disable(tabId); });
     it("disables badge", () => {
       assert(chrome.browserAction.disable.calledOnce);
       assert(chrome.browserAction.disable.firstCall.args[0] === tabId);
@@ -78,7 +78,7 @@ describe("Badge", () => {
   });
 
   describe("#showError", () => {
-    beforeEach(() => { badge.showError(tabId) });
+    beforeEach(() => { badge.showError(tabId); });
     it("sets badge background color", () => {
       assertBadgeColorChanged();
     });
@@ -150,11 +150,6 @@ describe("Badge", () => {
   });
 
   describe("#updateForTab()", () => {
-    const unsupportedTab = {
-      id: tabId,
-      url: "chrome://extensions/",
-    };
-
     context("with supported url", () => {
       const tab = {
         id: tabId,
@@ -167,17 +162,17 @@ describe("Badge", () => {
           waiting: false,
           active: true,
           marks: [],
-          counts: { error: 0, warning: 0, info: 0 }
+          counts: { error: 0, warning: 0, info: 0 },
         });
         sinonsb.stub(linters, "getStatus").returns({
           lastError: args.lastError,
           clientLinted: args.clientLinted,
-          waiting: args.waiting
+          waiting: args.waiting,
         });
         sinonsb.stub(messages, "getStatus").returns(Promise.resolve({
           active: args.active,
           marks: args.marks,
-          counts: args.counts
+          counts: args.counts,
         }));
         return badge.updateForTab(tab);
       }
@@ -222,7 +217,7 @@ describe("Badge", () => {
         beforeEach(() => {
           sinonsb.stub(linters, "isActive").returns(true);
           deactivateStub = sinonsb.stub(linters, "deactivate");
-          return updateForTab({ active: false })
+          return updateForTab({ active: false });
         });
         it("hides lint count", () => {
           assertBadgeText("");
@@ -243,5 +238,4 @@ describe("Badge", () => {
       });
     });
   });
-
 });

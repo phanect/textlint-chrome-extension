@@ -1,5 +1,5 @@
-import glob from 'glob';
-import _ from 'lodash';
+import glob from "glob";
+import _ from "lodash";
 
 /**
  * Expand glob expressions into individual path strings.
@@ -20,9 +20,9 @@ import _ from 'lodash';
  * @param  {Object} manifest
  * @return {Object}
  */
-export default function expandGlobsFor(keys, cwd){
-  return function(manifest){
-    keys.forEach((key)=>{
+export default function expandGlobsFor(keys, cwd) {
+  return function (manifest) {
+    keys.forEach((key) => {
       if (!manifest[key] || !Array.isArray(manifest[key])) {
         return;
       }
@@ -37,5 +37,5 @@ export default function expandGlobsFor(keys, cwd){
     });
 
     return manifest;
-  }
-};
+  };
+}

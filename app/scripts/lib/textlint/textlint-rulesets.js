@@ -14,7 +14,7 @@ export default {
           resolve({
             name: "Custom",
             rules: _.keys(ruleOptions),
-            ruleOptions: ruleOptions,
+            ruleOptions,
           });
         }).catch(reject);
       } else {
@@ -24,10 +24,10 @@ export default {
   },
 
   getDefaultRulesetName(lang = null) {
-    if (!lang && chrome && chrome.i18n && typeof chrome.i18n.getUILanguage === 'function') {
+    if (!lang && chrome && chrome.i18n && typeof chrome.i18n.getUILanguage === "function") {
       lang = chrome.i18n.getUILanguage();
     }
-    return appConfig.defaultRuleset[lang] || appConfig.defaultRuleset["en"];
+    return appConfig.defaultRuleset[lang] || appConfig.defaultRuleset.en;
   },
 
   getDefaultRuleset(lang = null) {
@@ -54,4 +54,4 @@ export default {
       }).catch(reject);
     });
   },
-}
+};

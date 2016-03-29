@@ -2,6 +2,7 @@
  * License: GNU GPLv3 http://www.gnu.org/licenses/gpl-3.0.html */
 "use strict";
 
+import _ from "lodash";
 import React from "react";
 import PageSwitch from "./pages/page-switch";
 import PagePanel from "./pages/page-panel";
@@ -11,11 +12,6 @@ import AboutPage from "./about/about-page";
 import FooterPanel from "./footer/footer-panel";
 
 const OptionsView = React.createClass({
-  pages: [
-    { name: "rules", menuTitle: "menuRules", pageTitle: "customizeRules", icon: "pencil" },
-    { name: "visual", menuTitle: "menuVisual", pageTitle: "visualEffects", icon: "eye" },
-    { name: "about", menuTitle: "menuAbout", pageTitle: "aboutExtension", icon: "info-circle" },
-  ],
   propTypes: {
     controller: React.PropTypes.object.isRequired,
     bundles: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
@@ -24,15 +20,21 @@ const OptionsView = React.createClass({
     appVersion: React.PropTypes.string.isRequired,
     appStoreURL: React.PropTypes.string.isRequired,
   },
-  componentWillMount() {
-    this.readyPageCount = 0;
-    this.editors = {};
-  },
   getInitialState() {
     return {
       saveEnabled: false,
       activePage: null,
     };
+  },
+  componentWillMount() {
+    this.readyPageCount = 0;
+    this.editors = {};
+  },
+
+  setLocation(pageName, hash) {
+    this.setState({ activePage: pageName }, () => {
+      if (hash) location.href = hash;
+    });
   },
 
   handlePageReady(pageName, editor) {
@@ -65,30 +67,44 @@ const OptionsView = React.createClass({
       return true;
     });
   },
-  setLocation(pageName, hash) {
-    this.setState({ activePage: pageName }, () => {
-      if (hash) location.href = hash;
-    });
-  },
+
+  pages: [
+    { name: "rules", menuTitle: "menuRules", pageTitle: "customizeRules", icon: "pencil" },
+    { name: "visual", menuTitle: "menuVisual", pageTitle: "visualEffects", icon: "eye" },
+    { name: "about", menuTitle: "menuAbout", pageTitle: "aboutExtension", icon: "info-circle" },
+  ],
 
   render() {
-    const {controller, bundles, rules, appOptions, appVersion, appStoreURL} = this.props;
-    const {saveEnabled, activePage} = this.state;
+    const { bundles, rules, appOptions, appVersion, appStoreURL } = this.props;
+    const { saveEnabled, activePage } = this.state;
 
     const pageContents = {
-      rules:  <RulesPage rules={rules}
-        onReady={(editor) => this.handlePageReady("rules", editor)} />,
-      visual: <VisualPage appOptions={appOptions}
-        onReady={(editor) => this.handlePageReady("visual", editor)} />,
-      about:  <AboutPage bundles={bundles}
-        onReady={() => this.handlePageReady("about")} />,
+      rules:
+        <RulesPage
+          rules={rules}
+          onReady={(editor) => this.handlePageReady("rules", editor)}
+        />,
+      visual:
+        <VisualPage
+          appOptions={appOptions}
+          onReady={(editor) => this.handlePageReady("visual", editor)}
+        />,
+      about:
+        <AboutPage
+          bundles={bundles}
+          onReady={() => this.handlePageReady("about")}
+        />,
     };
 
     return (
       <div className="options-view">
         <div className="top-pane">
           <div className="menu-pane">
-            <PageSwitch activePage={activePage} onPageChange={this.handlePageChange} pages={this.pages} />
+            <PageSwitch
+              activePage={activePage}
+              onPageChange={this.handlePageChange}
+              pages={this.pages}
+            />
           </div>
           <div className="main-pane">
             <div className="tab-content">

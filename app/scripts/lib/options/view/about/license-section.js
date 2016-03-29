@@ -3,7 +3,7 @@
 "use strict";
 
 import React from "react";
-import {translate} from "../../../util/chrome-util";
+import { translate } from "../../../util/chrome-util";
 import Paragraph from "./paragraph";
 
 const LicenseSection = React.createClass({
@@ -14,7 +14,7 @@ const LicenseSection = React.createClass({
         <Paragraph text="aboutS3P1" />
       </div>
     );
-  }
+  },
 });
 
 export default LicenseSection;

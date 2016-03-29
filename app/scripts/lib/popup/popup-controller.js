@@ -2,7 +2,6 @@
  * License: GNU GPLv3 http://www.gnu.org/licenses/gpl-3.0.html */
 "use strict";
 
-import _ from "lodash";
 import React from "react";
 import ReactDOM from "react-dom";
 import messages from "../background/messages";
@@ -41,7 +40,7 @@ export default class PopupController {
   }
 
   bindMessageEvents() {
-    messages.onError((reason) => {
+    messages.onError(() => {
       this.showRefreshMessage();
     });
     messages.onUpdateStatus((msg, sender, sendResponse) => {
@@ -61,7 +60,8 @@ export default class PopupController {
       return;  // Not ready
     }
     if (this.lastError) {
-      return ReactDOM.render(<ErrorMessage reason={this.lastError} />, this.container);
+      ReactDOM.render(<ErrorMessage reason={this.lastError} />, this.container);
+      return;
     }
 
     this.withLinters((linters) => {
