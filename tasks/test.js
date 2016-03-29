@@ -10,7 +10,7 @@ gulp.task("test:clean", () => {
   return del("tmp/scripts");
 });
 
-gulp.task("test", ["test:clean", "bundle:test"], (taskDone) => {
+gulp.task("test", ["lint", "test:clean", "bundle:test"], (taskDone) => {
   let server;
   buildForTest()
     .pipe(through.obj(function (file, enc, done) {
