@@ -1,0 +1,11 @@
+extends: ../.eslintrc.yml
+env:
+  browser: true
+  webextensions: true
+  mocha: true
+globals:
+  sinon: true
+  assert: true
+  sinonsb: true
+  withResolved: true
+  withRejected: true

@@ -16,7 +16,8 @@
     "build": "gulp build --vendor=chrome",
     "watch": "gulp build --watch --vendor=chrome",
     "test": "gulp test",
-    "testw": "gulp test --watch"
+    "testw": "gulp test --watch",
+    "lint": "eslint --ignore-path .gitignore app/scripts tests"
   },
   "devDependencies": {
     "babel-loader": "^6.2.4",
@@ -29,6 +30,9 @@
     "del": "^2.2.0",
     "es6-promise": "^3.1.2",
     "escape-string-regexp": "^1.0.5",
+    "eslint": "^2.5.3",
+    "eslint-config-airbnb": "^6.2.0",
+    "eslint-plugin-react": "^4.2.3",
     "glob": "^7.0.3",
     "gulp": "^3.9.1",
     "gulp-bump": "^2.1.0",
