@@ -16,6 +16,8 @@ module.exports = function (config) {
       "node_modules/power-assert/build/power-assert.js",
       "node_modules/sinon/pkg/sinon.js",
       "node_modules/sinon-chrome/dist/sinon-chrome.latest.js",
+      "node_modules/jquery/dist/jquery.min.js",
+      "node_modules/lodash/lodash.min.js",
       "tmp/scripts/tests.js",
     ],
 

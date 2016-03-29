@@ -13,6 +13,7 @@ gulp.task("build", gulpSequence(
     "pages",
     "locales",
     "images",
+    "vendor",
     "bower",
     "livereload",
   ]
