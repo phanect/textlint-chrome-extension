@@ -2,6 +2,7 @@ extends: airbnb
 env:
   browser: true
   webextensions: true
+  jquery: true
 plugins:
   - react
 globals:
@@ -10,6 +11,7 @@ globals:
   DEBUG: true
   LIVERELOAD: true
   JSONEditor: true
+  _: true
 rules:
   strict: 0
   arrow-body-style: 0

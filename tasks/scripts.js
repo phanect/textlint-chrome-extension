@@ -7,6 +7,7 @@ import espower from "gulp-espower";
 import livereload from "gulp-livereload";
 import plumber from "gulp-plumber";
 import notify from "gulp-notify";
+import named from "vinyl-named";
 import args from "./lib/args";
 import _ from "lodash";
 import path from "path";
@@ -16,16 +17,6 @@ const scriptsDir = `${rootDir}/app/scripts`;
 
 function getWebpackConfig(testing) {
   return {
-    entry: testing ? null : {
-      background: `${scriptsDir}/background.js`,
-      contentscript: `${scriptsDir}/contentscript.js`,
-      options: `${scriptsDir}/options.js`,
-      popup: `${scriptsDir}/popup.js`,
-      sandbox: `${scriptsDir}/sandbox.js`,
-
-      vendor: ["jquery", "lodash"],
-      jquery: `${scriptsDir}/exporter/jquery.js`,
-    },
     output: testing ? { filename: "tests.js" } : {
       filename: "[name].js",
       publicPath: "/scripts/",
@@ -46,12 +37,7 @@ function getWebpackConfig(testing) {
           "NODE_ENV": JSON.stringify(args.production ? "production" : "development"),
         },
       }),
-    ].concat(!testing ? [
-      new webpack.optimize.CommonsChunkPlugin({
-        name: "vendor",
-        minChunks: Infinity,
-      }),
-    ] : []).concat(args.production ? [
+    ].concat(args.production ? [
       new webpack.optimize.DedupePlugin(),
       new webpack.optimize.AggressiveMergingPlugin(),
       new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false } }),
@@ -124,6 +110,20 @@ function getWebpackConfig(testing) {
         [`${scriptsDir}/lib/app/bundles`]: "tmp/bundle/bundles.js",
       } : {}),
     },
+    externals(context, request, callback) {
+      if (!/node_modules/.test(context)) {
+        // Replace jquery and lodash used in app with global variables
+        if (request === "jquery") {
+          callback(null, "var jQuery");
+          return;
+        }
+        if (request === "lodash") {
+          callback(null, "var _");
+          return;
+        }
+      }
+      callback();
+    },
   };
 }
 
@@ -132,6 +132,7 @@ gulp.task("scripts", ["bundle"], () => {
     .pipe(plumber({
       errorHandler: notify.onError("Error: <%= error.message %>"),
     }))
+    .pipe(named())
     .pipe(gulpWebpack(getWebpackConfig(false)))
     .pipe(gulp.dest(`dist/${args.vendor}/scripts`))
     .pipe(gulpif(args.watch, livereload()));
