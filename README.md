@@ -1,6 +1,6 @@
 # textlint Chrome Extension
 
-[![Build Status](https://travis-ci.org/io-monad/textlint-chrome-extension.svg?branch=master)](https://travis-ci.org/io-monad/textlint-chrome-extension) [![GitHub license](https://img.shields.io/github/license/io-monad/textlint-chrome-extension.svg)](LICENSE)
+[![wercker status](https://app.wercker.com/status/2f32f541de3ca03d8c8bc95152953ee9/s/master "wercker status")](https://app.wercker.com/project/bykey/2f32f541de3ca03d8c8bc95152953ee9) [![GitHub license](https://img.shields.io/github/license/io-monad/textlint-chrome-extension.svg)](LICENSE)
 
 Chrome Extension that proofreads `<textarea>` using [textlint](http://textlint.github.io/).
 
