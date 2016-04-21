@@ -5,9 +5,6 @@
 import $ from "jquery";
 import "./test-utils/with-promise";
 
-// Polyfill Promise for PhantomJS
-require("es6-promise").polyfill();
-
 // Global sinon sandbox
 global.sinonsb = sinon.sandbox.create();
 
