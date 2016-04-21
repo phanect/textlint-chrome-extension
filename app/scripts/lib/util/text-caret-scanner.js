@@ -1,6 +1,5 @@
 /* Copyright (C) 2016  IRIDE Monad <iride.monad@gmail.com>
  * License: GNU GPLv3 http://www.gnu.org/licenses/gpl-3.0.html */
-"use strict";
 
 // RegExp to pick a word at caret in textarea.
 //  Since "\b" only represents boundary of English words,
