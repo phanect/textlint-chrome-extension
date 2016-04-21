@@ -1,3 +1,5 @@
+import path from "path";
+import _ from "lodash";
 import gulp from "gulp";
 import gulpif from "gulp-if";
 import webpack from "webpack";
@@ -9,8 +11,6 @@ import plumber from "gulp-plumber";
 import notify from "gulp-notify";
 import named from "vinyl-named";
 import args from "./lib/args";
-import _ from "lodash";
-import path from "path";
 
 const rootDir = path.join(__dirname, "..");
 const scriptsDir = `${rootDir}/app/scripts`;

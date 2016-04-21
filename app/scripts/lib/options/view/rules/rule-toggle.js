@@ -1,15 +1,15 @@
 /* Copyright (C) 2016  IRIDE Monad <iride.monad@gmail.com>
  * License: GNU GPLv3 http://www.gnu.org/licenses/gpl-3.0.html */
-"use strict";
 
 import $ from "jquery";
-import React from "react";
+import React, { PropTypes } from "react";
 
-const RuleToggle = React.createClass({
-  propTypes: {
-    enabled: React.PropTypes.bool.isRequired,
-    onChange: React.PropTypes.func.isRequired,
-  },
+export default class RuleToggle extends React.Component {
+  static propTypes = {
+    enabled: PropTypes.bool.isRequired,
+    onChange: PropTypes.func.isRequired,
+  };
+
   componentDidMount() {
     $(this.refs.checkbox).bootstrapSwitch({
       size: "mini",
@@ -17,10 +17,11 @@ const RuleToggle = React.createClass({
         this.props.onChange(checked);
       },
     });
-  },
+  }
   componentDidUpdate() {
     $(this.refs.checkbox).bootstrapSwitch("state", this.props.enabled);
-  },
+  }
+
   render() {
     return (
       <div className="rule-toggle">
@@ -30,7 +31,5 @@ const RuleToggle = React.createClass({
         />
       </div>
     );
-  },
-});
-
-export default RuleToggle;
+  }
+}

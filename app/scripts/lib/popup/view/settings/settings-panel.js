@@ -1,27 +1,34 @@
 /* Copyright (C) 2016  IRIDE Monad <iride.monad@gmail.com>
  * License: GNU GPLv3 http://www.gnu.org/licenses/gpl-3.0.html */
-"use strict";
 
-import React from "react";
+import React, { PropTypes } from "react";
 import { translate } from "../../../util/chrome-util";
 import RulesetList from "./ruleset-list";
 import FormatSelect from "./format-select";
 
-const SettingsPanel = React.createClass({
-  propTypes: {
-    rulesets: React.PropTypes.arrayOf(React.PropTypes.shape({
-      name: React.PropTypes.string.isRequired,
+export default class SettingsPanel extends React.Component {
+  static propTypes = {
+    rulesets: PropTypes.arrayOf(PropTypes.shape({
+      name: PropTypes.string.isRequired,
     })).isRequired,
-    ruleset: React.PropTypes.string,
-    format: React.PropTypes.string,
-    onChange: React.PropTypes.func.isRequired,
-  },
+    ruleset: PropTypes.string,
+    format: PropTypes.string,
+    onChange: PropTypes.func.isRequired,
+  };
+
+  constructor(props) {
+    super(props);
+    this.handleRulesetSelect = this.handleRulesetSelect.bind(this);
+    this.handleFormatSelect = this.handleFormatSelect.bind(this);
+  }
+
   handleRulesetSelect(rulesetName) {
     this.props.onChange({ ruleset: rulesetName });
-  },
+  }
   handleFormatSelect(formatName) {
     this.props.onChange({ format: formatName });
-  },
+  }
+
   render() {
     const { rulesets, ruleset, format } = this.props;
     return (
@@ -37,7 +44,5 @@ const SettingsPanel = React.createClass({
         </form>
       </div>
     );
-  },
-});
-
-export default SettingsPanel;
+  }
+}

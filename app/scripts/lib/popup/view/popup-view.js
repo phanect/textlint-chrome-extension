@@ -1,8 +1,7 @@
 /* Copyright (C) 2016  IRIDE Monad <iride.monad@gmail.com>
  * License: GNU GPLv3 http://www.gnu.org/licenses/gpl-3.0.html */
-"use strict";
 
-import React from "react";
+import React, { PropTypes } from "react";
 import ErrorMessage from "./messages/error-message";
 import LintingMessage from "./messages/linting-message";
 import ReadyMessage from "./messages/ready-message";
@@ -11,41 +10,49 @@ import HeaderPanel from "./header/header-panel";
 import MarksPanel from "./marks/marks-panel";
 import SettingsPanel from "./settings/settings-panel";
 
-const PopupView = React.createClass({
-  propTypes: {
-    controller: React.PropTypes.object.isRequired,
-    settings: React.PropTypes.object.isRequired,
-    rulesets: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
-    contentStatus: React.PropTypes.shape({
-      active: React.PropTypes.bool.isRequired,
-      undoCount: React.PropTypes.number.isRequired,
-      counts: React.PropTypes.objectOf(React.PropTypes.number).isRequired,
-      marks: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
+export default class PopupView extends React.Component {
+  static propTypes = {
+    controller: PropTypes.object.isRequired,
+    settings: PropTypes.object.isRequired,
+    rulesets: PropTypes.arrayOf(PropTypes.object).isRequired,
+    contentStatus: PropTypes.shape({
+      active: PropTypes.bool.isRequired,
+      undoCount: PropTypes.number.isRequired,
+      counts: PropTypes.objectOf(PropTypes.number).isRequired,
+      marks: PropTypes.arrayOf(PropTypes.object).isRequired,
     }).isRequired,
-    linterStatus: React.PropTypes.shape({
-      active: React.PropTypes.bool.isRequired,
-      waiting: React.PropTypes.bool.isRequired,
-      clientLinted: React.PropTypes.bool.isRequired,
+    linterStatus: PropTypes.shape({
+      active: PropTypes.bool.isRequired,
+      waiting: PropTypes.bool.isRequired,
+      clientLinted: PropTypes.bool.isRequired,
     }).isRequired,
-  },
-  getInitialState() {
-    return {
+  };
+
+  constructor(props) {
+    super(props);
+    this.state = {
       ruleset: this.props.settings.ruleset || this.props.settings.preset, /* Backward-compat */
       format: this.props.settings.format,
     };
-  },
+
+    this.handleActivate = this.handleActivate.bind(this);
+    this.handleDeactivate = this.handleDeactivate.bind(this);
+    this.handleSettingsChange = this.handleSettingsChange.bind(this);
+    this.handleUndo = this.handleUndo.bind(this);
+  }
+
   handleActivate() {
     this.props.controller.activate(this.state);
-  },
+  }
   handleDeactivate() {
     this.props.controller.deactivate();
-  },
+  }
   handleSettingsChange(changes) {
     this.setState(changes);
-  },
+  }
   handleUndo() {
     this.props.controller.undo();
-  },
+  }
 
   renderContent() {
     const { controller, rulesets, contentStatus, linterStatus } = this.props;
@@ -76,7 +83,7 @@ const PopupView = React.createClass({
         hasUndo={contentStatus.undoCount > 0}
       />
     );
-  },
+  }
 
   render() {
     const { controller, contentStatus, linterStatus } = this.props;
@@ -96,7 +103,5 @@ const PopupView = React.createClass({
         {this.renderContent()}
       </div>
     );
-  },
-});
-
-export default PopupView;
+  }
+}

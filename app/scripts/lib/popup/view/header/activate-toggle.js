@@ -1,16 +1,16 @@
 /* Copyright (C) 2016  IRIDE Monad <iride.monad@gmail.com>
  * License: GNU GPLv3 http://www.gnu.org/licenses/gpl-3.0.html */
-"use strict";
 
-import React from "react";
+import React, { PropTypes } from "react";
 import IconButton from "../common/icon-button";
 
-const ActivateToggle = React.createClass({
-  propTypes: {
-    active: React.PropTypes.bool.isRequired,
-    onClickActivate: React.PropTypes.func.isRequired,
-    onClickDeactivate: React.PropTypes.func.isRequired,
-  },
+export default class ActivateToggle extends React.Component {
+  static propTypes = {
+    active: PropTypes.bool.isRequired,
+    onClickActivate: PropTypes.func.isRequired,
+    onClickDeactivate: PropTypes.func.isRequired,
+  };
+
   render() {
     const { active, onClickActivate, onClickDeactivate } = this.props;
     return (
@@ -23,7 +23,5 @@ const ActivateToggle = React.createClass({
         />
       </div>
     );
-  },
-});
-
-export default ActivateToggle;
+  }
+}

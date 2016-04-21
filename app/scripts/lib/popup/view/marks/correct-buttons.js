@@ -1,20 +1,20 @@
 /* Copyright (C) 2016  IRIDE Monad <iride.monad@gmail.com>
  * License: GNU GPLv3 http://www.gnu.org/licenses/gpl-3.0.html */
-"use strict";
 
 import _ from "lodash";
-import React from "react";
+import React, { PropTypes } from "react";
 import IconButton from "../common/icon-button";
 
-const CorrectButtons = React.createClass({
-  propTypes: {
-    marks: React.PropTypes.arrayOf(React.PropTypes.shape({
-      correctable: React.PropTypes.bool.isRequired,
+export default class CorrectButtons extends React.Component {
+  static propTypes = {
+    marks: PropTypes.arrayOf(PropTypes.shape({
+      correctable: PropTypes.bool.isRequired,
     })).isRequired,
-    hasUndo: React.PropTypes.bool.isRequired,
-    onUndoClick: React.PropTypes.func.isRequired,
-    onCorrectClick: React.PropTypes.func.isRequired,
-  },
+    hasUndo: PropTypes.bool.isRequired,
+    onUndoClick: PropTypes.func.isRequired,
+    onCorrectClick: PropTypes.func.isRequired,
+  };
+
   render() {
     const { marks, hasUndo, onUndoClick, onCorrectClick } = this.props;
     return (
@@ -31,7 +31,5 @@ const CorrectButtons = React.createClass({
         : ""}
       </div>
     );
-  },
-});
-
-export default CorrectButtons;
+  }
+}

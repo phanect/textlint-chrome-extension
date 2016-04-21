@@ -1,22 +1,27 @@
 /* Copyright (C) 2016  IRIDE Monad <iride.monad@gmail.com>
  * License: GNU GPLv3 http://www.gnu.org/licenses/gpl-3.0.html */
-"use strict";
 
-import React from "react";
+import React, { PropTypes } from "react";
 import MessageBox from "../common/message-box";
 import IconButton from "../common/icon-button";
 
-const RefreshMessage = React.createClass({
-  propTypes: {
-    onRefresh: React.PropTypes.func.isRequired,
-  },
-  getInitialState() {
-    return { refreshing: false };
-  },
+export default class RefreshMessage extends React.Component {
+  static propTypes = {
+    onRefresh: PropTypes.func.isRequired,
+  };
+
+  constructor(props) {
+    super(props);
+    this.state = { refreshing: false };
+
+    this.handleRefreshClick = this.handleRefreshClick.bind(this);
+  }
+
   handleRefreshClick() {
     this.setState({ refreshing: true });
     this.props.onRefresh();
-  },
+  }
+
   render() {
     const { refreshing } = this.state;
     return (
@@ -26,7 +31,5 @@ const RefreshMessage = React.createClass({
         />
       </MessageBox>
     );
-  },
-});
-
-export default RefreshMessage;
+  }
+}

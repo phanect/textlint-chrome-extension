@@ -1,17 +1,17 @@
 /* Copyright (C) 2016  IRIDE Monad <iride.monad@gmail.com>
  * License: GNU GPLv3 http://www.gnu.org/licenses/gpl-3.0.html */
-"use strict";
 
-import React from "react";
+import React, { PropTypes } from "react";
 import { translate } from "../../../util/chrome-util";
 
-const FilterItem = React.createClass({
-  propTypes: {
-    severity: React.PropTypes.string.isRequired,
-    count: React.PropTypes.number.isRequired,
-    active: React.PropTypes.bool.isRequired,
-    onChange: React.PropTypes.func.isRequired,
-  },
+export default class FilterItem extends React.Component {
+  static propTypes = {
+    severity: PropTypes.string.isRequired,
+    count: PropTypes.number.isRequired,
+    active: PropTypes.bool.isRequired,
+    onChange: PropTypes.func.isRequired,
+  };
+
   render() {
     const { severity, count, active } = this.props;
     return (
@@ -24,7 +24,5 @@ const FilterItem = React.createClass({
         <span>{translate(severity)}</span>
       </button>
     );
-  },
-});
-
-export default FilterItem;
+  }
+}

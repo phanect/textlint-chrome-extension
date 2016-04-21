@@ -1,10 +1,14 @@
-extends: airbnb
+extends:
+  - airbnb
+  - plugin:import-order/recommended
 env:
   browser: true
   webextensions: true
   jquery: true
+parser: babel-eslint
 plugins:
   - react
+  - import-order
 globals:
   __ENV__: true
   __VENDOR__: true
@@ -18,10 +22,11 @@ rules:
   no-console: 0
   no-param-reassign: 0
   func-names: 0
-  quote-props: 0
   no-else-return: 0
-  react/prefer-es6-class: 0
   react/prefer-stateless-function: 0
+  quote-props:
+    - error
+    - consistent
   quotes:
     - error
     - double

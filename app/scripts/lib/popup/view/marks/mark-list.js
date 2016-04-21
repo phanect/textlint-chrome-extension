@@ -1,27 +1,28 @@
 /* Copyright (C) 2016  IRIDE Monad <iride.monad@gmail.com>
  * License: GNU GPLv3 http://www.gnu.org/licenses/gpl-3.0.html */
-"use strict";
 
 import _ from "lodash";
-import React from "react";
+import React, { PropTypes } from "react";
 import MarkItem from "./mark-item";
 
-const MarkList = React.createClass({
-  propTypes: {
-    actives: React.PropTypes.objectOf(React.PropTypes.bool).isRequired,
-    marks: React.PropTypes.arrayOf(React.PropTypes.shape({
-      markId: React.PropTypes.string.isRequired,
-      severity: React.PropTypes.string.isRequired,
+export default class MarkList extends React.Component {
+  static propTypes = {
+    actives: PropTypes.objectOf(PropTypes.bool).isRequired,
+    marks: PropTypes.arrayOf(PropTypes.shape({
+      markId: PropTypes.string.isRequired,
+      severity: PropTypes.string.isRequired,
     })).isRequired,
-    onMarkClick: React.PropTypes.func.isRequired,
-    onUndismissClick: React.PropTypes.func.isRequired,
-    onDismissThisClick: React.PropTypes.func.isRequired,
-    onDismissSameClick: React.PropTypes.func.isRequired,
-  },
+    onMarkClick: PropTypes.func.isRequired,
+    onUndismissClick: PropTypes.func.isRequired,
+    onDismissThisClick: PropTypes.func.isRequired,
+    onDismissSameClick: PropTypes.func.isRequired,
+  };
+
   getFilteredMarks() {
     const { actives } = this.props;
     return _.filter(this.props.marks, m => actives[m.dismissed ? "dismissed" : m.severity]);
-  },
+  }
+
   render() {
     const filteredMarks = this.getFilteredMarks();
     return (
@@ -38,7 +39,5 @@ const MarkList = React.createClass({
         )}
       </div>
     );
-  },
-});
-
-export default MarkList;
+  }
+}

@@ -1,18 +1,23 @@
 /* Copyright (C) 2016  IRIDE Monad <iride.monad@gmail.com>
  * License: GNU GPLv3 http://www.gnu.org/licenses/gpl-3.0.html */
-"use strict";
 
 import React from "react";
 import { translate } from "../../../util/chrome-util";
 import Paragraph from "./paragraph";
 
-const AuthorSection = React.createClass({
+export default class AuthorSection extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleMailClick = this.handleMailClick.bind(this);
+  }
+
   handleMailClick(e) {
     e.preventDefault();
     chrome.tabs.create({ url: e.target.href }, (tab) => {
       setTimeout(() => { chrome.tabs.remove(tab.id); }, 500);
     });
-  },
+  }
+
   render() {
     return (
       <div className="author-section">
@@ -41,7 +46,5 @@ const AuthorSection = React.createClass({
         </ul>
       </div>
     );
-  },
-});
-
-export default AuthorSection;
+  }
+}

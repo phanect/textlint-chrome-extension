@@ -2,8 +2,8 @@ import gulp from "gulp";
 import gulpif from "gulp-if";
 import gunzip from "gulp-gunzip";
 import livereload from "gulp-livereload";
-import args from "./lib/args";
 import through from "through2";
+import args from "./lib/args";
 
 // Quickfix for gulp-gunzip does not add base to piped files
 function addBase(base) {

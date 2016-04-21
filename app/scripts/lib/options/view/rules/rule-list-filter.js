@@ -1,16 +1,16 @@
 /* Copyright (C) 2016  IRIDE Monad <iride.monad@gmail.com>
  * License: GNU GPLv3 http://www.gnu.org/licenses/gpl-3.0.html */
-"use strict";
 
 import _ from "lodash";
-import React from "react";
+import React, { PropTypes } from "react";
 import escapeStringRegexp from "escape-string-regexp";
 import { translate } from "../../../util/chrome-util";
 
-const RuleListFilter = React.createClass({
-  propTypes: {
-    onFilterChange: React.PropTypes.func.isRequired,
-  },
+export default class RuleListFilter extends React.Component {
+  static propTypes = {
+    onFilterChange: PropTypes.func.isRequired,
+  };
+
   handleFilterChange(filterString) {
     const words = _.reject((filterString || "").split(/\s+/), _.isEmpty);
     let newFilter = null;
@@ -18,7 +18,8 @@ const RuleListFilter = React.createClass({
       newFilter = new RegExp(words.map(escapeStringRegexp).join("|"), "i");
     }
     this.props.onFilterChange(newFilter);
-  },
+  }
+
   render() {
     return (
       <div className="rule-list-filter form-inline">
@@ -32,7 +33,5 @@ const RuleListFilter = React.createClass({
         </div>
       </div>
     );
-  },
-});
-
-export default RuleListFilter;
+  }
+}

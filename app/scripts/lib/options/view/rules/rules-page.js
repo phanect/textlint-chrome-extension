@@ -1,15 +1,15 @@
 /* Copyright (C) 2016  IRIDE Monad <iride.monad@gmail.com>
  * License: GNU GPLv3 http://www.gnu.org/licenses/gpl-3.0.html */
-"use strict";
 
-import React from "react";
+import React, { PropTypes } from "react";
 import RuleListEditor from "./rule-list-editor";
 
-const RulesPage = React.createClass({
-  propTypes: {
-    rules: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
-    onReady: React.PropTypes.func.isRequired,
-  },
+export default class RulesPage extends React.Component {
+  static propTypes = {
+    rules: PropTypes.arrayOf(PropTypes.object).isRequired,
+    onReady: PropTypes.func.isRequired,
+  };
+
   render() {
     return (
       <div className="rule-page">
@@ -19,7 +19,5 @@ const RulesPage = React.createClass({
         />
       </div>
     );
-  },
-});
-
-export default RulesPage;
+  }
+}

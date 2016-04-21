@@ -1,49 +1,60 @@
 /* Copyright (C) 2016  IRIDE Monad <iride.monad@gmail.com>
  * License: GNU GPLv3 http://www.gnu.org/licenses/gpl-3.0.html */
-"use strict";
 
 import _ from "lodash";
-import React from "react";
+import React, { PropTypes } from "react";
 import FilterList from "./filter-list";
 import MarkList from "./mark-list";
 import CorrectButtons from "./correct-buttons";
 
-const MarksPanel = React.createClass({
-  propTypes: {
-    controller: React.PropTypes.any.isRequired,
-    counts: React.PropTypes.objectOf(React.PropTypes.number).isRequired,
-    marks: React.PropTypes.arrayOf(React.PropTypes.shape({
-      correctable: React.PropTypes.bool.isRequired,
+export default class MarksPanel extends React.Component {
+  static propTypes = {
+    controller: PropTypes.any.isRequired,
+    counts: PropTypes.objectOf(PropTypes.number).isRequired,
+    marks: PropTypes.arrayOf(PropTypes.shape({
+      correctable: PropTypes.bool.isRequired,
     })).isRequired,
-    hasUndo: React.PropTypes.bool.isRequired,
-  },
-  getInitialState() {
-    return {
+    hasUndo: PropTypes.bool.isRequired,
+  };
+
+  constructor(props) {
+    super(props);
+    this.state = {
       actives: { error: true, warning: true, info: true },
     };
-  },
+
+    this.handleFilterChange = this.handleFilterChange.bind(this);
+    this.handleUndoClick = this.handleUndoClick.bind(this);
+    this.handleCorrectClick = this.handleCorrectClick.bind(this);
+    this.handleMarkClick = this.handleMarkClick.bind(this);
+    this.handleUndismissClick = this.handleUndismissClick.bind(this);
+    this.handleDismissThisClick = this.handleDismissThisClick.bind(this);
+    this.handleDismissSameClick = this.handleDismissSameClick.bind(this);
+  }
+
   handleFilterChange(severity, active) {
     const newActives = _.defaults({ [severity]: active }, this.state.actives);
     this.setState({ actives: newActives });
-  },
+  }
   handleUndoClick() {
     this.props.controller.undo();
-  },
+  }
   handleCorrectClick() {
     this.props.controller.correct();
-  },
+  }
   handleMarkClick(markId) {
     this.props.controller.showMark(markId);
-  },
+  }
   handleUndismissClick(markId) {
     this.props.controller.undismissMark(markId);
-  },
+  }
   handleDismissThisClick(markId) {
     this.props.controller.dismissThisMark(markId);
-  },
+  }
   handleDismissSameClick(markId) {
     this.props.controller.dismissSameMarks(markId);
-  },
+  }
+
   render() {
     const { counts, marks, hasUndo } = this.props;
     const { actives } = this.state;
@@ -66,7 +77,5 @@ const MarksPanel = React.createClass({
         />
       </div>
     );
-  },
-});
-
-export default MarksPanel;
+  }
+}

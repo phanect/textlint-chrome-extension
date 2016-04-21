@@ -1,23 +1,22 @@
 /* Copyright (C) 2016  IRIDE Monad <iride.monad@gmail.com>
  * License: GNU GPLv3 http://www.gnu.org/licenses/gpl-3.0.html */
-"use strict";
 
-import React from "react";
+import React, { PropTypes } from "react";
 import { translate } from "../../../util/chrome-util";
 
-const FooterLinks = [
-  { icon: "twitter", title: "@io_monad", url: "https://twitter.com/io_monad" },
-  { icon: "github", title: "@io-monad", url: "https://github.com/io-monad" },
-  { icon: "code-fork", title: "Fork me", url: "https://github.com/io-monad/textlint-chrome-extension" },
-];
+export default class FooterPanel extends React.Component {
+  static propTypes = {
+    appVersion: PropTypes.string.isRequired,
+    appStoreURL: PropTypes.string.isRequired,
+    saveEnabled: PropTypes.bool.isRequired,
+    onSaveClick: PropTypes.func.isRequired,
+  };
+  static links = [
+    { icon: "twitter", title: "@io_monad", url: "https://twitter.com/io_monad" },
+    { icon: "github", title: "@io-monad", url: "https://github.com/io-monad" },
+    { icon: "code-fork", title: "Fork me", url: "https://github.com/io-monad/textlint-chrome-extension" },
+  ];
 
-const FooterPanel = React.createClass({
-  propTypes: {
-    appVersion: React.PropTypes.string.isRequired,
-    appStoreURL: React.PropTypes.string.isRequired,
-    saveEnabled: React.PropTypes.bool.isRequired,
-    onSaveClick: React.PropTypes.func.isRequired,
-  },
   render() {
     const { appVersion, appStoreURL, saveEnabled } = this.props;
     return (
@@ -31,7 +30,7 @@ const FooterPanel = React.createClass({
               <i className="fa fa-star fa-lg"></i>
               Rate me!
             </a>
-            {FooterLinks.map(link =>
+            {FooterPanel.links.map(link =>
               <a
                 key={link.icon} href={link.url} target="_blank"
                 className="btn btn-link btn-sm icon-button"
@@ -53,7 +52,5 @@ const FooterPanel = React.createClass({
         </div>
       </div>
     );
-  },
-});
-
-export default FooterPanel;
+  }
+}

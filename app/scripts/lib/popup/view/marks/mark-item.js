@@ -1,34 +1,43 @@
 /* Copyright (C) 2016  IRIDE Monad <iride.monad@gmail.com>
  * License: GNU GPLv3 http://www.gnu.org/licenses/gpl-3.0.html */
-"use strict";
 
 import $ from "jquery";
-import React from "react";
+import React, { PropTypes } from "react";
 import { translate } from "../../../util/chrome-util";
 import bundles from "../../../app/bundles";
+import DismissButton from "./dismiss-button";
+import UndismissButton from "./undismiss-button";
 
-const MarkItem = React.createClass({
-  propTypes: {
-    mark: React.PropTypes.shape({
-      severity: React.PropTypes.string.isRequired,
-      message: React.PropTypes.string.isRequired,
-      correctable: React.PropTypes.bool.isRequired,
-      dismissed: React.PropTypes.bool.isRequired,
-      ruleId: React.PropTypes.string.isRequired,
+export default class MarkItem extends React.Component {
+  static propTypes = {
+    mark: PropTypes.shape({
+      severity: PropTypes.string.isRequired,
+      message: PropTypes.string.isRequired,
+      correctable: PropTypes.bool.isRequired,
+      dismissed: PropTypes.bool.isRequired,
+      ruleId: PropTypes.string.isRequired,
     }).isRequired,
-    onMarkClick: React.PropTypes.func.isRequired,
-    onUndismissClick: React.PropTypes.func.isRequired,
-    onDismissThisClick: React.PropTypes.func.isRequired,
-    onDismissSameClick: React.PropTypes.func.isRequired,
-  },
+    onMarkClick: PropTypes.func.isRequired,
+    onUndismissClick: PropTypes.func.isRequired,
+    onDismissThisClick: PropTypes.func.isRequired,
+    onDismissSameClick: PropTypes.func.isRequired,
+  };
+
+  constructor(props) {
+    super(props);
+    this.handleMarkClick = this.handleMarkClick.bind(this);
+  }
+
   getRuleHomepage() {
     const rule = bundles.get(this.props.mark.ruleId);
     return rule && rule.homepage;
-  },
+  }
+
   handleMarkClick(e) {
     if ($(e.target).parents(".mark-item-menu").length > 0) return;
     this.props.onMarkClick(e);
-  },
+  }
+
   render() {
     const { mark } = this.props;
     const ruleHomepage = this.getRuleHomepage();
@@ -68,44 +77,5 @@ const MarkItem = React.createClass({
         </div>
       </div>
     );
-  },
-});
-
-const UndismissButton = (props) => (
-  <a href="#" className="mark-item-menu-item mark-undismiss"
-    title={translate("undismissIt")} onClick={props.onClick}
-  >
-    <i className="fa fa-bell"></i>
-  </a>
-);
-UndismissButton.propTypes = {
-  onClick: React.PropTypes.func.isRequired,
-};
-
-const DismissButton = (props) => (
-  <div className="btn-group mark-dismiss">
-    <a href="#" className="mark-item-menu-item" title={translate("dismissIt")}
-      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-    >
-      <i className="fa fa-bell-slash"></i>
-    </a>
-    <ul className="dropdown-menu dropdown-menu-right">
-      <li>
-        <a href="#" className="mark-dismiss-this" onClick={props.onDismissThisClick}>
-          {translate("dismissOnlyThis")}
-        </a>
-      </li>
-      <li>
-        <a href="#" className="mark-dismiss-same" onClick={props.onDismissSameClick}>
-          {translate("dismissAllSame")}
-        </a>
-      </li>
-    </ul>
-  </div>
-);
-DismissButton.propTypes = {
-  onDismissThisClick: React.PropTypes.func.isRequired,
-  onDismissSameClick: React.PropTypes.func.isRequired,
-};
-
-export default MarkItem;
+  }
+}

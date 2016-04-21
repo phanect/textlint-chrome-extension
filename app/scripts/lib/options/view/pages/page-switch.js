@@ -1,20 +1,20 @@
 /* Copyright (C) 2016  IRIDE Monad <iride.monad@gmail.com>
  * License: GNU GPLv3 http://www.gnu.org/licenses/gpl-3.0.html */
-"use strict";
 
-import React from "react";
+import React, { PropTypes } from "react";
 import { translate } from "../../../util/chrome-util";
 
-const PageSwitch = React.createClass({
-  propTypes: {
-    pages: React.PropTypes.arrayOf(React.PropTypes.shape({
-      name: React.PropTypes.string.isRequired,
-      menuTitle: React.PropTypes.string.isRequired,
-      icon: React.PropTypes.string.isRequired,
+export default class PageSwitch extends React.Component {
+  static propTypes = {
+    pages: PropTypes.arrayOf(PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      menuTitle: PropTypes.string.isRequired,
+      icon: PropTypes.string.isRequired,
     })).isRequired,
-    activePage: React.PropTypes.string,
-    onPageChange: React.PropTypes.func,
-  },
+    activePage: PropTypes.string,
+    onPageChange: PropTypes.func,
+  };
+
   render() {
     const { pages, activePage, onPageChange } = this.props;
     return (
@@ -29,7 +29,5 @@ const PageSwitch = React.createClass({
         )}
       </ul>
     );
-  },
-});
-
-export default PageSwitch;
+  }
+}

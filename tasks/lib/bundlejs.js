@@ -1,7 +1,7 @@
-import gutil from "gulp-util";
-import _ from "lodash";
 import fs from "fs";
 import path from "path";
+import gutil from "gulp-util";
+import _ from "lodash";
 import through from "through2";
 import textlintRegistry from "textlint-registry";
 

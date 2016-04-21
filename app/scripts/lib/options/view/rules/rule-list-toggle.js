@@ -1,15 +1,15 @@
 /* Copyright (C) 2016  IRIDE Monad <iride.monad@gmail.com>
  * License: GNU GPLv3 http://www.gnu.org/licenses/gpl-3.0.html */
-"use strict";
 
-import React from "react";
+import React, { PropTypes } from "react";
 import { translate } from "../../../util/chrome-util";
 
-const RuleListToggle = React.createClass({
-  propTypes: {
-    onTurnOnClick: React.PropTypes.func.isRequired,
-    onTurnOffClick: React.PropTypes.func.isRequired,
-  },
+export default class RuleListToggle extends React.Component {
+  static propTypes = {
+    onTurnOnClick: PropTypes.func.isRequired,
+    onTurnOffClick: PropTypes.func.isRequired,
+  };
+
   render() {
     return (
       <div className="rule-list-toggle">
@@ -23,7 +23,5 @@ const RuleListToggle = React.createClass({
         </button>
       </div>
     );
-  },
-});
-
-export default RuleListToggle;
+  }
+}

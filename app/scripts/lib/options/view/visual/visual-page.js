@@ -1,15 +1,15 @@
 /* Copyright (C) 2016  IRIDE Monad <iride.monad@gmail.com>
  * License: GNU GPLv3 http://www.gnu.org/licenses/gpl-3.0.html */
-"use strict";
 
-import React from "react";
+import React, { PropTypes } from "react";
 import VisualEditor from "./visual-editor";
 
-const VisualPage = React.createClass({
-  propTypes: {
-    appOptions: React.PropTypes.object.isRequired,
-    onReady: React.PropTypes.func.isRequired,
-  },
+export default class VisualPage extends React.Component {
+  static propTypes = {
+    appOptions: PropTypes.object.isRequired,
+    onReady: PropTypes.func.isRequired,
+  };
+
   render() {
     const { appOptions } = this.props;
     return (
@@ -21,7 +21,5 @@ const VisualPage = React.createClass({
         />
       </div>
     );
-  },
-});
-
-export default VisualPage;
+  }
+}
