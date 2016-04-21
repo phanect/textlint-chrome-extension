@@ -73,19 +73,11 @@ export default class Badge {
   }
 
   updateForTabId(tabId) {
-    return new Promise((resolve, reject) => {
-      cutil.withTab(tabId, (tab) => {
-        this.updateForTab(tab).then(resolve, reject);
-      });
-    });
+    return cutil.withTab(tabId, (tab) => this.updateForTab(tab));
   }
 
   updateForActiveTab() {
-    return new Promise((resolve, reject) => {
-      cutil.withActiveTab((tab) => {
-        this.updateForTab(tab).then(resolve, reject);
-      });
-    });
+    return cutil.withActiveTab((tab) => this.updateForTab(tab));
   }
 
   updateForTab(tab) {

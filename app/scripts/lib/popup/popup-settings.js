@@ -12,10 +12,8 @@ const DEFAULT_SETTINGS = {
 
 export default class PopupSettings {
   static load() {
-    return new Promise((resolve, reject) => {
-      appStorage.getPopupSettings().then((settings) => {
-        resolve(new PopupSettings(settings));
-      }).catch(reject);
+    return appStorage.getPopupSettings().then(settings => {
+      return new PopupSettings(settings);
     });
   }
 
@@ -47,11 +45,9 @@ export default class PopupSettings {
   }
 
   load() {
-    return new Promise((resolve, reject) => {
-      appStorage.getPopupSettings().then((settings) => {
-        this.overwrite(settings);
-        resolve(this);
-      }).catch(reject);
+    return appStorage.getPopupSettings().then((settings) => {
+      this.overwrite(settings);
+      return this;
     });
   }
   save() {

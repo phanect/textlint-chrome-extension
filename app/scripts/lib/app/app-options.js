@@ -63,11 +63,7 @@ const VISUAL_OPTIONS_SCHEMA = {
 
 export default class AppOptions {
   static load() {
-    return new Promise((resolve, reject) => {
-      appStorage.getOptions().then((options) => {
-        resolve(new AppOptions(options));
-      }).catch(reject);
-    });
+    return appStorage.getOptions().then(options => new AppOptions(options));
   }
 
   constructor(options) {
@@ -139,11 +135,9 @@ export default class AppOptions {
   }
 
   load() {
-    return new Promise((resolve, reject) => {
-      appStorage.getOptions().then((options) => {
-        this.overwrite(options);
-        resolve(this);
-      }).catch(reject);
+    return appStorage.getOptions().then((options) => {
+      this.overwrite(options);
+      return this;
     });
   }
   save() {

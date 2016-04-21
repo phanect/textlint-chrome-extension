@@ -67,7 +67,7 @@ describe("appMessage", () => {
       }
 
       it("resolves a promise with response", () => {
-        return withResolved(sendSuccess(), (passed) => {
+        return sendSuccess().then(passed => {
           assert(response === passed);
         });
       });
@@ -86,15 +86,17 @@ describe("appMessage", () => {
         return promised;
       }
 
-      it("rejects a promise with error message", () => {
-        return withRejected(sendError(), (passed) => {
+      it("rejects a promise with error message", (done) => {
+        sendError().catch(passed => {
           assert(passed === error.message);
+          done();
         });
       });
 
-      it("calls error handler when error occurred", () => {
-        return withRejected(sendError(), () => {
+      it("calls error handler when error occurred", (done) => {
+        sendError().catch(() => {
           assert(handler.calledOnce);
+          done();
         });
       });
     });
@@ -146,7 +148,7 @@ describe("appMessage", () => {
       }
 
       it("resolves a promise with response", () => {
-        return withResolved(sendSuccess(), (passed) => {
+        return sendSuccess().then(passed => {
           assert(response === passed);
         });
       });
@@ -165,15 +167,17 @@ describe("appMessage", () => {
         return promise;
       }
 
-      it("rejects a promise with error message", () => {
-        return withRejected(sendError(), (passed) => {
+      it("rejects a promise with error message", (done) => {
+        sendError().catch((passed) => {
           assert(passed === error.message);
+          done();
         });
       });
 
-      it("calls error handler when error occurred", () => {
-        return withRejected(sendError(), () => {
+      it("calls error handler when error occurred", (done) => {
+        sendError().catch(() => {
           assert(handler.calledOnce);
+          done();
         });
       });
     });

@@ -56,14 +56,12 @@ export default class TextlintRulePackage {
   }
 
   getLatestVersion() {
-    return new Promise((resolve, reject) => {
-      this.getInfo().then((info) => {
-        if (info["dist-tags"] && info["dist-tags"].latest) {
-          resolve(info["dist-tags"].latest);
-        } else {
-          reject("No latest version on package info");
-        }
-      }).catch(reject);
+    return this.getInfo().then((info) => {
+      if (info["dist-tags"] && info["dist-tags"].latest) {
+        return info["dist-tags"].latest;
+      } else {
+        throw new Error("No latest version on package info");
+      }
     });
   }
 
@@ -82,11 +80,7 @@ export default class TextlintRulePackage {
   }
 
   loadLatest() {
-    return new Promise((resolve, reject) => {
-      this.getLatestVersion().then((version) => {
-        this.load(version).then(resolve, reject);
-      }).catch(reject);
-    });
+    return this.getLatestVersion().then(version => this.load(version));
   }
 
   loadBundled() {
@@ -102,10 +96,6 @@ export default class TextlintRulePackage {
   }
 
   loadBundledOrLatest() {
-    return new Promise((resolve, reject) => {
-      this.loadBundled().then(resolve).catch(() => {
-        this.loadLatest().then(resolve, reject);
-      });
-    });
+    return this.loadBundled().catch(() => this.loadLatest());
   }
 }

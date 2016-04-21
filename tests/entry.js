@@ -2,7 +2,6 @@
  * License: GNU GPLv3 http://www.gnu.org/licenses/gpl-3.0.html */
 
 import $ from "jquery";
-import "./test-utils/with-promise";
 
 // Global sinon sandbox
 global.sinonsb = sinon.sandbox.create();

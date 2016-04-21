@@ -22,7 +22,7 @@ describe("AppOptions", () => {
     });
 
     it("resolves to AppOptions instance", () => {
-      return withResolved(AppOptions.load(), (resolved) => {
+      return AppOptions.load().then(resolved => {
         assert(resolved instanceof AppOptions);
       });
     });
@@ -193,7 +193,7 @@ describe("AppOptions", () => {
     });
 
     it("loads options from storage", () => {
-      return withResolved(appOptions.load(), () => {
+      return appOptions.load().then(() => {
         assert.deepEqual(appOptions.toObject(), storeOptions);
       });
     });
@@ -207,7 +207,7 @@ describe("AppOptions", () => {
     });
 
     it("saves options into storage", () => {
-      return withResolved(appOptions.save(), () => {
+      return appOptions.save().then(() => {
         assert(setOptions.calledOnce);
         assert.deepEqual(setOptions.firstCall.args[0], appOptions.toObject());
       });
