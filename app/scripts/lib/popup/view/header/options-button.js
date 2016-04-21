@@ -4,17 +4,12 @@
 
 import React from "react";
 import IconButton from "../common/icon-button";
-import cutil from "../../../util/chrome-util";
+import { openOptionsPage } from "../../../util/chrome-util";
 
-const OptionsButton = React.createClass({
-  handleClick() {
-    cutil.openOptionsPage();
-  },
+export default class OptionsButton extends React.Component {
   render() {
     return (
-      <IconButton icon="cog" label="options" onClick={this.handleClick} />
+      <IconButton icon="cog" label="options" onClick={openOptionsPage} />
     );
-  },
-});
-
-export default OptionsButton;
+  }
+}

@@ -5,12 +5,10 @@
 import React from "react";
 import MessageBox from "../common/message-box";
 
-const LintingMessage = React.createClass({
+export default class LintingMessage extends React.Component {
   render() {
     return (
       <MessageBox text="linting" mark="circle-o-notch" spin />
     );
-  },
-});
-
-export default LintingMessage;
+  }
+}

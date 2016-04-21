@@ -2,19 +2,20 @@
  * License: GNU GPLv3 http://www.gnu.org/licenses/gpl-3.0.html */
 "use strict";
 
-import React from "react";
+import React, { PropTypes } from "react";
 import { translate } from "../../../util/chrome-util";
 
-const IconButton = React.createClass({
-  propTypes: {
-    icon: React.PropTypes.string.isRequired,
-    label: React.PropTypes.string.isRequired,
-    btn: React.PropTypes.string,
-    size: React.PropTypes.string,
-    active: React.PropTypes.bool,
-    disabled: React.PropTypes.bool,
-    onClick: React.PropTypes.func.isRequired,
-  },
+export default class IconButton extends React.Component {
+  static propTypes = {
+    icon: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+    btn: PropTypes.string,
+    size: PropTypes.string,
+    active: PropTypes.bool,
+    disabled: PropTypes.bool,
+    onClick: PropTypes.func.isRequired,
+  };
+
   render() {
     const { icon, label, btn, size, active, disabled } = this.props;
 
@@ -33,7 +34,5 @@ const IconButton = React.createClass({
         <span>{translate(label)}</span>
       </button>
     );
-  },
-});
-
-export default IconButton;
+  }
+}

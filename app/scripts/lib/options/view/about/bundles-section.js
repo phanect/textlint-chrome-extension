@@ -2,20 +2,21 @@
  * License: GNU GPLv3 http://www.gnu.org/licenses/gpl-3.0.html */
 "use strict";
 
-import React from "react";
+import React, { PropTypes } from "react";
 import { translate } from "../../../util/chrome-util";
 import Paragraph from "./paragraph";
 
-const BundlesSection = React.createClass({
-  propTypes: {
-    bundles: React.PropTypes.arrayOf(React.PropTypes.shape({
-      name: React.PropTypes.string.isRequired,
-      version: React.PropTypes.string.isRequired,
-      author: React.PropTypes.string.isRequired,
-      license: React.PropTypes.string.isRequired,
-      homepage: React.PropTypes.string.isRequired,
+export default class BundlesSection extends React.Component {
+  static propTypes = {
+    bundles: PropTypes.arrayOf(PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      version: PropTypes.string.isRequired,
+      author: PropTypes.string.isRequired,
+      license: PropTypes.string.isRequired,
+      homepage: PropTypes.string.isRequired,
     })).isRequired,
-  },
+  };
+
   render() {
     return (
       <div className="bundles-section">
@@ -43,7 +44,5 @@ const BundlesSection = React.createClass({
         </table>
       </div>
     );
-  },
-});
-
-export default BundlesSection;
+  }
+}

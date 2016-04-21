@@ -2,16 +2,17 @@
  * License: GNU GPLv3 http://www.gnu.org/licenses/gpl-3.0.html */
 "use strict";
 
-import React from "react";
+import React, { PropTypes } from "react";
 import { translate } from "../../../util/chrome-util";
 
-const PagePanel = React.createClass({
-  propTypes: {
-    active: React.PropTypes.bool,
-    title: React.PropTypes.string.isRequired,
-    icon: React.PropTypes.string.isRequired,
-    children: React.PropTypes.any,
-  },
+export default class PagePanel extends React.Component {
+  static propTypes = {
+    active: PropTypes.bool,
+    title: PropTypes.string.isRequired,
+    icon: PropTypes.string.isRequired,
+    children: PropTypes.any,
+  };
+
   render() {
     const { active, title, icon } = this.props;
     return (
@@ -23,7 +24,5 @@ const PagePanel = React.createClass({
         {this.props.children}
       </div>
     );
-  },
-});
-
-export default PagePanel;
+  }
+}

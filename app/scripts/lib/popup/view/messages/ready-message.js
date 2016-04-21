@@ -5,12 +5,10 @@
 import React from "react";
 import MessageBox from "../common/message-box";
 
-const ReadyMessage = React.createClass({
+export default class ReadyMessage extends React.Component {
   render() {
     return (
       <MessageBox text="ready" mark="rocket" />
     );
-  },
-});
-
-export default ReadyMessage;
+  }
+}

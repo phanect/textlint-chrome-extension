@@ -5,14 +5,18 @@
 import React, { PropTypes } from "react";
 import { translate } from "../../../util/chrome-util";
 
-export default class Pargraph extends React.Component {
+export default class UndismissButton extends React.Component {
   static propTypes = {
-    text: PropTypes.string.isRequired,
+    onClick: PropTypes.func.isRequired,
   };
 
   render() {
     return (
-      <p dangerouslySetInnerHTML={{ __html: translate(this.props.text) }}></p>
+      <a href="#" className="mark-item-menu-item mark-undismiss"
+        title={translate("undismissIt")} onClick={this.props.onClick}
+      >
+        <i className="fa fa-bell"></i>
+      </a>
     );
   }
 }

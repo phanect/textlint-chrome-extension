@@ -5,6 +5,7 @@ env:
   browser: true
   webextensions: true
   jquery: true
+parser: babel-eslint
 plugins:
   - react
   - import-order
@@ -22,7 +23,6 @@ rules:
   no-param-reassign: 0
   func-names: 0
   no-else-return: 0
-  react/prefer-es6-class: 0
   react/prefer-stateless-function: 0
   quote-props:
     - error

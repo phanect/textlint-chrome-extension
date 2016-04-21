@@ -3,26 +3,32 @@
 "use strict";
 
 import _ from "lodash";
-import React from "react";
+import React, { PropTypes } from "react";
 import RuleList from "./rule-list";
 
-const RuleListEditor = React.createClass({
-  propTypes: {
-    rules: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
-    onReady: React.PropTypes.func.isRequired,
-  },
+export default class RuleListEditor extends React.Component {
+  static propTypes = {
+    rules: PropTypes.arrayOf(PropTypes.object).isRequired,
+    onReady: PropTypes.func.isRequired,
+  };
+
+  constructor(props) {
+    super(props);
+    this.handleEditorReady = this.handleEditorReady.bind(this);
+  }
 
   componentWillMount() {
     this.editors = {};
     this.editorCount = 0;
-  },
+  }
+
   handleEditorReady(ruleKey, editor) {
     this.editors[ruleKey] = editor;
     this.editorCount++;
     if (this.editorCount === this.props.rules.length) {
       this.props.onReady(this);
     }
-  },
+  }
 
   validate() {
     let errors = [];
@@ -37,7 +43,7 @@ const RuleListEditor = React.createClass({
     });
     if (location) errors.location = location;
     return errors;
-  },
+  }
   serialize() {
     const serialized = {};
     const ruleList = this.refs.ruleList;
@@ -50,7 +56,7 @@ const RuleListEditor = React.createClass({
       }
     });
     return serialized;
-  },
+  }
 
   render() {
     return (
@@ -60,7 +66,5 @@ const RuleListEditor = React.createClass({
         onEditorReady={this.handleEditorReady}
       />
     );
-  },
-});
-
-export default RuleListEditor;
+  }
+}

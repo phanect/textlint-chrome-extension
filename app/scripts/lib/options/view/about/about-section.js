@@ -6,7 +6,7 @@ import React from "react";
 import { translate } from "../../../util/chrome-util";
 import Paragraph from "./paragraph";
 
-const AboutSection = React.createClass({
+export default class AboutSection extends React.Component {
   render() {
     return (
       <div className="about-section">
@@ -16,7 +16,5 @@ const AboutSection = React.createClass({
         <Paragraph text="aboutS1P3" />
       </div>
     );
-  },
-});
-
-export default AboutSection;
+  }
+}

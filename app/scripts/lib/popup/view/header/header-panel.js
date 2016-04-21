@@ -2,17 +2,18 @@
  * License: GNU GPLv3 http://www.gnu.org/licenses/gpl-3.0.html */
 "use strict";
 
-import React from "react";
+import React, { PropTypes } from "react";
 import OptionsButton from "./options-button";
 import ActivateToggle from "./activate-toggle";
 
-const HeaderPanel = React.createClass({
-  propTypes: {
-    controller: React.PropTypes.any.isRequired,
-    active: React.PropTypes.bool.isRequired,
-    onActivate: React.PropTypes.func.isRequired,
-    onDeactivate: React.PropTypes.func.isRequired,
-  },
+export default class HeaderPanel extends React.Component {
+  static propTypes = {
+    controller: PropTypes.any.isRequired,
+    active: PropTypes.bool.isRequired,
+    onActivate: PropTypes.func.isRequired,
+    onDeactivate: PropTypes.func.isRequired,
+  };
+
   render() {
     const { active } = this.props;
     return (
@@ -29,7 +30,5 @@ const HeaderPanel = React.createClass({
         </div>
       </div>
     );
-  },
-});
-
-export default HeaderPanel;
+  }
+}

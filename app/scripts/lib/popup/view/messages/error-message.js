@@ -2,20 +2,19 @@
  * License: GNU GPLv3 http://www.gnu.org/licenses/gpl-3.0.html */
 "use strict";
 
-import React from "react";
+import React, { PropTypes } from "react";
 import MessageBox from "../common/message-box";
 
-const ErrorMessage = React.createClass({
-  propTypes: {
-    reason: React.PropTypes.string,
-  },
+export default class ErrorMessage extends React.Component {
+  static propTypes = {
+    reason: PropTypes.string,
+  };
+
   render() {
     const { reason } = this.props;
     const details = DEBUG ? reason : null;
     return (
       <MessageBox text="wentWrong" details={details} mark="exclamation-triangle" />
     );
-  },
-});
-
-export default ErrorMessage;
+  }
+}

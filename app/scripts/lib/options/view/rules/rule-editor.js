@@ -2,21 +2,28 @@
  * License: GNU GPLv3 http://www.gnu.org/licenses/gpl-3.0.html */
 "use strict";
 
-import React from "react";
+import React, { PropTypes } from "react";
 import JsonEditor from "../json-editor/json-editor";
 
-const RuleEditor = React.createClass({
-  propTypes: {
-    rule: React.PropTypes.shape({
-      key: React.PropTypes.string.isRequired,
-      schema: React.PropTypes.object.isRequired,
-      options: React.PropTypes.any,
+export default class RuleEditor extends React.Component {
+  static propTypes = {
+    rule: PropTypes.shape({
+      key: PropTypes.string.isRequired,
+      schema: PropTypes.object.isRequired,
+      options: PropTypes.any,
     }).isRequired,
-    onReady: React.PropTypes.func.isRequired,
-  },
+    onReady: PropTypes.func.isRequired,
+  };
+
+  constructor(props) {
+    super(props);
+    this.handleEditorReady = this.handleEditorReady.bind(this);
+  }
+
   handleEditorReady() {
     this.props.onReady(this.refs.editor);
-  },
+  }
+
   render() {
     const { rule } = this.props;
     return (
@@ -27,7 +34,5 @@ const RuleEditor = React.createClass({
         onReady={this.handleEditorReady}
       />
     );
-  },
-});
-
-export default RuleEditor;
+  }
+}

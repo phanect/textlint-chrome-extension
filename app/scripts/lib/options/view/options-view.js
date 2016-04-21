@@ -3,7 +3,7 @@
 "use strict";
 
 import _ from "lodash";
-import React from "react";
+import React, { PropTypes } from "react";
 import PageSwitch from "./pages/page-switch";
 import PagePanel from "./pages/page-panel";
 import RulesPage from "./rules/rules-page";
@@ -11,44 +11,56 @@ import VisualPage from "./visual/visual-page";
 import AboutPage from "./about/about-page";
 import FooterPanel from "./footer/footer-panel";
 
-const OptionsView = React.createClass({
-  propTypes: {
-    controller: React.PropTypes.object.isRequired,
-    bundles: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
-    rules: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
-    appOptions: React.PropTypes.object.isRequired,
-    appVersion: React.PropTypes.string.isRequired,
-    appStoreURL: React.PropTypes.string.isRequired,
-  },
-  getInitialState() {
-    return {
+export default class OptionsView extends React.Component {
+  static propTypes = {
+    controller: PropTypes.object.isRequired,
+    bundles: PropTypes.arrayOf(PropTypes.object).isRequired,
+    rules: PropTypes.arrayOf(PropTypes.object).isRequired,
+    appOptions: PropTypes.object.isRequired,
+    appVersion: PropTypes.string.isRequired,
+    appStoreURL: PropTypes.string.isRequired,
+  };
+  static pages = [
+    { name: "rules", menuTitle: "menuRules", pageTitle: "customizeRules", icon: "pencil" },
+    { name: "visual", menuTitle: "menuVisual", pageTitle: "visualEffects", icon: "eye" },
+    { name: "about", menuTitle: "menuAbout", pageTitle: "aboutExtension", icon: "info-circle" },
+  ];
+
+  constructor(props) {
+    super(props);
+    this.state = {
       saveEnabled: false,
       activePage: null,
     };
-  },
+
+    this.handlePageReady = this.handlePageReady.bind(this);
+    this.handlePageChange = this.handlePageChange.bind(this);
+    this.handleSaveClick = this.handleSaveClick.bind(this);
+  }
+
   componentWillMount() {
     this.readyPageCount = 0;
     this.editors = {};
-  },
+  }
 
   setLocation(pageName, hash) {
     this.setState({ activePage: pageName }, () => {
       if (hash) location.href = hash;
     });
-  },
+  }
 
   handlePageReady(pageName, editor) {
     if (editor) {
       this.editors[pageName] = editor;
     }
-    if (++this.readyPageCount === this.pages.length) {
+    if (++this.readyPageCount === OptionsView.pages.length) {
       this.setState({ saveEnabled: true, activePage: "rules" });
     }
-  },
+  }
   handlePageChange(page) {
     if (!this.state.activePage) return;
     this.setState({ activePage: page });
-  },
+  }
   handleSaveClick() {
     if (this.validate()) {
       this.props.controller.save(
@@ -56,7 +68,8 @@ const OptionsView = React.createClass({
         this.editors.visual.serialize()
       );
     }
-  },
+  }
+
   validate() {
     return _.every(this.editors, (editor, pageName) => {
       const errors = editor.validate();
@@ -66,13 +79,7 @@ const OptionsView = React.createClass({
       }
       return true;
     });
-  },
-
-  pages: [
-    { name: "rules", menuTitle: "menuRules", pageTitle: "customizeRules", icon: "pencil" },
-    { name: "visual", menuTitle: "menuVisual", pageTitle: "visualEffects", icon: "eye" },
-    { name: "about", menuTitle: "menuAbout", pageTitle: "aboutExtension", icon: "info-circle" },
-  ],
+  }
 
   render() {
     const { bundles, rules, appOptions, appVersion, appStoreURL } = this.props;
@@ -103,12 +110,12 @@ const OptionsView = React.createClass({
             <PageSwitch
               activePage={activePage}
               onPageChange={this.handlePageChange}
-              pages={this.pages}
+              pages={OptionsView.pages}
             />
           </div>
           <div className="main-pane">
             <div className="tab-content">
-              {this.pages.map(page =>
+              {OptionsView.pages.map(page =>
                 <PagePanel
                   key={page.name}
                   active={activePage === page.name}
@@ -131,7 +138,5 @@ const OptionsView = React.createClass({
         </div>
       </div>
     );
-  },
-});
-
-export default OptionsView;
+  }
+}

@@ -2,15 +2,16 @@
  * License: GNU GPLv3 http://www.gnu.org/licenses/gpl-3.0.html */
 "use strict";
 
-import React from "react";
+import React, { PropTypes } from "react";
 import { translate } from "../../../util/chrome-util";
 
-const RulesetItem = React.createClass({
-  propTypes: {
-    name: React.PropTypes.string.isRequired,
-    selected: React.PropTypes.bool.isRequired,
-    onClick: React.PropTypes.func.isRequired,
-  },
+export default class RulesetItem extends React.Component {
+  static propTypes = {
+    name: PropTypes.string.isRequired,
+    selected: PropTypes.bool.isRequired,
+    onClick: PropTypes.func.isRequired,
+  };
+
   render() {
     const { name, selected, onClick } = this.props;
     return (
@@ -25,7 +26,5 @@ const RulesetItem = React.createClass({
         </label>
       </div>
     );
-  },
-});
-
-export default RulesetItem;
+  }
+}

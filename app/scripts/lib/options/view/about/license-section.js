@@ -6,7 +6,7 @@ import React from "react";
 import { translate } from "../../../util/chrome-util";
 import Paragraph from "./paragraph";
 
-const LicenseSection = React.createClass({
+export default class LicenseSection extends React.Component {
   render() {
     return (
       <div className="license-section">
@@ -14,7 +14,5 @@ const LicenseSection = React.createClass({
         <Paragraph text="aboutS3P1" />
       </div>
     );
-  },
-});
-
-export default LicenseSection;
+  }
+}

@@ -2,18 +2,25 @@
  * License: GNU GPLv3 http://www.gnu.org/licenses/gpl-3.0.html */
 "use strict";
 
-import React from "react";
+import React, { PropTypes } from "react";
 import JsonEditor from "../json-editor/json-editor";
 
-const VisualEditor = React.createClass({
-  propTypes: {
-    visualOptionsSchema: React.PropTypes.object.isRequired,
-    visualOptions: React.PropTypes.object.isRequired,
-    onReady: React.PropTypes.func.isRequired,
-  },
+export default class VisualEditor extends React.Component {
+  static propTypes = {
+    visualOptionsSchema: PropTypes.object.isRequired,
+    visualOptions: PropTypes.object.isRequired,
+    onReady: PropTypes.func.isRequired,
+  };
+
+  constructor(props) {
+    super(props);
+    this.handleEditorReady = this.handleEditorReady.bind(this);
+  }
+
   handleEditorReady() {
     this.props.onReady(this.refs.editor);
-  },
+  }
+
   render() {
     return (
       <JsonEditor
@@ -23,7 +30,5 @@ const VisualEditor = React.createClass({
         onReady={this.handleEditorReady}
       />
     );
-  },
-});
-
-export default VisualEditor;
+  }
+}

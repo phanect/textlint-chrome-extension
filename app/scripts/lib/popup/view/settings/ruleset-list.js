@@ -2,17 +2,18 @@
  * License: GNU GPLv3 http://www.gnu.org/licenses/gpl-3.0.html */
 "use strict";
 
-import React from "react";
+import React, { PropTypes } from "react";
 import RulesetItem from "./ruleset-item";
 
-const RulesetList = React.createClass({
-  propTypes: {
-    rulesets: React.PropTypes.arrayOf(React.PropTypes.shape({
-      name: React.PropTypes.string.isRequired,
+export default class RulesetList extends React.Component {
+  static propTypes = {
+    rulesets: PropTypes.arrayOf(PropTypes.shape({
+      name: PropTypes.string.isRequired,
     })).isRequired,
-    selected: React.PropTypes.string.isRequired,
-    onRulesetSelect: React.PropTypes.func.isRequired,
-  },
+    selected: PropTypes.string.isRequired,
+    onRulesetSelect: PropTypes.func.isRequired,
+  };
+
   render() {
     const { rulesets, selected, onRulesetSelect } = this.props;
     return (
@@ -27,7 +28,5 @@ const RulesetList = React.createClass({
         )}
       </div>
     );
-  },
-});
-
-export default RulesetList;
+  }
+}

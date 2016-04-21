@@ -2,25 +2,25 @@
  * License: GNU GPLv3 http://www.gnu.org/licenses/gpl-3.0.html */
 "use strict";
 
-import React from "react";
+import React, { PropTypes } from "react";
 import { translate } from "../../../util/chrome-util";
 
-const Severities = [
-  { name: "error", title: "showAsErrors" },
-  { name: "warning", title: "showAsWarnings" },
-  { name: "info", title: "showAsInfo" },
-];
+export default class SeveritySwitch extends React.Component {
+  static propTypes = {
+    selected: PropTypes.string.isRequired,
+    onSelect: PropTypes.func.isRequired,
+  };
+  static severities = [
+    { name: "error", title: "showAsErrors" },
+    { name: "warning", title: "showAsWarnings" },
+    { name: "info", title: "showAsInfo" },
+  ];
 
-const SeveritySwitch = React.createClass({
-  propTypes: {
-    selected: React.PropTypes.string.isRequired,
-    onSelect: React.PropTypes.func.isRequired,
-  },
   render() {
     const { selected, onSelect } = this.props;
     return (
       <div className="severity-switch btn-group">
-        {Severities.map(({ name, title }) =>
+        {SeveritySwitch.severities.map(({ name, title }) =>
           <button
             key={name}
             className={[
@@ -36,7 +36,5 @@ const SeveritySwitch = React.createClass({
         )}
       </div>
     );
-  },
-});
-
-export default SeveritySwitch;
+  }
+}

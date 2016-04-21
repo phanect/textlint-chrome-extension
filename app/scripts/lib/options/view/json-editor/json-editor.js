@@ -4,7 +4,7 @@
 
 import _ from "lodash";
 import $ from "jquery";
-import React from "react";
+import React, { PropTypes } from "react";
 import { translate } from "../../../util/chrome-util";
 import fixSchema from "./fix-schema";
 import "./editor-multiselectize";
@@ -16,13 +16,14 @@ JSONEditor.defaults.options.theme = "bootstrap3";
 JSONEditor.defaults.options.iconlib = "fontawesome4";
 JSONEditor.plugins.selectize.enable = true;
 
-const JsonEditor = React.createClass({
-  propTypes: {
-    schema: React.PropTypes.object.isRequired,
-    defaultValue: React.PropTypes.any,
-    onReady: React.PropTypes.func,
-    onChange: React.PropTypes.func,
-  },
+export default class JsonEditor extends React.Component {
+  static propTypes = {
+    schema: PropTypes.object.isRequired,
+    defaultValue: PropTypes.any,
+    onReady: PropTypes.func,
+    onChange: PropTypes.func,
+  };
+
   componentDidMount() {
     const editor = new JSONEditor(this.refs.editor, {
       schema: fixSchema(this.props.schema),
@@ -36,10 +37,11 @@ const JsonEditor = React.createClass({
       if (this.props.onChange) this.props.onChange(editor);
     });
     this.editor = editor;
-  },
+  }
   componentWillUnmount() {
     this.editor = null;
-  },
+  }
+
   translateLabels() {
     $(this.refs.editor).find("label").contents()
       .filter(function () {
@@ -52,19 +54,18 @@ const JsonEditor = React.createClass({
           this.nodeValue = translate(key, this.nodeValue);
         }
       });
-  },
+  }
   validate() {
     return this.editor.validate();
-  },
+  }
   serialize() {
     return this.editor.getValue();
-  },
+  }
+
   render() {
     return (
       <div className="json-editor" ref="editor">
       </div>
     );
-  },
-});
-
-export default JsonEditor;
+  }
+}
