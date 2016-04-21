@@ -48,44 +48,38 @@ function getBundledRuleNames() {
 }
 
 function getBundledRules() {
-  return new Promise((resolve, reject) => {
-    const rules = buildRulesFromPackageNames(getBundledRuleNames());
-    const promises = _.map(rules, rule => textlintRegistry.getSchema(rule.name));
+  const rules = buildRulesFromPackageNames(getBundledRuleNames());
+  const promises = _.map(rules, rule => textlintRegistry.getSchema(rule.name));
 
-    Promise.all(promises).then((schemas) => {
-      _.each(schemas, (schema, index) => { rules[index].schema = schema; });
-      resolve(rules);
-    })
-    .catch(reject);
+  return Promise.all(promises).then((schemas) => {
+    _.each(schemas, (schema, index) => { rules[index].schema = schema; });
+    return rules;
   });
 }
 
 function getBundles() {
-  return new Promise((resolve, reject) => {
-    Promise.all([getBundledTextlint(), getBundledRules()])
-    .then((resolved) => {
-      resolve({
-        textlintInfo: resolved[0],
-        rules: resolved[1],
-      });
-    })
-    .catch(reject);
+  return Promise.all([
+    getBundledTextlint(),
+    getBundledRules(),
+  ]).then(([textlintInfo, rules]) => {
+    return {
+      textlintInfo,
+      rules,
+    };
   });
 }
 
 function getBundleJS(options = {}) {
   const empty = options.empty;
-  return new Promise((resolve, reject) => {
-    if (empty) {
-      getBundledTextlint().then((textlintInfo) => {
-        resolve(renderTemplate({ textlintInfo, rules: [] }));
-      }).catch(reject);
-    } else {
-      getBundles().then(({ textlintInfo, rules }) => {
-        resolve(renderTemplate({ textlintInfo, rules }));
-      }).catch(reject);
-    }
-  });
+  if (empty) {
+    return getBundledTextlint().then((textlintInfo) => {
+      return renderTemplate({ textlintInfo, rules: [] });
+    });
+  } else {
+    return getBundles().then(({ textlintInfo, rules }) => {
+      return renderTemplate({ textlintInfo, rules });
+    });
+  }
 }
 
 export default function bundlejs(fileName, options = {}) {

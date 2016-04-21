@@ -67,7 +67,7 @@ describe("sandboxMessage", () => {
     }
 
     it("posts message to sandbox iframe", () => {
-      return withResolved(send(), (posted) => {
+      return send().then(posted => {
         assert.deepEqual(posted, typedMessage);
       });
     });

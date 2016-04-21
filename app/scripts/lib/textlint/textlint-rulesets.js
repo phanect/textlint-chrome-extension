@@ -7,19 +7,17 @@ import AppOptions from "../app/app-options";
 
 export default {
   getRuleset(name) {
-    return new Promise((resolve, reject) => {
-      if (name === "Custom") {
-        this.getCustom().then((ruleOptions) => {
-          resolve({
-            name: "Custom",
-            rules: _.keys(ruleOptions),
-            ruleOptions,
-          });
-        }).catch(reject);
-      } else {
-        resolve(_.find(appConfig.rulesets, ["name", name]));
-      }
-    });
+    if (name === "Custom") {
+      return this.getCustom().then((ruleOptions) => {
+        return {
+          name: "Custom",
+          rules: _.keys(ruleOptions),
+          ruleOptions,
+        };
+      });
+    } else {
+      return Promise.resolve(_.find(appConfig.rulesets, ["name", name]));
+    }
   },
 
   getDefaultRulesetName(lang = null) {
@@ -35,22 +33,18 @@ export default {
   },
 
   getRulesetOrDefault(name) {
-    return new Promise((resolve, reject) => {
-      this.getRuleset(name).then((ruleset) => {
-        if (ruleset) {
-          resolve(ruleset);
-        } else {
-          this.getDefaultRuleset().then(resolve, reject);
-        }
-      }).catch(reject);
+    return this.getRuleset(name).then((ruleset) => {
+      if (ruleset) {
+        return ruleset;
+      } else {
+        return this.getDefaultRuleset();
+      }
     });
   },
 
   getCustom() {
-    return new Promise((resolve, reject) => {
-      AppOptions.load().then((appOptions) => {
-        resolve(_.pickBy(appOptions.ruleOptions));
-      }).catch(reject);
+    return AppOptions.load().then((appOptions) => {
+      return _.pickBy(appOptions.ruleOptions);
     });
   },
 };

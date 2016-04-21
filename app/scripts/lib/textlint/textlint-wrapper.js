@@ -24,30 +24,26 @@ export default class TextlintWrapper {
 
   getTextlint() {
     if (!this.loadingPromise) {
-      this.loadingPromise = new Promise((resolve, reject) => {
-        const promises = _.map(this.ruleNames, (ruleName) => {
-          return (new TextlintRulePackage(ruleName)).loadBundled();
-        });
-        Promise.all(promises).then((rules) => {
-          const loadedRules = _.fromPairs(_.zip(this.ruleNames, rules));
-          const flattenRules = this._flattenPreset(loadedRules, true);
-          const flattenRuleOptions = this._flattenPreset(this.ruleOptions, false);
-          this.textlint.setupRules(flattenRules, flattenRuleOptions);
-          resolve(this.textlint);
-        }).catch(reject);
+      const promises = _.map(this.ruleNames, (ruleName) => {
+        return (new TextlintRulePackage(ruleName)).loadBundled();
+      });
+      this.loadingPromise = Promise.all(promises).then((rules) => {
+        const loadedRules = _.fromPairs(_.zip(this.ruleNames, rules));
+        const flattenRules = this._flattenPreset(loadedRules, true);
+        const flattenRuleOptions = this._flattenPreset(this.ruleOptions, false);
+        this.textlint.setupRules(flattenRules, flattenRuleOptions);
+        return this.textlint;
       });
     }
     return this.loadingPromise;
   }
 
   lint(text) {
-    return new Promise((resolve, reject) => {
-      this.getTextlint().then((textlint) => {
-        textlint.lintText(text, `.${this.format}`).then((lintResult) => {
-          this._decorateMessages(text, lintResult.messages);
-          resolve(lintResult);
-        }).catch(reject);
-      }).catch(reject);
+    return this.getTextlint().then((textlint) => {
+      return textlint.lintText(text, `.${this.format}`).then((lintResult) => {
+        this._decorateMessages(text, lintResult.messages);
+        return lintResult;
+      });
     });
   }
 
@@ -63,10 +59,8 @@ export default class TextlintWrapper {
   }
 
   fix(text) {
-    return new Promise((resolve, reject) => {
-      this.getTextlint().then((textlint) => {
-        textlint.fixText(text, `.${this.format}`).then(resolve, reject);
-      }).catch(reject);
+    return this.getTextlint().then((textlint) => {
+      return textlint.fixText(text, `.${this.format}`);
     });
   }
 

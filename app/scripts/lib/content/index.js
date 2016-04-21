@@ -7,24 +7,22 @@ export default function () {
   let textareaLinter;
 
   function initTextareaLinter() {
-    return new Promise((resolve, reject) => {
-      if (textareaLinter) {
-        resolve(textareaLinter);
-      } else {
-        messages.getOptions().then((options) => {
-          // Delay load to avoid initial impact
-          const TextareaLinter = require("./textarea-linter").TextareaLinter;
-          textareaLinter = new TextareaLinter({
-            lintText: (lintId, text) => { messages.lintText(lintId, text); },
-            correctText: (correctId, text) => { messages.correctText(correctId, text); },
-            onMarksChanged: () => { messages.updateStatus(); },
-            showMarks: options.showMarks,
-            showBorder: options.showBorder,
-          });
-          resolve(textareaLinter);
-        }).catch(reject);
-      }
-    });
+    if (textareaLinter) {
+      return Promise.resolve(textareaLinter);
+    } else {
+      return messages.getOptions().then((options) => {
+        // Delay load to avoid initial impact
+        const TextareaLinter = require("./textarea-linter").TextareaLinter;
+        textareaLinter = new TextareaLinter({
+          lintText: (lintId, text) => { messages.lintText(lintId, text); },
+          correctText: (correctId, text) => { messages.correctText(correctId, text); },
+          onMarksChanged: () => { messages.updateStatus(); },
+          showMarks: options.showMarks,
+          showBorder: options.showBorder,
+        });
+        return textareaLinter;
+      });
+    }
   }
 
   let lastActiveTextarea = null;

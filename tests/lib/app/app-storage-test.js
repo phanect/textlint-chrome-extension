@@ -31,7 +31,7 @@ describe("appStorage", () => {
 
   describe("#getPopupSettings()", () => {
     it("gets popup settings from chrome storage", () => {
-      return withResolved(appStorage.getPopupSettings(), (resolved) => {
+      return appStorage.getPopupSettings().then(resolved => {
         assert.deepEqual(resolved, storageOptions.popupSettings);
       });
     });
@@ -41,7 +41,7 @@ describe("appStorage", () => {
     const newValue = { preset: "japanese", format: "txt" };
 
     it("sets popup settings to chrome storage", () => {
-      return withResolved(appStorage.setPopupSettings(newValue), () => {
+      return appStorage.setPopupSettings(newValue).then(() => {
         assertSetValue({ popupSettings: newValue });
       });
     });
@@ -49,7 +49,7 @@ describe("appStorage", () => {
 
   describe("#getOptions()", () => {
     it("gets options from chrome storage", () => {
-      return withResolved(appStorage.getOptions(), (resolved) => {
+      return appStorage.getOptions().then(resolved => {
         assert.deepEqual(resolved, storageOptions.options);
       });
     });
@@ -59,7 +59,7 @@ describe("appStorage", () => {
     const newValue = { showMarks: true };
 
     it("sets options to chrome storage", () => {
-      return withResolved(appStorage.setOptions(newValue), () => {
+      return appStorage.setOptions(newValue).then(() => {
         assertSetValue({ options: newValue });
       });
     });
