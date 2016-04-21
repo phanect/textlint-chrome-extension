@@ -1,10 +1,13 @@
-extends: airbnb
+extends:
+  - airbnb
+  - plugin:import-order/recommended
 env:
   browser: true
   webextensions: true
   jquery: true
 plugins:
   - react
+  - import-order
 globals:
   __ENV__: true
   __VENDOR__: true

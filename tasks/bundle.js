@@ -1,5 +1,5 @@
-import gulp from "gulp";
 import path from "path";
+import gulp from "gulp";
 import bundlejs from "./lib/bundlejs";
 
 gulp.task("bundle", () => {
