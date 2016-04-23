@@ -3,7 +3,7 @@
 
 import $ from "jquery";
 import React, { PropTypes } from "react";
-import { translate } from "../../../util/chrome-util";
+import { translate } from "@io-monad/chrome-util";
 import bundles from "../../../app/bundles";
 import DismissButton from "./dismiss-button";
 import UndismissButton from "./undismiss-button";

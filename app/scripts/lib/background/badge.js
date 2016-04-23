@@ -2,7 +2,7 @@
  * License: GNU GPLv3 http://www.gnu.org/licenses/gpl-3.0.html */
 
 import _ from "lodash";
-import cutil from "../util/chrome-util";
+import { tabs } from "@io-monad/chrome-util";
 import appConfig from "../app/app-config";
 import linters from "./linters";
 import messages from "./messages";
@@ -73,11 +73,11 @@ export default class Badge {
   }
 
   updateForTabId(tabId) {
-    return cutil.withTab(tabId, (tab) => this.updateForTab(tab));
+    return tabs.withTab(tabId, (tab) => this.updateForTab(tab));
   }
 
   updateForActiveTab() {
-    return cutil.withActiveTab((tab) => this.updateForTab(tab));
+    return tabs.withActiveTab((tab) => this.updateForTab(tab));
   }
 
   updateForTab(tab) {

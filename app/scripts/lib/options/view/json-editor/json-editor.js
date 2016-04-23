@@ -4,7 +4,7 @@
 import _ from "lodash";
 import $ from "jquery";
 import React, { PropTypes } from "react";
-import { translate } from "../../../util/chrome-util";
+import { translate } from "@io-monad/chrome-util";
 import fixSchema from "./fix-schema";
 import "./editor-multiselectize";
 import "./editor-enumconstant";

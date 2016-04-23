@@ -3,7 +3,7 @@
 
 import React from "react";
 import IconButton from "../common/icon-button";
-import { openOptionsPage } from "../../../util/chrome-util";
+import { openOptionsPage } from "@io-monad/chrome-util";
 
 export default class OptionsButton extends React.Component {
   render() {
