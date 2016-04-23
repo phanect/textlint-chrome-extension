@@ -29,20 +29,9 @@ export default class OptionsController {
         bundles={this.getBundles()}
         rules={this.getRules()}
         appOptions={this.appOptions}
-        appVersion={this.getAppVersion()}
-        appStoreURL={this.getAppStoreURL()}
       />,
       this.container
     );
-  }
-
-  getAppVersion() {
-    return chrome.runtime.getManifest().version;
-  }
-
-  getAppStoreURL() {
-    const extensionId = chrome.i18n.getMessage("@@extension_id");
-    return `https://chrome.google.com/webstore/detail/currently/${extensionId}/reviews`;
   }
 
   getBundles() {
