@@ -16,8 +16,6 @@ export default class OptionsView extends React.Component {
     bundles: PropTypes.arrayOf(PropTypes.object).isRequired,
     rules: PropTypes.arrayOf(PropTypes.object).isRequired,
     appOptions: PropTypes.object.isRequired,
-    appVersion: PropTypes.string.isRequired,
-    appStoreURL: PropTypes.string.isRequired,
   };
   static pages = [
     { name: "rules", menuTitle: "menuRules", pageTitle: "customizeRules", icon: "pencil" },
@@ -81,7 +79,7 @@ export default class OptionsView extends React.Component {
   }
 
   render() {
-    const { bundles, rules, appOptions, appVersion, appStoreURL } = this.props;
+    const { bundles, rules, appOptions } = this.props;
     const { saveEnabled, activePage } = this.state;
 
     const pageContents = {
@@ -129,8 +127,6 @@ export default class OptionsView extends React.Component {
         </div>
         <div className="bottom-pane">
           <FooterPanel
-            appVersion={appVersion}
-            appStoreURL={appStoreURL}
             saveEnabled={saveEnabled}
             onSaveClick={this.handleSaveClick}
           />

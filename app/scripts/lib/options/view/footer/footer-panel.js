@@ -2,12 +2,10 @@
  * License: GNU GPLv3 http://www.gnu.org/licenses/gpl-3.0.html */
 
 import React, { PropTypes } from "react";
-import { translate } from "../../../util/chrome-util";
+import { translate, getVersion, openStorePage } from "@io-monad/chrome-util";
 
 export default class FooterPanel extends React.Component {
   static propTypes = {
-    appVersion: PropTypes.string.isRequired,
-    appStoreURL: PropTypes.string.isRequired,
     saveEnabled: PropTypes.bool.isRequired,
     onSaveClick: PropTypes.func.isRequired,
   };
@@ -18,18 +16,18 @@ export default class FooterPanel extends React.Component {
   ];
 
   render() {
-    const { appVersion, appStoreURL, saveEnabled } = this.props;
+    const { saveEnabled } = this.props;
     return (
       <div className="footer-panel container-fluid">
         <div className="row">
           <div className="col-xs-9 links-area">
             <span className="app-brand">
-              textlint Extension ver <span className="app-version">{appVersion}</span>
+              textlint Extension ver <span className="app-version">{getVersion()}</span>
             </span>
-            <a href={appStoreURL} target="_blank" className="btn btn-link btn-sm icon-button">
+            <button onClick={openStorePage} className="btn btn-link btn-sm icon-button">
               <i className="fa fa-star fa-lg"></i>
               Rate me!
-            </a>
+            </button>
             {FooterPanel.links.map(link =>
               <a
                 key={link.icon} href={link.url} target="_blank"

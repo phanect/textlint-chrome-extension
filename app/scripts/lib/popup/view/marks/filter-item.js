@@ -2,7 +2,7 @@
  * License: GNU GPLv3 http://www.gnu.org/licenses/gpl-3.0.html */
 
 import React, { PropTypes } from "react";
-import { translate } from "../../../util/chrome-util";
+import { translate } from "@io-monad/chrome-util";
 
 export default class FilterItem extends React.Component {
   static propTypes = {

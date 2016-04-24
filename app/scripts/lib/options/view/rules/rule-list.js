@@ -3,7 +3,7 @@
 
 import _ from "lodash";
 import React, { PropTypes } from "react";
-import { translate } from "../../../util/chrome-util";
+import { translate } from "@io-monad/chrome-util";
 import RuleListFilter from "./rule-list-filter";
 import RuleListToggle from "./rule-list-toggle";
 import RuleItem from "./rule-item";

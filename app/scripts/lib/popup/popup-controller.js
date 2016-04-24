@@ -3,10 +3,10 @@
 
 import React from "react";
 import ReactDOM from "react-dom";
+import { tabs } from "@io-monad/chrome-util";
 import messages from "../background/messages";
 import appConfig from "../app/app-config";
 import DismissType from "../content/dismiss-type";
-import cutil from "../util/chrome-util";
 import PopupSettings from "./popup-settings";
 import PopupView from "./view/popup-view";
 import RefreshMessage from "./view/messages/refresh-message";
@@ -49,7 +49,7 @@ export default class PopupController {
   }
 
   updateViewForActiveTab() {
-    cutil.withActiveTab((tab) => this.updateViewForTab(tab));
+    tabs.withActiveTab((tab) => this.updateViewForTab(tab));
   }
 
   updateViewForTab(tab) {
@@ -98,7 +98,7 @@ export default class PopupController {
     this.settings.overwrite(settings);
     this.settings.save().then(() => {
       this.withLinters((linters) => {
-        cutil.withActiveTab((tab) => {
+        tabs.withActiveTab((tab) => {
           linters.activate(tab.id, this.settings.ruleset, this.settings.format);
         });
       });
@@ -107,50 +107,50 @@ export default class PopupController {
 
   deactivate() {
     this.withLinters((linters) => {
-      cutil.withActiveTab((tab) => {
+      tabs.withActiveTab((tab) => {
         linters.deactivate(tab.id);
       });
     });
   }
 
   correct() {
-    cutil.withActiveTab((tab) => {
+    tabs.withActiveTab((tab) => {
       messages.triggerCorrect(tab.id);
     });
   }
 
   undo() {
-    cutil.withActiveTab((tab) => {
+    tabs.withActiveTab((tab) => {
       messages.undo(tab.id);
     });
   }
 
   showMark(markId) {
-    cutil.withActiveTab((tab) => {
+    tabs.withActiveTab((tab) => {
       messages.showMark(tab.id, markId);
     });
   }
 
   dismissThisMark(markId) {
-    cutil.withActiveTab((tab) => {
+    tabs.withActiveTab((tab) => {
       messages.dismissMark(tab.id, markId, DismissType.ONLY_THIS);
     });
   }
 
   dismissSameMarks(markId) {
-    cutil.withActiveTab((tab) => {
+    tabs.withActiveTab((tab) => {
       messages.dismissMark(tab.id, markId, DismissType.ALL_SAME);
     });
   }
 
   undismissMark(markId) {
-    cutil.withActiveTab((tab) => {
+    tabs.withActiveTab((tab) => {
       messages.dismissMark(tab.id, markId, DismissType.UNDISMISS);
     });
   }
 
   refreshPage() {
-    cutil.withActiveTab((tab) => {
+    tabs.withActiveTab((tab) => {
       chrome.tabs.reload(tab.id);
     });
   }
