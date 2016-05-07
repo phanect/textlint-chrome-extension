@@ -63,7 +63,7 @@ export default {
     {
       "name": "textlint",
       "key": "textlint",
-      "version": "6.3.0",
+      "version": "6.6.0",
       "description": "The pluggable linting tool for text and markdown.",
       "author": "azu",
       "license": "MIT",
@@ -88,7 +88,7 @@ export default {
         "rules": [],
         "schema": {
           "$schema": "http://json-schema.org/draft-04/schema#",
-          "title": "textlint-rule-alex configuration",
+          "title": "textlint-rule-alex v1.0.1 configuration",
           "oneOf": [
             {
               "title": "Enable this rule with default options",
@@ -136,7 +136,7 @@ export default {
         "rules": [],
         "schema": {
           "$schema": "http://json-schema.org/draft-04/schema#",
-          "title": "textlint-rule-common-misspellings configuration",
+          "title": "textlint-rule-common-misspellings v1.0.1 configuration",
           "oneOf": [
             {
               "title": "Enable this rule with default options",
@@ -184,7 +184,7 @@ export default {
         "rules": [],
         "schema": {
           "$schema": "http://json-schema.org/draft-04/schema#",
-          "title": "textlint-rule-general-novel-style-ja configuration",
+          "title": "textlint-rule-general-novel-style-ja v1.3.0 configuration",
           "oneOf": [
             {
               "title": "Enable this rule with default options",
@@ -298,7 +298,7 @@ export default {
         "rules": [],
         "schema": {
           "$schema": "http://json-schema.org/draft-04/schema#",
-          "title": "textlint-rule-incremental-headers configuration",
+          "title": "textlint-rule-incremental-headers v0.2.0 configuration",
           "oneOf": [
             {
               "title": "Enable this rule with default options",
@@ -336,7 +336,7 @@ export default {
         "rules": [],
         "schema": {
           "$schema": "http://json-schema.org/draft-04/schema#",
-          "title": "textlint-rule-max-appearence-count-of-words configuration",
+          "title": "textlint-rule-max-appearence-count-of-words v1.0.1 configuration",
           "oneOf": [
             {
               "title": "Enable this rule with default options",
@@ -380,7 +380,7 @@ export default {
         "rules": [],
         "schema": {
           "$schema": "http://json-schema.org/draft-04/schema#",
-          "title": "textlint-rule-max-length-of-title configuration",
+          "title": "textlint-rule-max-length-of-title v1.0.1 configuration",
           "oneOf": [
             {
               "title": "Enable this rule with default options",
@@ -443,7 +443,7 @@ export default {
         "rules": [],
         "schema": {
           "$schema": "http://json-schema.org/draft-04/schema#",
-          "title": "textlint-rule-max-number-of-lines configuration",
+          "title": "textlint-rule-max-number-of-lines v1.0.2 configuration",
           "oneOf": [
             {
               "title": "Enable this rule with default options",
@@ -487,7 +487,7 @@ export default {
         "rules": [],
         "schema": {
           "$schema": "http://json-schema.org/draft-04/schema#",
-          "title": "textlint-rule-max-ten configuration",
+          "title": "textlint-rule-max-ten v2.0.1 configuration",
           "oneOf": [
             {
               "title": "Enable this rule with default options",
@@ -536,7 +536,7 @@ export default {
         "rules": [],
         "schema": {
           "$schema": "http://json-schema.org/draft-04/schema#",
-          "title": "textlint-rule-ng-word configuration",
+          "title": "textlint-rule-ng-word v1.0.0 configuration",
           "oneOf": [
             {
               "title": "Enable this rule with default options",
@@ -575,7 +575,7 @@ export default {
       {
         "name": "textlint-rule-no-double-negative-ja",
         "key": "no-double-negative-ja",
-        "version": "1.0.3",
+        "version": "1.0.4",
         "description": "二重否定をチェックするtextlint rule",
         "author": "azu",
         "license": "MIT",
@@ -584,7 +584,7 @@ export default {
         "rules": [],
         "schema": {
           "$schema": "http://json-schema.org/draft-04/schema#",
-          "title": "textlint-rule-no-double-negative-ja configuration",
+          "title": "textlint-rule-no-double-negative-ja v1.0.4 configuration",
           "oneOf": [
             {
               "title": "Enable this rule with default options",
@@ -622,7 +622,7 @@ export default {
         "rules": [],
         "schema": {
           "$schema": "http://json-schema.org/draft-04/schema#",
-          "title": "textlint-rule-doubled-conjunctive-particle-ga configuration",
+          "title": "textlint-rule-no-doubled-conjunctive-particle-ga v1.0.2 configuration",
           "oneOf": [
             {
               "title": "Enable this rule with default options",
@@ -651,7 +651,7 @@ export default {
       {
         "name": "textlint-rule-no-doubled-joshi",
         "key": "no-doubled-joshi",
-        "version": "3.2.0",
+        "version": "3.2.1",
         "description": "textlint rule check doubled joshi",
         "author": "azu",
         "license": "MIT",
@@ -660,7 +660,7 @@ export default {
         "rules": [],
         "schema": {
           "$schema": "http://json-schema.org/draft-04/schema#",
-          "title": "textlint-rule-no-doubled-joshi configuration",
+          "title": "textlint-rule-no-doubled-joshi v3.2.1 configuration",
           "oneOf": [
             {
               "title": "Enable this rule with default options",
@@ -700,7 +700,7 @@ export default {
       {
         "name": "textlint-rule-no-dropping-the-ra",
         "key": "no-dropping-the-ra",
-        "version": "1.0.1",
+        "version": "1.0.2",
         "description": "ら抜き言葉を検出するtextlint rule",
         "author": "azu",
         "license": "MIT",
@@ -709,7 +709,7 @@ export default {
         "rules": [],
         "schema": {
           "$schema": "http://json-schema.org/draft-04/schema#",
-          "title": "textlint-rule-no-dropping-the-ra configuration",
+          "title": "textlint-rule-no-dropping-the-ra v1.0.2 configuration",
           "oneOf": [
             {
               "title": "Enable this rule with default options",
@@ -738,8 +738,8 @@ export default {
       {
         "name": "textlint-rule-no-mix-dearu-desumasu",
         "key": "no-mix-dearu-desumasu",
-        "version": "1.4.0",
-        "description": "textlint rule that no mix である and ですます.",
+        "version": "2.2.1",
+        "description": "textlint rule that no mixed である and ですます.",
         "author": "azu",
         "license": "MIT",
         "homepage": "https://github.com/azu/textlint-rule-no-mix-dearu-desumasu",
@@ -747,7 +747,7 @@ export default {
         "rules": [],
         "schema": {
           "$schema": "http://json-schema.org/draft-04/schema#",
-          "title": "textlint-rule-no-mix-dearu-desumasu configuration",
+          "title": "textlint-rule-no-mix-dearu-desumasu v2.2.1 configuration",
           "oneOf": [
             {
               "title": "Enable this rule with default options",
@@ -756,6 +756,36 @@ export default {
             {
               "type": "object",
               "properties": {
+                "preferInHeader": {
+                  "title": "Preferred style in header",
+                  "type": "string",
+                  "enum": [
+                    "",
+                    "である",
+                    "ですます"
+                  ],
+                  "default": ""
+                },
+                "preferInBody": {
+                  "title": "Preferred style in body",
+                  "type": "string",
+                  "enum": [
+                    "",
+                    "である",
+                    "ですます"
+                  ],
+                  "default": ""
+                },
+                "preferInList": {
+                  "title": "Preferred style in list",
+                  "type": "string",
+                  "enum": [
+                    "",
+                    "である",
+                    "ですます"
+                  ],
+                  "default": ""
+                },
                 "severity": {
                   "title": "Severity of lint messages",
                   "type": "string",
@@ -785,7 +815,7 @@ export default {
         "rules": [],
         "schema": {
           "$schema": "http://json-schema.org/draft-04/schema#",
-          "title": "textlint-rule-no-start-duplicated-conjunction configuration",
+          "title": "textlint-rule-no-start-duplicated-conjunction v1.0.7 configuration",
           "oneOf": [
             {
               "title": "Enable this rule with default options",
@@ -820,7 +850,7 @@ export default {
       {
         "name": "textlint-rule-preset-jtf-style",
         "key": "preset-jtf-style",
-        "version": "2.1.2",
+        "version": "2.2.0",
         "description": "JTF Style Guide for Translators Working into Japanese for textlint.",
         "author": "azu",
         "license": "MIT",
@@ -830,7 +860,7 @@ export default {
           {
             "name": "textlint-rule-prh",
             "key": "prh",
-            "version": "2.4.1",
+            "version": "3.0.1",
             "description": "textlint rule for prh.",
             "author": "azu",
             "license": "MIT",
@@ -842,7 +872,7 @@ export default {
         ],
         "schema": {
           "$schema": "http://json-schema.org/draft-04/schema#",
-          "title": "textlint-rule-preset-jtf-style configuration",
+          "title": "textlint-rule-preset-jtf-style v2.2.0 configuration",
           "oneOf": [
             {
               "title": "Enable this rule with default options",
@@ -1018,7 +1048,7 @@ export default {
         "rules": [],
         "schema": {
           "$schema": "http://json-schema.org/draft-04/schema#",
-          "title": "textlint-rule-rousseau configuration",
+          "title": "textlint-rule-rousseau v1.4.1 configuration",
           "oneOf": [
             {
               "title": "Enable this rule with default options",
@@ -1096,7 +1126,7 @@ export default {
         "rules": [],
         "schema": {
           "$schema": "http://json-schema.org/draft-04/schema#",
-          "title": "textlint-rule-sentence-length configuration",
+          "title": "textlint-rule-sentence-length v1.0.4 configuration",
           "oneOf": [
             {
               "title": "Enable this rule with default options",
@@ -1140,7 +1170,7 @@ export default {
         "rules": [],
         "schema": {
           "$schema": "http://json-schema.org/draft-04/schema#",
-          "title": "textlint-rule-sjsj configuration",
+          "title": "textlint-rule-sjsj v1.0.5 configuration",
           "oneOf": [
             {
               "title": "Enable this rule with default options",
@@ -1184,7 +1214,7 @@ export default {
         "rules": [],
         "schema": {
           "$schema": "http://json-schema.org/draft-04/schema#",
-          "title": "textlint-rule-spellcheck-tech-word configuration",
+          "title": "textlint-rule-spellcheck-tech-word v5.0.0 configuration",
           "oneOf": [
             {
               "title": "Enable this rule with default options",
@@ -1222,7 +1252,7 @@ export default {
         "rules": [],
         "schema": {
           "$schema": "http://json-schema.org/draft-04/schema#",
-          "title": "textlint-rule-unexpanded-acronym configuration",
+          "title": "textlint-rule-unexpanded-acronym v1.2.1 configuration",
           "oneOf": [
             {
               "title": "Enable this rule with default options",
