@@ -241,8 +241,14 @@
   "labelCharacters": {
     "message": "文字"
   },
+  "labelDisableChecking": {
+    "message": "チェックしない"
+  },
   "labelIgnoringMisspellings": {
     "message": "チェック対象外とするスペルミス"
+  },
+  "labelMisspelling": {
+    "message": "スペルミス"
   },
   "labelMaximumApprearanceCountOfWords": {
     "message": "同じ単語を使える最大回数"
@@ -271,6 +277,9 @@
   "labelNgWords": {
     "message": "NGワード"
   },
+  "labelNgWord": {
+    "message": "NGワード"
+  },
   "labelMaximumEditDistanceFromCorrectSpelling": {
     "message": "正しいスペルからの最大編集距離（何回の編集で直せるか）"
   },
@@ -283,8 +292,14 @@
   "labelIgnoringAcronymList": {
     "message": "無視する頭文字語"
   },
+  "labelAcronym": {
+    "message": "頭文字語"
+  },
   "labelIgnoringTypeOfMessage": {
     "message": "無視するメッセージの種類"
+  },
+  "labelTypeOfMessage": {
+    "message": "メッセージの種類"
   },
   "labelCharactersAllowedToLeadAParagraph": {
     "message": "各段落の先頭に許可する文字"
@@ -328,11 +343,26 @@
   "labelMinimumIntervalOfJoshi": {
     "message": "同じ助詞を使うのに最低限必要な単語の数"
   },
+  "labelPreferredStyleInHeader": {
+    "message": "見出しで優先する表記"
+  },
+  "labelPreferredStyleInBody": {
+    "message": "本文で優先する表記"
+  },
+  "labelPreferredStyleInList": {
+    "message": "箇条書きで優先する表記"
+  },
+  "labelNotSelected": {
+    "message": "未選択"
+  },
   "labelIntervalOfSentences": {
     "message": "同じ接続詞を使うのに最低限あける文の数"
   },
   "labelLevelOfImportance": {
     "message": "表示するメッセージの重要度"
+  },
+  "labelLevel": {
+    "message": "重要度"
   },
   "labelIgnoringTypeOfCheck": {
     "message": "無視するメッセージの種類"

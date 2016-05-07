@@ -241,8 +241,14 @@
   "labelCharacters": {
     "message": "Characters"
   },
+  "labelDisableChecking": {
+    "message": "Disable checking"
+  },
   "labelIgnoringMisspellings": {
     "message": "Ignoring misspellings"
+  },
+  "labelMisspelling": {
+    "message": "Misspelling"
   },
   "labelMaximumApprearanceCountOfWords": {
     "message": "Maximum number of apprearance"
@@ -271,6 +277,9 @@
   "labelNgWords": {
     "message": "NG words"
   },
+  "labelNgWord": {
+    "message": "NG word"
+  },
   "labelMaximumEditDistanceFromCorrectSpelling": {
     "message": "Maximum edit distance from correct spelling"
   },
@@ -283,8 +292,14 @@
   "labelIgnoringAcronymList": {
     "message": "Ignoring acronym list"
   },
+  "labelAcronym": {
+    "message": "Acronym"
+  },
   "labelIgnoringTypeOfMessage": {
     "message": "Ignoring type of message"
+  },
+  "labelTypeOfMessage": {
+    "message": "Type of message"
   },
   "labelCharactersAllowedToLeadAParagraph": {
     "message": "Characters allowed to lead a paragraph"
@@ -328,11 +343,26 @@
   "labelMinimumIntervalOfJoshi": {
     "message": "Minimum interval of particles"
   },
+  "labelPreferredStyleInHeader": {
+    "message": "Preferred style in header"
+  },
+  "labelPreferredStyleInBody": {
+    "message": "Preferred style in body"
+  },
+  "labelPreferredStyleInList": {
+    "message": "Preferred style in list"
+  },
+  "labelNotSelected": {
+    "message": "Not selected"
+  },
   "labelIntervalOfSentences": {
     "message": "Interval of sentences"
   },
   "labelLevelOfImportance": {
     "message": "Level of importance"
+  },
+  "labelLevel": {
+    "message": "Level"
   },
   "labelIgnoringTypeOfCheck": {
     "message": "Ignoring type of check"

@@ -2,18 +2,20 @@
  * License: GNU GPLv3 http://www.gnu.org/licenses/gpl-3.0.html */
 
 import _ from "lodash";
-import $ from "jquery";
 import React, { PropTypes } from "react";
-import { translate } from "@io-monad/chrome-util";
 import fixSchema from "./fix-schema";
 import "./editor-multiselectize";
 import "./editor-enumconstant";
 import "./editor-checkboxed-editor";
+import "./patch-fix-allow-empty-option";
 import "./messages";
 
 JSONEditor.defaults.options.theme = "bootstrap3";
 JSONEditor.defaults.options.iconlib = "fontawesome4";
-JSONEditor.plugins.selectize.enable = true;
+_.extend(JSONEditor.plugins.selectize, {
+  enable: true,
+  allowEmptyOption: true,
+});
 
 export default class JsonEditor extends React.Component {
   static propTypes = {
@@ -25,11 +27,18 @@ export default class JsonEditor extends React.Component {
 
   componentDidMount() {
     const editor = new JSONEditor(this.refs.editor, {
-      schema: fixSchema(this.props.schema),
+      schema: fixSchema(_.clone(this.props.schema)),
       startval: this.props.defaultValue,
+      disable_array_add: true,
+      disable_array_delete: true,
+      disable_array_reorder: true,
+      disable_collapse: true,
+      disable_edit_json: true,
+      disable_properties: true,
+      no_additional_properties: true,
+      required_by_default: true,
     });
     editor.on("ready", () => {
-      this.translateLabels();
       if (this.props.onReady) this.props.onReady(editor);
     });
     editor.on("change", () => {
@@ -41,19 +50,6 @@ export default class JsonEditor extends React.Component {
     this.editor = null;
   }
 
-  translateLabels() {
-    $(this.refs.editor).find("label").contents()
-      .filter(function () {
-        // Filter to only non-empty text nodes
-        return this.nodeType === 3 && !/^\s*$/.test(this.nodeValue);
-      })
-      .each(function () {
-        const key = _.camelCase(`label-${this.nodeValue}`).replace(/[^a-zA-Z0-9]+/g, "");
-        if (/^label[A-Z][a-zA-Z0-9]+$/.test(key)) {
-          this.nodeValue = translate(key, this.nodeValue);
-        }
-      });
-  }
   validate() {
     return this.editor.validate();
   }
