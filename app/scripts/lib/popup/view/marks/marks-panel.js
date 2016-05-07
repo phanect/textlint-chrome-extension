@@ -61,15 +61,18 @@ export default class MarksPanel extends React.Component {
     return (
       <div className="marks-panel">
         <div className="marks-panel-header clearfix">
-          <FilterList counts={counts} actives={actives}
+          <FilterList
+            counts={counts} actives={actives}
             onFilterChange={this.handleFilterChange}
           />
-          <CorrectButtons marks={marks} hasUndo={hasUndo}
+          <CorrectButtons
+            marks={marks} hasUndo={hasUndo}
             onUndoClick={this.handleUndoClick}
             onCorrectClick={this.handleCorrectClick}
           />
         </div>
-        <MarkList actives={actives} marks={marks}
+        <MarkList
+          actives={actives} marks={marks}
           onMarkClick={this.handleMarkClick}
           onUndismissClick={this.handleUndismissClick}
           onDismissThisClick={this.handleDismissThisClick}

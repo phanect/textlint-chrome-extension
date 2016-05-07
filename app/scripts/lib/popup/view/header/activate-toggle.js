@@ -15,7 +15,8 @@ export default class ActivateToggle extends React.Component {
     const { active, onClickActivate, onClickDeactivate } = this.props;
     return (
       <div className="activate-toggle">
-        <IconButton icon="flash"
+        <IconButton
+          icon="flash"
           label={active ? "deactivate" : "activate"}
           onClick={active ? onClickDeactivate : onClickActivate}
           btn="primary"

@@ -20,12 +20,14 @@ export default class CorrectButtons extends React.Component {
     return (
       <div className="correct-buttons">
         {hasUndo ?
-          <IconButton label="undo" icon="undo" size="sm"
+          <IconButton
+            label="undo" icon="undo" size="sm"
             onClick={onUndoClick}
           />
         : ""}
         {_.some(marks, "correctable") ?
-          <IconButton label="correct" icon="check-circle" btn="success" size="sm"
+          <IconButton
+            label="correct" icon="check-circle" btn="success" size="sm"
             onClick={onCorrectClick}
           />
         : ""}

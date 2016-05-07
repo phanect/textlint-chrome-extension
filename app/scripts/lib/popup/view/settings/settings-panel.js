@@ -35,10 +35,12 @@ export default class SettingsPanel extends React.Component {
       <div className="settings-panel">
         <p>{translate("chooseRuleset")}</p>
         <form>
-          <RulesetList rulesets={rulesets} selected={ruleset}
+          <RulesetList
+            rulesets={rulesets} selected={ruleset}
             onRulesetSelect={this.handleRulesetSelect}
           />
-          <FormatSelect selected={format}
+          <FormatSelect
+            selected={format}
             onFormatSelect={this.handleFormatSelect}
           />
         </form>
