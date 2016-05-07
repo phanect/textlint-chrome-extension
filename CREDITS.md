@@ -15,6 +15,7 @@ The following people have contibuted their work to this project. Many thanks for
 
 Following packages are bundled in the distribution of the extension. Many thanks to the authors of the packages!
 
+<!-- AutoUpdatedBundledPackages -->
 | Package Name | Author | License |
 | ------------ | ------ | ------- |
 | [textlint](https://github.com/textlint/textlint/) | azu | MIT |
@@ -39,3 +40,4 @@ Following packages are bundled in the distribution of the extension. Many thanks
 | [textlint-rule-sjsj](https://github.com/azu/textlint-rule-sjsj) | azu | MIT |
 | [textlint-rule-spellcheck-tech-word](https://github.com/azu/textlint-rule-spellcheck-tech-word/) | azu | MIT |
 | [textlint-rule-unexpanded-acronym](https://github.com/azu/textlint-rule-unexpanded-acronym) | azu | MIT |
+<!-- AutoUpdatedBundledPackages -->
