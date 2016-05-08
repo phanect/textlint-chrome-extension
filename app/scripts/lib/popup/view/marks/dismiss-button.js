@@ -14,7 +14,8 @@ export default class DismissButton extends React.Component {
     const { onDismissThisClick, onDismissSameClick } = this.props;
     return (
       <div className="btn-group mark-dismiss">
-        <a href="#" className="mark-item-menu-item" title={translate("dismissIt")}
+        <a
+          href="#" className="mark-item-menu-item" title={translate("dismissIt")}
           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
         >
           <i className="fa fa-bell-slash"></i>

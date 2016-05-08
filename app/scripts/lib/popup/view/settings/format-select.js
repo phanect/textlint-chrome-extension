@@ -15,7 +15,8 @@ export default class FormatSelect extends React.Component {
     return (
       <div className="format-select">
         <label className="checkbox">
-          <input type="checkbox" name="format" value="md"
+          <input
+            type="checkbox" name="format" value="md"
             defaultChecked={selected === "md"}
             onChange={(e) => onFormatSelect(e.target.checked ? "md" : "txt")}
           />

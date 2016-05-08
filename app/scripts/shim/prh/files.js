@@ -1,5 +1,6 @@
 /* Copyright (C) 2016  IRIDE Monad <iride.monad@gmail.com>
  * License: GNU GPLv3 http://www.gnu.org/licenses/gpl-3.0.html */
+/* eslint-disable import/no-unresolved */
 
 export default {
   // for textlint-rule-preset-jtf-style

@@ -238,11 +238,38 @@
   "ruleUnexpandedAcronymDescription": {
     "message": "Detect acronyms unexpanded in text."
   },
+  "ruleMaxCommaDescription": {
+    "message": "Limit the number of commas in a paragraph."
+  },
+  "ruleMaxKanjiContinuousLenDescription": {
+    "message": "<i class=\"flag jp\"></i> Limit the length of continuous Kanji characters."
+  },
+  "ruleNoExclamationQuestionMarkDescription": {
+    "message": "Disallow using exclamation marks and question marks."
+  },
+  "ruleNoHankakuKanaDescription": {
+    "message": "<i class=\"flag jp\"></i> Disallow using Hankaku-Katakana characters."
+  },
+  "ruleNoNfdDescription": {
+    "message": "Disallow using Unicode <abbr title=\"Normalization Form Canonical Decomposition\">NFD</abbr> characters."
+  },
+  "ruleOneWhiteSpaceBetweenZenkakuAndHankakuEijiDescription": {
+    "message": "<i class=\"flag jp\"></i> Force to put a whitespace between a wide character and an ASCII character."
+  },
+  "ruleWriteGoodDescription": {
+    "message": "Write good English prose with <a href=\"https://github.com/btford/write-good#readme\" target=\"_blank\">write-good</a>."
+  },
   "labelCharacters": {
     "message": "Characters"
   },
+  "labelDisableChecking": {
+    "message": "Disable checking"
+  },
   "labelIgnoringMisspellings": {
     "message": "Ignoring misspellings"
+  },
+  "labelMisspelling": {
+    "message": "Misspelling"
   },
   "labelMaximumApprearanceCountOfWords": {
     "message": "Maximum number of apprearance"
@@ -271,6 +298,9 @@
   "labelNgWords": {
     "message": "NG words"
   },
+  "labelNgWord": {
+    "message": "NG word"
+  },
   "labelMaximumEditDistanceFromCorrectSpelling": {
     "message": "Maximum edit distance from correct spelling"
   },
@@ -283,8 +313,14 @@
   "labelIgnoringAcronymList": {
     "message": "Ignoring acronym list"
   },
+  "labelAcronym": {
+    "message": "Acronym"
+  },
   "labelIgnoringTypeOfMessage": {
     "message": "Ignoring type of message"
+  },
+  "labelTypeOfMessage": {
+    "message": "Type of message"
   },
   "labelCharactersAllowedToLeadAParagraph": {
     "message": "Characters allowed to lead a paragraph"
@@ -328,17 +364,74 @@
   "labelMinimumIntervalOfJoshi": {
     "message": "Minimum interval of particles"
   },
+  "labelPreferredStyleInHeader": {
+    "message": "Preferred style in header"
+  },
+  "labelPreferredStyleInBody": {
+    "message": "Preferred style in body"
+  },
+  "labelPreferredStyleInList": {
+    "message": "Preferred style in list"
+  },
+  "labelNotSelected": {
+    "message": "Not selected"
+  },
   "labelIntervalOfSentences": {
     "message": "Interval of sentences"
   },
   "labelLevelOfImportance": {
     "message": "Level of importance"
   },
+  "labelLevel": {
+    "message": "Level"
+  },
   "labelIgnoringTypeOfCheck": {
     "message": "Ignoring type of check"
   },
   "labelMaximumLengthOfASentence": {
     "message": "Maximum length of a sentence"
+  },
+  "labelMaximumNumberOfCommasAllowedInASentence": {
+    "message": "Maximum number of commas allowed in a sentence"
+  },
+  "labelMaximumLengthOfContinuousKanjiCharacters": {
+    "message": "Maximum length of continuous Kanji characters"
+  },
+  "labelAllowToUseHalfWidthExclamationMarks": {
+    "message": "Allow to use ASCII exclamation marks (!)"
+  },
+  "labelAllowToUseFullWidthExclamationMarks": {
+    "message": "Allow to use full-width exclamation marks (！)"
+  },
+  "labelAllowToUseHalfWidthQuestionMarks": {
+    "message": "Allow to use ASCII question marks (?)"
+  },
+  "labelAllowToUseFullWidthQuestionMarks": {
+    "message": "Allow to use full-width question marks (？)"
+  },
+  "labelChecksForPassiveVoice": {
+    "message": "Checks for passive voice"
+  },
+  "labelChecksForLexicalIllustionsRepeatedWord": {
+    "message": "Checks for lexical illusions (repeated word)"
+  },
+  "labelChecksForSoAtTheBeginningOfASentence": {
+    "message": "Checks for \"so\" at the beginning of a sentence"
+  },
+  "labelChecksForThereIsOrThereAreAtTheBeginningOfASentence": {
+    "message": "Checks for \"there is\" or \"there are\" at the beginning of a sentence"
+  },
+  "labelChecksForWeaselWords": {
+    "message": "Checks for \"weasel words\""
+  },
+  "labelChecksForAdverbsThatCanWeakenMeaningReallyVeryEtc": {
+    "message": "Checks for adverbs that can weaken meaning (really, very, etc.)"
+  },
+  "labelChecksForWordyPhrasesAndUnnecessaryWords": {
+    "message": "Checks for wordy phrases and unnecessary words"
+  },
+  "labelChecksForCommonCliches": {
+    "message": "Checks for common cliches"
   },
   "labelShowMarkersOfHintMessagesInTextArea": {
     "message": "Show markers of hint messages in text area"

@@ -52,7 +52,8 @@ export default class RuleItem extends React.Component {
           </div>
         </div>
         <div className="rule-item-body">
-          <div className="rule-item-description"
+          <div
+            className="rule-item-description"
             dangerouslySetInnerHTML={{
               __html: translate(`rule-${rule.key}-description`, rule.description),
             }}

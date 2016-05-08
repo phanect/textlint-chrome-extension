@@ -16,7 +16,8 @@ export default class RulesetItem extends React.Component {
     return (
       <div className="ruleset-item radio">
         <label>
-          <input className="ruleset-item-radio" type="radio" name="ruleset"
+          <input
+            className="ruleset-item-radio" type="radio" name="ruleset"
             value={name} defaultChecked={selected} onChange={onClick}
           />
           <span className="ruleset-item-name">

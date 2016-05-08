@@ -26,7 +26,8 @@ export default class RefreshMessage extends React.Component {
     const { refreshing } = this.state;
     return (
       <MessageBox text="requireRefresh" mark="refresh">
-        <IconButton label="refresh" icon="refresh" btn="primary"
+        <IconButton
+          label="refresh" icon="refresh" btn="primary"
           disabled={refreshing} onClick={this.handleRefreshClick}
         />
       </MessageBox>

@@ -11,7 +11,8 @@ export default class UndismissButton extends React.Component {
 
   render() {
     return (
-      <a href="#" className="mark-item-menu-item mark-undismiss"
+      <a
+        href="#" className="mark-item-menu-item mark-undismiss"
         title={translate("undismissIt")} onClick={this.props.onClick}
       >
         <i className="fa fa-bell"></i>

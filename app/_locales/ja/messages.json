@@ -179,7 +179,7 @@
     "message": "<i class=\"flag us\"></i> 性差、宗教、人種などによる差別的な英単語を <a href=\"http://alexjs.com/\" target=\"_blank\">Alex</a> でチェックします"
   },
   "ruleCommonMisspellingsDescription": {
-    "message": "よくある英単語のスペルミスを <a href=\"https://en.wikipedia.org/wiki/Wikipedia:Lists_of_common_misspellings\" target=\"_blank\">Wikipedia のリスト</a> を元にチェックします"
+    "message": "<i class=\"flag us\"></i> よくある英単語のスペルミスを <a href=\"https://en.wikipedia.org/wiki/Wikipedia:Lists_of_common_misspellings\" target=\"_blank\">Wikipedia のリスト</a> を元にチェックします"
   },
   "ruleGeneralNovelStyleJaDescription": {
     "message": "日本の小説における一般的な作法に従います"
@@ -238,11 +238,38 @@
   "ruleUnexpandedAcronymDescription": {
     "message": "<i class=\"flag us\"></i> 文中で展開されていない頭文字語（アクロニム）を検出します"
   },
+  "ruleMaxCommaDescription": {
+    "message": "<i class=\"flag us\"></i> 一文の中で使えるカンマ(,)の数を制限します"
+  },
+  "ruleMaxKanjiContinuousLenDescription": {
+    "message": "連続する漢字の最大文字数を制限します"
+  },
+  "ruleNoExclamationQuestionMarkDescription": {
+    "message": "感嘆符(!)および疑問符(?)の使用を禁止します"
+  },
+  "ruleNoHankakuKanaDescription": {
+    "message": "半角カタカナの使用を禁止します"
+  },
+  "ruleNoNfdDescription": {
+    "message": "Unicode の <abbr title=\"Normalization Form Canonical Decomposition\">NFD</abbr> による濁音等の使用を禁止します"
+  },
+  "ruleOneWhiteSpaceBetweenZenkakuAndHankakuEijiDescription": {
+    "message": "全角文字と半角英字の間に半角スペースを必須とします"
+  },
+  "ruleWriteGoodDescription": {
+    "message": "<i class=\"flag us\"></i> 良い英文を書くためのルールを <a href=\"https://github.com/btford/write-good#readme\" target=\"_blank\">write-good</a> でチェックします"
+  },
   "labelCharacters": {
     "message": "文字"
   },
+  "labelDisableChecking": {
+    "message": "チェックしない"
+  },
   "labelIgnoringMisspellings": {
     "message": "チェック対象外とするスペルミス"
+  },
+  "labelMisspelling": {
+    "message": "スペルミス"
   },
   "labelMaximumApprearanceCountOfWords": {
     "message": "同じ単語を使える最大回数"
@@ -271,6 +298,9 @@
   "labelNgWords": {
     "message": "NGワード"
   },
+  "labelNgWord": {
+    "message": "NGワード"
+  },
   "labelMaximumEditDistanceFromCorrectSpelling": {
     "message": "正しいスペルからの最大編集距離（何回の編集で直せるか）"
   },
@@ -283,8 +313,14 @@
   "labelIgnoringAcronymList": {
     "message": "無視する頭文字語"
   },
+  "labelAcronym": {
+    "message": "頭文字語"
+  },
   "labelIgnoringTypeOfMessage": {
     "message": "無視するメッセージの種類"
+  },
+  "labelTypeOfMessage": {
+    "message": "メッセージの種類"
   },
   "labelCharactersAllowedToLeadAParagraph": {
     "message": "各段落の先頭に許可する文字"
@@ -328,17 +364,74 @@
   "labelMinimumIntervalOfJoshi": {
     "message": "同じ助詞を使うのに最低限必要な単語の数"
   },
+  "labelPreferredStyleInHeader": {
+    "message": "見出しで優先する表記"
+  },
+  "labelPreferredStyleInBody": {
+    "message": "本文で優先する表記"
+  },
+  "labelPreferredStyleInList": {
+    "message": "箇条書きで優先する表記"
+  },
+  "labelNotSelected": {
+    "message": "未選択"
+  },
   "labelIntervalOfSentences": {
     "message": "同じ接続詞を使うのに最低限あける文の数"
   },
   "labelLevelOfImportance": {
     "message": "表示するメッセージの重要度"
   },
+  "labelLevel": {
+    "message": "重要度"
+  },
   "labelIgnoringTypeOfCheck": {
     "message": "無視するメッセージの種類"
   },
   "labelMaximumLengthOfASentence": {
     "message": "一文の最大文字数"
+  },
+  "labelMaximumNumberOfCommasAllowedInASentence": {
+    "message": "一文で使えるカンマの最大数"
+  },
+  "labelMaximumLengthOfContinuousKanjiCharacters": {
+    "message": "連続する漢字の最大文字数"
+  },
+  "labelAllowToUseHalfWidthExclamationMarks": {
+    "message": "半角文字の感嘆符 (!) を許可する"
+  },
+  "labelAllowToUseFullWidthExclamationMarks": {
+    "message": "全角文字の感嘆符 (！) を許可する"
+  },
+  "labelAllowToUseHalfWidthQuestionMarks": {
+    "message": "半角文字の疑問符 (?) を許可する"
+  },
+  "labelAllowToUseFullWidthQuestionMarks": {
+    "message": "全角文字の疑問符 (？) を許可する"
+  },
+  "labelChecksForPassiveVoice": {
+    "message": "受動態の使用をチェックする"
+  },
+  "labelChecksForLexicalIllustionsRepeatedWord": {
+    "message": "連続した同じ単語をチェックする"
+  },
+  "labelChecksForSoAtTheBeginningOfASentence": {
+    "message": "文頭での「So」をチェックする"
+  },
+  "labelChecksForThereIsOrThereAreAtTheBeginningOfASentence": {
+    "message": "文頭での「There is」「There are」をチェックする"
+  },
+  "labelChecksForWeaselWords": {
+    "message": "曖昧な表現や意味深な表現 (weasel words) をチェックする"
+  },
+  "labelChecksForAdverbsThatCanWeakenMeaningReallyVeryEtc": {
+    "message": "「really」「very」などの意味を弱めてしまう副詞をチェックする"
+  },
+  "labelChecksForWordyPhrasesAndUnnecessaryWords": {
+    "message": "冗長な表現や言い回しをチェックする"
+  },
+  "labelChecksForCommonCliches": {
+    "message": "使い古された表現をチェックする"
   },
   "labelShowMarkersOfHintMessagesInTextArea": {
     "message": "編集中のテキストにマーカーでチェック結果を表示する"

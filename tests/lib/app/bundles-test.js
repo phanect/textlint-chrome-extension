@@ -2,7 +2,7 @@
  * License: GNU GPLv3 http://www.gnu.org/licenses/gpl-3.0.html */
 
 import _ from "lodash";
-import bundles from "../../../tmp/bundle/bundles";
+import bundles from "../../../tmp/bundle/bundles"; // eslint-disable-line
 
 describe("bundles", () => {
   describe("#get()", () => {

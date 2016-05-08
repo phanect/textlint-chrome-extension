@@ -2,26 +2,27 @@
  * License: GNU GPLv3 http://www.gnu.org/licenses/gpl-3.0.html */
 
 import _ from "lodash";
+import { translate } from "@io-monad/chrome-util";
+
+function translateLabel(title) {
+  const key = _.camelCase(`label-${title}`).replace(/\W+/g, "");
+  if (/^label\w+$/.test(key)) {
+    return translate(key) || title;
+  } else {
+    return title;
+  }
+}
 
 function fixOne(schema) {
+  if (schema.title) {
+    schema.title = translateLabel(schema.title);
+  }
+  if (schema.enum && schema.type === "string" && !_.has(schema, "options.enum_titles")) {
+    const titles = _.map(schema.enum, s => s || translateLabel("NotSelected"));
+    _.set(schema, "options.enum_titles", titles);
+  }
   if (schema.type === "boolean" && !schema.format) {
     schema.format = "checkbox";
-  }
-  if (schema.type === "array") {
-    schema.options = _.extend(schema.options, {
-      "disable_array_reorder": true,
-    });
-  }
-  if (schema.type === "object") {
-    schema.options = _.extend(schema.options, {
-      "disable_edit_json": true,
-      "disable_properties": true,
-    });
-  }
-  if (schema.type === "array" || schema.type === "object") {
-    schema.options = _.extend(schema.options, {
-      "disable_collapse": true,
-    });
   }
   if ((schema.type === "integer" || schema.type === "number") && !schema.format) {
     schema.format = schema.type;
