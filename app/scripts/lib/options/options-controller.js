@@ -68,8 +68,7 @@ export default class OptionsController {
     this.appOptions.ruleOptions = ruleOptions;
     this.appOptions.visualOptions = visualOptions;
     this.appOptions.save().then(() => {
-      if (DEBUG) console.log("Saved ", this.appOptions.toObject());
-      // window.close();
+      window.close();
     });
   }
 }
