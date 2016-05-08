@@ -25,6 +25,10 @@ export default {
 
     "textlint-rule-max-appearence-count-of-words": (cb) => { require(["textlint-rule-max-appearence-count-of-words"], cb) },
 
+    "textlint-rule-max-comma": (cb) => { require(["textlint-rule-max-comma"], cb) },
+
+    "textlint-rule-max-kanji-continuous-len": (cb) => { require(["textlint-rule-max-kanji-continuous-len"], cb) },
+
     "textlint-rule-max-length-of-title": (cb) => { require(["textlint-rule-max-length-of-title"], cb) },
 
     "textlint-rule-max-number-of-lines": (cb) => { require(["textlint-rule-max-number-of-lines"], cb) },
@@ -41,9 +45,17 @@ export default {
 
     "textlint-rule-no-dropping-the-ra": (cb) => { require(["textlint-rule-no-dropping-the-ra"], cb) },
 
+    "textlint-rule-no-exclamation-question-mark": (cb) => { require(["textlint-rule-no-exclamation-question-mark"], cb) },
+
+    "textlint-rule-no-hankaku-kana": (cb) => { require(["textlint-rule-no-hankaku-kana"], cb) },
+
     "textlint-rule-no-mix-dearu-desumasu": (cb) => { require(["textlint-rule-no-mix-dearu-desumasu"], cb) },
 
+    "textlint-rule-no-nfd": (cb) => { require(["textlint-rule-no-nfd"], cb) },
+
     "textlint-rule-no-start-duplicated-conjunction": (cb) => { require(["textlint-rule-no-start-duplicated-conjunction"], cb) },
+
+    "textlint-rule-one-white-space-between-zenkaku-and-hankaku-eiji": (cb) => { require(["textlint-rule-one-white-space-between-zenkaku-and-hankaku-eiji"], cb) },
 
     "textlint-rule-preset-jtf-style": (cb) => { require(["textlint-rule-preset-jtf-style"], cb) },
 
@@ -56,6 +68,8 @@ export default {
     "textlint-rule-spellcheck-tech-word": (cb) => { require(["textlint-rule-spellcheck-tech-word"], cb) },
 
     "textlint-rule-unexpanded-acronym": (cb) => { require(["textlint-rule-unexpanded-acronym"], cb) },
+
+    "textlint-rule-write-good": (cb) => { require(["textlint-rule-write-good"], cb) },
 
   },
 
@@ -350,6 +364,94 @@ export default {
                   "type": "integer",
                   "minimum": 1,
                   "default": 4
+                },
+                "severity": {
+                  "title": "Severity of lint messages",
+                  "type": "string",
+                  "enum": [
+                    "error",
+                    "warning",
+                    "info"
+                  ],
+                  "default": "error"
+                }
+              }
+            }
+          ]
+        }
+      },
+
+    "textlint-rule-max-comma":
+      {
+        "name": "textlint-rule-max-comma",
+        "key": "max-comma",
+        "version": "1.0.2",
+        "description": "textlint rule that limit maxinum comma(,) count of sentence.",
+        "author": "azu",
+        "license": "MIT",
+        "homepage": "https://github.com/azu/textlint-rule-max-comma#readme",
+        "isPreset": false,
+        "rules": [],
+        "schema": {
+          "$schema": "http://json-schema.org/draft-04/schema#",
+          "title": "textlint-rule-max-comma v1.0.1 configuration",
+          "oneOf": [
+            {
+              "title": "Enable this rule with default options",
+              "type": "boolean"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "max": {
+                  "title": "Maximum number of commas allowed in a sentence",
+                  "type": "integer",
+                  "minimum": 1,
+                  "default": 4
+                },
+                "severity": {
+                  "title": "Severity of lint messages",
+                  "type": "string",
+                  "enum": [
+                    "error",
+                    "warning",
+                    "info"
+                  ],
+                  "default": "error"
+                }
+              }
+            }
+          ]
+        }
+      },
+
+    "textlint-rule-max-kanji-continuous-len":
+      {
+        "name": "textlint-rule-max-kanji-continuous-len",
+        "key": "max-kanji-continuous-len",
+        "version": "1.0.1",
+        "description": "textlint rule that limit max continuous length of kanji(漢字).",
+        "author": "azu",
+        "license": "MIT",
+        "homepage": "https://github.com/azu/textlint-rule-max-kanji-continuous-len",
+        "isPreset": false,
+        "rules": [],
+        "schema": {
+          "$schema": "http://json-schema.org/draft-04/schema#",
+          "title": "textlint-rule-max-kanji-continuous-len v1.0.1 configuration",
+          "oneOf": [
+            {
+              "title": "Enable this rule with default options",
+              "type": "boolean"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "max": {
+                  "title": "Maximum length of continuous Kanji characters",
+                  "type": "integer",
+                  "minimum": 1,
+                  "default": 5
                 },
                 "severity": {
                   "title": "Severity of lint messages",
@@ -734,6 +836,102 @@ export default {
         }
       },
 
+    "textlint-rule-no-exclamation-question-mark":
+      {
+        "name": "textlint-rule-no-exclamation-question-mark",
+        "key": "no-exclamation-question-mark",
+        "version": "1.0.2",
+        "description": "textlint rule that disallow exclamation and question mark.",
+        "author": "azu",
+        "license": "MIT",
+        "homepage": "https://github.com/azu/textlint-rule-no-exclamation-question-mark",
+        "isPreset": false,
+        "rules": [],
+        "schema": {
+          "$schema": "http://json-schema.org/draft-04/schema#",
+          "title": "textlint-rule-no-exclamation-question-mark v1.0.2 configuration",
+          "oneOf": [
+            {
+              "title": "Enable this rule with default options",
+              "type": "boolean"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "allowHalfWidthExclamation": {
+                  "title": "Allow to use half-width exclamation marks (!)",
+                  "type": "boolean",
+                  "default": false
+                },
+                "allowFullWidthExclamation": {
+                  "title": "Allow to use full-width exclamation marks (！)",
+                  "type": "boolean",
+                  "default": false
+                },
+                "allowHalfWidthQuestion": {
+                  "title": "Allow to use half-width question marks (?)",
+                  "type": "boolean",
+                  "default": false
+                },
+                "allowFullWidthQuestion": {
+                  "title": "Allow to use full-width question marks (？)",
+                  "type": "boolean",
+                  "default": false
+                },
+                "severity": {
+                  "title": "Severity of lint messages",
+                  "type": "string",
+                  "enum": [
+                    "error",
+                    "warning",
+                    "info"
+                  ],
+                  "default": "error"
+                }
+              }
+            }
+          ]
+        }
+      },
+
+    "textlint-rule-no-hankaku-kana":
+      {
+        "name": "textlint-rule-no-hankaku-kana",
+        "key": "no-hankaku-kana",
+        "version": "1.0.1",
+        "description": "textlint rule that disallow to use 半角カタカナ.",
+        "author": "azu",
+        "license": "MIT",
+        "homepage": "https://github.com/azu/textlint-rule-no-hankaku-kana",
+        "isPreset": false,
+        "rules": [],
+        "schema": {
+          "$schema": "http://json-schema.org/draft-04/schema#",
+          "title": "textlint-rule-no-hankaku-kana v1.0.1 configuration",
+          "oneOf": [
+            {
+              "title": "Enable this rule with default options",
+              "type": "boolean"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "severity": {
+                  "title": "Severity of lint messages",
+                  "type": "string",
+                  "enum": [
+                    "error",
+                    "warning",
+                    "info"
+                  ],
+                  "default": "error"
+                }
+              }
+            }
+          ]
+        }
+      },
+
     "textlint-rule-no-mix-dearu-desumasu":
       {
         "name": "textlint-rule-no-mix-dearu-desumasu",
@@ -802,6 +1000,44 @@ export default {
         }
       },
 
+    "textlint-rule-no-nfd":
+      {
+        "name": "textlint-rule-no-nfd",
+        "key": "no-nfd",
+        "version": "1.0.1",
+        "description": "textlint rule that disallow to use NFD like 濁点.",
+        "author": "azu",
+        "license": "MIT",
+        "homepage": "https://github.com/azu/textlint-rule-no-nfd",
+        "isPreset": false,
+        "rules": [],
+        "schema": {
+          "$schema": "http://json-schema.org/draft-04/schema#",
+          "title": "textlint-rule-no-nfd v1.0.1 configuration",
+          "oneOf": [
+            {
+              "title": "Enable this rule with default options",
+              "type": "boolean"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "severity": {
+                  "title": "Severity of lint messages",
+                  "type": "string",
+                  "enum": [
+                    "error",
+                    "warning",
+                    "info"
+                  ],
+                  "default": "error"
+                }
+              }
+            }
+          ]
+        }
+      },
+
     "textlint-rule-no-start-duplicated-conjunction":
       {
         "name": "textlint-rule-no-start-duplicated-conjunction",
@@ -830,6 +1066,44 @@ export default {
                   "minimum": 1,
                   "default": 2
                 },
+                "severity": {
+                  "title": "Severity of lint messages",
+                  "type": "string",
+                  "enum": [
+                    "error",
+                    "warning",
+                    "info"
+                  ],
+                  "default": "error"
+                }
+              }
+            }
+          ]
+        }
+      },
+
+    "textlint-rule-one-white-space-between-zenkaku-and-hankaku-eiji":
+      {
+        "name": "textlint-rule-one-white-space-between-zenkaku-and-hankaku-eiji",
+        "key": "one-white-space-between-zenkaku-and-hankaku-eiji",
+        "version": "1.0.0",
+        "description": "textlint rule that need one white space between Zenkaku and Hankaku Eiji",
+        "author": "Z Lab",
+        "license": "MIT",
+        "homepage": "https://github.com/zlabjp/textlint-rule-one-white-space-between-zenkaku-and-hankaku-eiji#readme",
+        "isPreset": false,
+        "rules": [],
+        "schema": {
+          "$schema": "http://json-schema.org/draft-04/schema#",
+          "title": "textlint-rule-one-white-space-between-zenkaku-and-hankaku-eiji v1.0.0 configuration",
+          "oneOf": [
+            {
+              "title": "Enable this rule with default options",
+              "type": "boolean"
+            },
+            {
+              "type": "object",
+              "properties": {
                 "severity": {
                   "title": "Severity of lint messages",
                   "type": "string",
@@ -1282,6 +1556,84 @@ export default {
                     "minLength": 1
                   },
                   "uniqueItems": true
+                },
+                "severity": {
+                  "title": "Severity of lint messages",
+                  "type": "string",
+                  "enum": [
+                    "error",
+                    "warning",
+                    "info"
+                  ],
+                  "default": "error"
+                }
+              }
+            }
+          ]
+        }
+      },
+
+    "textlint-rule-write-good":
+      {
+        "name": "textlint-rule-write-good",
+        "key": "write-good",
+        "version": "0.1.4",
+        "description": "textlint rule to check your English style with write good",
+        "author": "nodaguti",
+        "license": "MIT",
+        "homepage": "https://github.com/nodaguti/textlint-rule-write-good",
+        "isPreset": false,
+        "rules": [],
+        "schema": {
+          "$schema": "http://json-schema.org/draft-04/schema#",
+          "title": "textlint-rule-write-good v0.1.4 configuration",
+          "oneOf": [
+            {
+              "title": "Enable this rule with default options",
+              "type": "boolean"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "passive": {
+                  "title": "Checks for passive voice",
+                  "type": "boolean",
+                  "default": true
+                },
+                "illusion": {
+                  "title": "Checks for lexical illusions (repeated word)",
+                  "type": "boolean",
+                  "default": true
+                },
+                "so": {
+                  "title": "Checks for \"so\" at the beginning of a sentence",
+                  "type": "boolean",
+                  "default": true
+                },
+                "thereIs": {
+                  "title": "Checks for \"there is\" or \"there are\" at the beginning of a sentence",
+                  "type": "boolean",
+                  "default": true
+                },
+                "weasel": {
+                  "title": "Checks for \"weasel words\"",
+                  "type": "boolean",
+                  "default": true
+                },
+                "adverb": {
+                  "title": "Checks for adverbs that can weaken meaning (really, very, etc.)",
+                  "type": "boolean",
+                  "default": true
+                },
+                "tooWordy": {
+                  "title": "Checks for wordy phrases and unnecessary words",
+                  "type": "boolean",
+                  "default": true
+                },
+                "cliches": {
+                  "title": "Checks for common cliches",
+                  "type": "boolean",
+                  "default": true
                 },
                 "severity": {
                   "title": "Severity of lint messages",
