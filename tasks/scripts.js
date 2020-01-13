@@ -18,6 +18,7 @@ const scriptsDir = `${rootDir}/app/scripts`;
 
 function getWebpackConfig(testing) {
   return {
+    mode: testing ? "development" : "production",
     output: testing ? { filename: "tests.js" } : {
       filename: "[name].js",
       publicPath: "/scripts/",
