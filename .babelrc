@@ -2,7 +2,6 @@
   "presets": [
     "@babel/preset-env",
     "react",
-    "react-optimize"
   ],
   "plugins": [
     "transform-runtime",
