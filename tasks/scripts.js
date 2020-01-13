@@ -23,7 +23,7 @@ function getWebpackConfig(testing) {
       publicPath: "/scripts/",
     },
     devtool: (testing && args.watch) || (!testing && args.sourcemaps) ?
-      "inline-source-map" : null,
+      "inline-source-map" : false,
     watch: args.watch,
     plugins: [
       new webpack.IgnorePlugin(
@@ -44,10 +44,11 @@ function getWebpackConfig(testing) {
       new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false } }),
     ] : []),
     module: {
-      preLoaders: [
+      rules: [
         {
           test: /node_modules\/kuromoji\/dist\/node\/TokenizerBuilder\.js/,
-          loader: "string-replace",
+          enforce: "pre",
+          loader: "string-replace-loader",
           query: {
             search: "./loader/NodeDictionaryLoader.js",
             replace: `${scriptsDir}/shim/kuromoji/ChromeDictionaryLoader.js`,
@@ -55,7 +56,8 @@ function getWebpackConfig(testing) {
         },
         {
           test: /node_modules\/kuromojin\/lib\/kuromojin\.js/,
-          loader: "string-replace",
+          enforce: "pre",
+          loader: "string-replace-loader",
           query: {
             search: "require.resolve(\"kuromoji\")",
             replace: "\"\"",
@@ -63,7 +65,8 @@ function getWebpackConfig(testing) {
         },
         {
           test: /node_modules\/sorted-array\/sorted-array\.js/,
-          loader: "string-replace",
+          enforce: "pre",
+          loader: "string-replace-loader",
           query: {
             search: "define(SortedArray);",
             replace: "void(0);",
@@ -71,30 +74,29 @@ function getWebpackConfig(testing) {
         },
         {
           test: /node_modules\/prh\/lib\/index\.js/,
-          loader: "string-replace",
+          enforce: "pre",
+          loader: "string-replace-loader",
           query: {
             search: "fs.readFileSync",
             replace: `require("${scriptsDir}/shim/prh/fs-mock").readFileSync`,
           },
         },
-      ],
-      loaders: [
         {
           test: /\.js$/,
           exclude: /node_modules/,
-          loader: "babel",
+          loader: "babel-loader",
         },
         {
           test: /node_modules\/regx\/src\/regx\.js$/,
-          loader: "babel",
+          loader: "babel-loader",
         },
         {
           test: /interop-require|try-resolve|require-like|textlint-formatter/,
-          loader: "null",
+          loader: "null-loader",
         },
         {
           test: /\.json$/,
-          loader: "json",
+          loader: "json-loader",
         },
       ],
     },
