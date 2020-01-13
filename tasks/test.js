@@ -1,17 +1,18 @@
-import gulp from "gulp";
+import { series } from "gulp";
 import gutil from "gulp-util";
-import gulpSequence from "gulp-sequence";
 import karma from "karma";
 import through from "through2";
 import del from "del";
 import args from "./lib/args";
+import { bundleTest } from "./bundle.js";
+import { lint } from "./lint.js";
 import { buildForTest } from "./scripts";
 
-gulp.task("test:clean", () => {
+const testClean = () => {
   return del("tmp/scripts");
-});
+};
 
-gulp.task("test:run", (taskDone) => {
+const testRun = (taskDone) => {
   let server;
   buildForTest()
     .pipe(through.obj(function (file, enc, done) {
@@ -49,11 +50,11 @@ gulp.task("test:run", (taskDone) => {
       if (taskDone) taskDone(e);
       taskDone = null;
     });
-});
+};
 
-gulp.task("test", gulpSequence(
-  "test:clean",
-  "lint",
-  "bundle:test",
-  "test:run"
-));
+export const test = series(
+  testClean,
+  lint,
+  bundleTest,
+  testRun,
+);

@@ -1,6 +1,6 @@
 import path from "path";
 import _ from "lodash";
-import gulp from "gulp";
+import gulp, { series } from "gulp";
 import gulpif from "gulp-if";
 import webpack from "webpack";
 import gulpWebpack from "webpack-stream";
@@ -11,6 +11,7 @@ import plumber from "gulp-plumber";
 import notify from "gulp-notify";
 import named from "vinyl-named";
 import args from "./lib/args";
+import { bundle, bundleTest } from "./bundle.js";
 
 const rootDir = path.join(__dirname, "..");
 const scriptsDir = `${rootDir}/app/scripts`;
@@ -127,7 +128,7 @@ function getWebpackConfig(testing) {
   };
 }
 
-gulp.task("scripts", ["bundle"], () => {
+export const scripts = series(bundle, () => {
   return gulp.src(["app/scripts/*.js"])
     .pipe(plumber({
       errorHandler: notify.onError("Error: <%= error.message %>"),
@@ -153,6 +154,6 @@ export function buildForTest() {
   }
 }
 
-gulp.task("scripts:test", ["bundle:test"], () => {
+export const scriptsTest = series(bundleTest, () => {
   return buildForTest();
 });

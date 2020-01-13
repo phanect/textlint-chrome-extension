@@ -1,20 +1,20 @@
-import gulp from "gulp";
+import gulp, { series } from "gulp";
 import gulpif from "gulp-if";
 import livereload from "gulp-livereload";
 import args from "./lib/args";
 
-gulp.task("fonts:app", () => {
+const fontsApp = () => {
   return gulp.src("app/fonts/**/*.{woff,ttf,eot,svg}")
     .pipe(gulp.dest(`dist/${args.vendor}/fonts`))
     .pipe(gulpif(args.watch, livereload()));
-});
+};
 
-gulp.task("fonts:fontawesome", () => {
+const fontsFontAwesome = () => {
   return gulp.src("bower_components/font-awesome/fonts/*.{woff,woff2,eot,svg,ttf}")
     .pipe(gulp.dest(`dist/${args.vendor}/fonts/font-awesome`));
-});
+};
 
-gulp.task("fonts", [
-  "fonts:app",
-  "fonts:fontawesome",
-]);
+export const fonts = series(
+  fontsApp,
+  fontsFontAwesome,
+);

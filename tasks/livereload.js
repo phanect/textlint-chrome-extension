@@ -1,9 +1,9 @@
 import gulp from "gulp";
 import gutil from "gulp-util";
-import livereload from "gulp-livereload";
+import glivereload from "gulp-livereload";
 import args from "./lib/args";
 
-gulp.task("livereload", (cb) => {
+export const livereload = (cb) => {
   // This task runs only if the
   // watch argument is present!
   if (!args.watch) {
@@ -12,7 +12,7 @@ gulp.task("livereload", (cb) => {
   }
 
   // Start livereload server
-  livereload.listen({
+  glivereload.listen({
     reloadPage: "Extension",
     quiet: !args.verbose,
   });
@@ -27,4 +27,4 @@ gulp.task("livereload", (cb) => {
   gulp.watch("app/pages/**/*.html", ["pages"]);
   gulp.watch("app/_locales/**/*", ["locales"]);
   gulp.watch("app/images/**/*", ["images"]);
-});
+};

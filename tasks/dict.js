@@ -14,11 +14,11 @@ function addBase(base) {
   });
 }
 
-gulp.task("dict", () => {
+export const dict = () => {
   const dictDir = "node_modules/kuromoji/dist/dict";
   return gulp.src(`${dictDir}/**/*.dat.gz`)
     .pipe(gunzip())
     .pipe(addBase(dictDir))
     .pipe(gulp.dest(`dist/${args.vendor}/dict`))
     .pipe(gulpif(args.watch, livereload()));
-});
+};

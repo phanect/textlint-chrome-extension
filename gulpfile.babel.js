@@ -1,5 +1,19 @@
-import requireDir from "require-dir";
-
-// Check out the tasks directory
-// if you want to modify tasks!
-requireDir("./tasks");
+export { bower } from "./tasks/bower.js";
+export { build } from "./tasks/build.js";
+export { bundle } from "./tasks/bundle.js";
+export { clean } from "./tasks/clean.js";
+export { default } from "./tasks/default.js";
+export { dict } from "./tasks/dict.js";
+export { fonts } from "./tasks/fonts.js";
+export { images } from "./tasks/images.js";
+export { license } from "./tasks/license.js";
+export { lint } from "./tasks/lint.js";
+export { livereload } from "./tasks/livereload.js";
+export { locales } from "./tasks/locales.js";
+export { manifest } from "./tasks/manifest.js";
+export { pages } from "./tasks/pages.js";
+export { release } from "./tasks/release.js";
+export { scripts } from "./tasks/scripts.js";
+export { styles } from "./tasks/styles.js";
+export { test } from "./tasks/test.js";
+export { vendor } from "./tasks/vendor.js";

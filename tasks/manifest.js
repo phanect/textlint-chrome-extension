@@ -7,7 +7,7 @@ import args from "./lib/args";
 import applyBrowserPrefixesFor from "./lib/applyBrowserPrefixesFor";
 import expandGlobsFor from "./lib/expandGlobsFor";
 
-gulp.task("manifest", () => {
+export const manifest = () => {
   const cwd = path.join(process.cwd(), `dist/${args.vendor}`);
 
   return gulp.src("app/manifest.json")
@@ -23,4 +23,4 @@ gulp.task("manifest", () => {
     )
     .pipe(gulp.dest(`dist/${args.vendor}`))
     .pipe(gulpif(args.watch, livereload()));
-});
+};

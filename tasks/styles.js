@@ -1,4 +1,4 @@
-import gulp from "gulp";
+import gulp, { series } from "gulp";
 import gulpif from "gulp-if";
 import gutil from "gulp-util";
 import sourcemaps from "gulp-sourcemaps";
@@ -8,15 +8,15 @@ import livereload from "gulp-livereload";
 import replace from "gulp-replace";
 import args from "./lib/args";
 
-gulp.task("styles:css", () => {
+const stylesCss = () => {
   return gulp.src("app/styles/*.css")
     .pipe(replace(/__VENDOR__/g, args.vendor))
     .pipe(gulpif(args.production, minifyCSS()))
     .pipe(gulp.dest(`dist/${args.vendor}/styles`))
     .pipe(gulpif(args.watch, livereload()));
-});
+};
 
-gulp.task("styles:less", () => {
+const stylesLess = () => {
   return gulp.src("app/styles/*.less")
     .pipe(gulpif(args.sourcemaps, sourcemaps.init()))
     .pipe(replace(/__VENDOR__/g, args.vendor))
@@ -28,9 +28,9 @@ gulp.task("styles:less", () => {
     .pipe(gulpif(args.sourcemaps, sourcemaps.write(".")))
     .pipe(gulp.dest(`dist/${args.vendor}/styles`))
     .pipe(gulpif(args.watch, livereload()));
-});
+};
 
-gulp.task("styles", [
-  "styles:css",
-  "styles:less",
-]);
+export const styles = series(
+  stylesCss,
+  stylesLess,
+);

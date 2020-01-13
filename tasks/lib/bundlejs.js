@@ -84,17 +84,18 @@ function getBundleJS(options = {}) {
 
 export default function bundlejs(fileName, options = {}) {
   const stream = through.obj();
-  getBundleJS(options).then((content) => {
+  return getBundleJS(options).then((content) => {
     stream.push(new gutil.File({
       path: fileName,
       contents: new Buffer(content),
     }));
     stream.push(null); // EOF
+    return Promise.resolve(stream)
   }).catch((err) => {
     gutil.log(gutil.colors.red(
       `Error while building ${fileName}:`, (err.message || err)
     ));
     stream.emit("error", err);
+    return Promise.resolve(stream);
   });
-  return stream;
 }
