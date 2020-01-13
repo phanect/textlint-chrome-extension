@@ -94,10 +94,6 @@ function getWebpackConfig(testing) {
           test: /interop-require|try-resolve|require-like|textlint-formatter/,
           loader: "null-loader",
         },
-        {
-          test: /\.json$/,
-          loader: "json-loader",
-        },
       ],
     },
     node: {
