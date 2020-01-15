@@ -23,13 +23,10 @@ function getWebpackConfig(testing) {
       filename: "[name].js",
       publicPath: "/scripts/",
     },
-    devtool: (testing && args.watch) || (!testing && args.sourcemaps) ?
-      "inline-source-map" : false,
+    devtool: (testing && args.watch) || (!testing && args.sourcemaps) ? "inline-source-map" : false,
     watch: args.watch,
     plugins: [
-      new webpack.IgnorePlugin(
-        /package\.json$|\.md$|\.d\.ts$/
-      ),
+      new webpack.IgnorePlugin(/package\.json$|\.md$|\.d\.ts$/),
       new webpack.DefinePlugin({
         "__ENV__": JSON.stringify(args.production ? "production" : "development"),
         "__VENDOR__": JSON.stringify(args.vendor),

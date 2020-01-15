@@ -13,13 +13,13 @@ export const manifest = () => {
   return gulp.src("app/manifest.json")
     .pipe(
       jsonTransform(
-        applyBrowserPrefixesFor(args.vendor)
-      )
+        applyBrowserPrefixesFor(args.vendor),
+      ),
     )
     .pipe(
       jsonTransform(
-        expandGlobsFor(["web_accessible_resources"], cwd)
-      )
+        expandGlobsFor(["web_accessible_resources"], cwd),
+      ),
     )
     .pipe(gulp.dest(`dist/${args.vendor}`))
     .pipe(gulpif(args.watch, livereload()));

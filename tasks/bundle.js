@@ -26,7 +26,7 @@ const bundleCredits = series(bundleJavaScripts, (done) => {
     buffer += "| ------------ | ------ | ------- |\n";
 
     const rules = _.sortBy(_.values(bundles.bundles), "name");
-    [bundles.textlint].concat(rules).forEach(pkg => {
+    [bundles.textlint].concat(rules).forEach((pkg) => {
       buffer += `| [${pkg.name}](${pkg.homepage}) | ${pkg.author} | ${pkg.license} |\n`;
     });
 

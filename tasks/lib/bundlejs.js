@@ -24,8 +24,7 @@ function getPackageInfo(packageName) {
     license: info.license,
     homepage: info.homepage,
     isPreset,
-    rules: isPreset ?
-      buildRulesFromPackageNames(_.keys(info.dependencies))  // eslint-disable-line
+    rules: isPreset ? buildRulesFromPackageNames(_.keys(info.dependencies))  // eslint-disable-line
       : [],
     schema: /* Place holder for textlint-registry */ null,
   };
@@ -49,7 +48,7 @@ function getBundledRuleNames() {
 
 function getBundledRules() {
   const rules = buildRulesFromPackageNames(getBundledRuleNames());
-  const promises = _.map(rules, rule => textlintRegistry.getSchema(rule.name));
+  const promises = _.map(rules, (rule) => textlintRegistry.getSchema(rule.name));
 
   return Promise.all(promises).then((schemas) => {
     _.each(schemas, (schema, index) => { rules[index].schema = schema; });
@@ -70,7 +69,7 @@ function getBundles() {
 }
 
 function getBundleJS(options = {}) {
-  const empty = options.empty;
+  const { empty } = options;
   if (empty) {
     return getBundledTextlint().then((textlintInfo) => {
       return renderTemplate({ textlintInfo, rules: [] });

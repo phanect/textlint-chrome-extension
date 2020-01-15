@@ -9,7 +9,7 @@ import { build } from "./build";
 
 function getZipFilename() {
   const name = packageJson.name.replace(/^@[\w-]+\//, "");
-  const version = packageJson.version;
+  const { version } = packageJson;
   const extname = args.vendor === "moz" ? ".xpi" : ".zip";
   return `${name}-${version}-${args.vendor}${extname}`;
 }
@@ -42,9 +42,9 @@ const releaseUpload = (done) => {
     done();
     return;
   }
-  if (!process.env.WEBSTORE_CLIENT_ID ||
-      !process.env.WEBSTORE_CLIENT_SECRET ||
-      !process.env.WEBSTORE_REFRESH_TOKEN) {
+  if (!process.env.WEBSTORE_CLIENT_ID
+    || !process.env.WEBSTORE_CLIENT_SECRET
+    || !process.env.WEBSTORE_REFRESH_TOKEN) {
     throw new Error("Credential for Chrome Web Store is not set");
   }
 
@@ -55,12 +55,10 @@ const releaseUpload = (done) => {
     refreshToken: process.env.WEBSTORE_REFRESH_TOKEN,
     id: packageJson.chromeExtensionId,
     zip: fs.readFileSync(filename),
-  })
-  .then(() => {
+  }).then(() => {
     log(`Uploaded ${colors.magenta(filename)} to Chrome Web Store`);
     done();
-  })
-  .catch(done);
+  }).catch(done);
 };
 
 export const release = series(
