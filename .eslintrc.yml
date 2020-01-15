@@ -31,3 +31,8 @@ rules:
     - error
     - double
   import/order: 2
+  import/no-extraneous-dependencies:
+    - error
+    - devDependencies:
+      - "tasks/**/*.js"
+      - "tests/**/*.js"
