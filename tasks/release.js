@@ -5,7 +5,7 @@ import zip from "gulp-zip";
 import deploy from "chrome-extension-deploy";
 import packageJson from "../package.json";
 import args from "./lib/args";
-import { build } from "./build.js";
+import { build } from "./build";
 
 function getZipFilename() {
   const name = packageJson.name.replace(/^@[\w-]+\//, "");

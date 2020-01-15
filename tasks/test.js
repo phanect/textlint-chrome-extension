@@ -4,8 +4,8 @@ import karma from "karma";
 import through from "through2";
 import del from "del";
 import args from "./lib/args";
-import { bundleTest } from "./bundle.js";
-import { lint } from "./lint.js";
+import { bundleTest } from "./bundle";
+import { lint } from "./lint";
 import { buildForTest } from "./scripts";
 
 const testClean = () => {

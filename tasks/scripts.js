@@ -11,7 +11,7 @@ import plumber from "gulp-plumber";
 import notify from "gulp-notify";
 import named from "vinyl-named";
 import args from "./lib/args";
-import { bundle, bundleTest } from "./bundle.js";
+import { bundle, bundleTest } from "./bundle";
 
 const rootDir = path.join(__dirname, "..");
 const scriptsDir = `${rootDir}/app/scripts`;

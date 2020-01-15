@@ -1,18 +1,18 @@
 import { series, parallel } from "gulp";
 
-import { bower } from "./bower.js";
-import { clean } from "./clean.js";
-import { dict } from "./dict.js";
-import { fonts } from "./fonts.js";
-import { images } from "./images.js";
-import { license } from "./license.js";
-import { livereload } from "./livereload.js";
-import { locales } from "./locales.js";
-import { manifest } from "./manifest.js";
-import { pages } from "./pages.js";
-import { scripts } from "./scripts.js";
-import { styles } from "./styles.js";
-import { vendor } from "./vendor.js";
+import { bower } from "./bower";
+import { clean } from "./clean";
+import { dict } from "./dict";
+import { fonts } from "./fonts";
+import { images } from "./images";
+import { license } from "./license";
+import { livereload } from "./livereload";
+import { locales } from "./locales";
+import { manifest } from "./manifest";
+import { pages } from "./pages";
+import { scripts } from "./scripts";
+import { styles } from "./styles";
+import { vendor } from "./vendor";
 
 export const build = series(
   clean,
@@ -31,5 +31,5 @@ export const build = series(
     vendor,
     bower,
     livereload,
-  )
+  ),
 );
