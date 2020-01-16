@@ -89,10 +89,10 @@ export default function bundlejs(fileName, options = {}) {
       contents: new Buffer(content),
     }));
     stream.push(null); // EOF
-    return Promise.resolve(stream)
+    return Promise.resolve(stream);
   }).catch((err) => {
     gutil.log(gutil.colors.red(
-      `Error while building ${fileName}:`, (err.message || err)
+      `Error while building ${fileName}:`, (err.message || err),
     ));
     stream.emit("error", err);
     return Promise.resolve(stream);

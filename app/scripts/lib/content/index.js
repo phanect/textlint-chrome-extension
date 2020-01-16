@@ -12,7 +12,7 @@ export default function () {
     } else {
       return messages.getOptions().then((options) => {
         // Delay load to avoid initial impact
-        const TextareaLinter = require("./textarea-linter").TextareaLinter;
+        const { TextareaLinter } = require("./textarea-linter");
         textareaLinter = new TextareaLinter({
           lintText: (lintId, text) => { messages.lintText(lintId, text); },
           correctText: (correctId, text) => { messages.correctText(correctId, text); },
@@ -35,7 +35,12 @@ export default function () {
   messages.onGetStatus((msg, sender, sendResponse) => {
     const active = textareaLinter ? textareaLinter.active : false;
     const marks = textareaLinter ? textareaLinter.getCurrentLintMarks() : [];
-    const counts = { info: 0, warning: 0, error: 0, dismissed: 0 };
+    const counts = {
+      info: 0,
+      warning: 0,
+      error: 0,
+      dismissed: 0,
+    };
     marks.forEach((mark) => { counts[mark.dismissed ? "dismissed" : mark.severity]++; });
     const undoCount = textareaLinter ? textareaLinter.getCurrentUndoCount() : 0;
     sendResponse({ active, marks, counts, undoCount });

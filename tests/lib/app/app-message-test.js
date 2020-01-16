@@ -86,14 +86,14 @@ describe("appMessage", () => {
         return promised;
       }
 
-      it("rejects a promise with error message", (done) => {
+      it("rejects a promise with error message", done => {
         sendError().catch(passed => {
           assert(passed === error.message);
           done();
         });
       });
 
-      it("calls error handler when error occurred", (done) => {
+      it("calls error handler when error occurred", done => {
         sendError().catch(() => {
           assert(handler.calledOnce);
           done();
@@ -167,14 +167,14 @@ describe("appMessage", () => {
         return promise;
       }
 
-      it("rejects a promise with error message", (done) => {
-        sendError().catch((passed) => {
+      it("rejects a promise with error message", done => {
+        sendError().catch(passed => {
           assert(passed === error.message);
           done();
         });
       });
 
-      it("calls error handler when error occurred", (done) => {
+      it("calls error handler when error occurred", done => {
         sendError().catch(() => {
           assert(handler.calledOnce);
           done();

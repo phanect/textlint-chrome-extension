@@ -22,12 +22,15 @@ export default class LinterStatus {
   get active() {
     return this.serverActive || this.clientActive;
   }
+
   get linting() {
     return this.lintingCount > 0;
   }
+
   get correcting() {
     return this.correctingCount > 0;
   }
+
   get waiting() {
     return this.linting || this.correcting;
   }

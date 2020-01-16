@@ -70,69 +70,88 @@ export default class AppOptions {
     this.options = _.defaultsDeep(options, DEFAULT_OPTIONS);
   }
 
+
   get(keys) {
     return _.isArray(keys) ? _.pick(this.options, keys) : this.options[keys];
   }
+
   set(options) {
     this.options = _.defaultsDeep(options, this.options);
   }
+
   overwrite(options) {
     this.options = _.defaultsDeep(options, DEFAULT_OPTIONS);
   }
+
   valueOf() {
     return this.options;
   }
+
   toObject() {
     return this.options;
   }
+
 
   get contentOptions() {
     return _.pick(this.options, CONTENT_OPTIONS);
   }
 
+
   get visualOptionsSchema() {
     return VISUAL_OPTIONS_SCHEMA;
   }
+
   get visualOptions() {
     return _.pick(this.options, VISUAL_OPTIONS);
   }
+
   set visualOptions(v) {
     v = _.pick(v || {}, VISUAL_OPTIONS);
     _.extend(this.options, v);
   }
 
+
   get showMarks() {
     return this.options.showMarks;
   }
+
   set showMarks(v) {
     this.options.showMarks = v;
   }
+
   get showBorder() {
     return this.options.showBorder;
   }
+
   set showBorder(v) {
     this.options.showBorder = v;
   }
+
   get badgeCountSeverity() {
     const val = this.options.badgeCountSeverity;
     if (val === "none") return [];
     return _.isString(val) ? val.split(",") : _.castArray(val);
   }
+
   set badgeCountSeverity(v) {
     if (_.isArray(v) && v.length === 0) v = "none";
     this.options.badgeCountSeverity = _.isArray(v) ? v.join(",") : v;
   }
 
+
   getRuleOption(ruleName) {
     ruleName = ruleName.replace(/^textlint-rule-/, "");
     return this.ruleOptions[ruleName];
   }
+
   get ruleOptions() {
     return this.options.ruleOptions;
   }
+
   set ruleOptions(v) {
     this.options.ruleOptions = v;
   }
+
 
   load() {
     return appStorage.getOptions().then((options) => {
@@ -140,6 +159,7 @@ export default class AppOptions {
       return this;
     });
   }
+
   save() {
     return appStorage.setOptions(this.toObject());
   }

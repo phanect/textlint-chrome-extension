@@ -65,7 +65,7 @@ describe("linters", () => {
       linters.activate(tabId, ruleset.name, format);
     }
 
-    it("sends activate message to sandbox", (done) => {
+    it("sends activate message to sandbox", done => {
       callActivate((sendingTabId, sendingRules, sendingRuleOptions, sendingFormat) => {
         assert(sendingTabId === tabId);
         assert.deepEqual(sendingRules, ruleset.rules);
@@ -75,7 +75,7 @@ describe("linters", () => {
       });
     });
 
-    it("sets ruleset name and format to linter status", (done) => {
+    it("sets ruleset name and format to linter status", done => {
       callActivate(() => {
         assert.deepEqual(linters.getStatus(tabId).ruleset, ruleset);
         assert(linters.getStatus(tabId).format === format);
@@ -85,8 +85,8 @@ describe("linters", () => {
   });
 
   describe("#onReturnActivate()", () => {
-    it("sends activate message to content script", (done) => {
-      sinonsb.stub(backgroundMessages, "activateLinter", (givenTabId) => {
+    it("sends activate message to content script", done => {
+      sinonsb.stub(backgroundMessages, "activateLinter", givenTabId => {
         assert(givenTabId === tabId);
         done();
       });
@@ -100,8 +100,8 @@ describe("linters", () => {
       linters.deactivate(tabId);
     }
 
-    it("sends deactivate message to sandbox", (done) => {
-      callDeactivate((sendingTabId) => {
+    it("sends deactivate message to sandbox", done => {
+      callDeactivate(sendingTabId => {
         assert(sendingTabId === tabId);
         done();
       });
@@ -109,8 +109,8 @@ describe("linters", () => {
   });
 
   describe("#onReturnDeactivate()", () => {
-    it("sends deactivate message to content script", (done) => {
-      sinonsb.stub(backgroundMessages, "deactivateLinter", (givenTabId) => {
+    it("sends deactivate message to content script", done => {
+      sinonsb.stub(backgroundMessages, "deactivateLinter", givenTabId => {
         assert(givenTabId === tabId);
         done();
       });
@@ -119,7 +119,7 @@ describe("linters", () => {
   });
 
   describe("#reload()", () => {
-    it("re-activates linter with the same ruleset and format", (done) => {
+    it("re-activates linter with the same ruleset and format", done => {
       sinonsb.stub(textlintRulesets, "getRulesetOrDefault", () => {
         return Promise.resolve(ruleset);
       });
@@ -144,7 +144,7 @@ describe("linters", () => {
       linters.lintText(tabId, lintId, text);
     }
 
-    it("sends lintText message to sandbox", (done) => {
+    it("sends lintText message to sandbox", done => {
       callLintText((sendingTabId, sendingLintId, sendingText) => {
         assert(sendingTabId === tabId);
         assert(sendingLintId === lintId);
@@ -158,18 +158,22 @@ describe("linters", () => {
     const lintId = "lint1";
     const lintResult = { foo: "bar" };
 
-    it("sends lint result to content script", (done) => {
-      sinonsb.stub(backgroundMessages, "sendLintResult",
+    it("sends lint result to content script", done => {
+      sinonsb.stub(
+        backgroundMessages,
+        "sendLintResult",
         (aTabId, aLintId, aResult) => {
           assert(aTabId === tabId);
           assert(aLintId === lintId);
           assert.deepEqual(aResult, lintResult);
           done();
-        }
+        },
       );
       window.postMessage({
         type: sandboxMessage.RETURN_LINT_TEXT,
-        tabId, lintId, lintResult,
+        tabId,
+        lintId,
+        lintResult,
       }, "*");
     });
   });
@@ -183,7 +187,7 @@ describe("linters", () => {
       linters.correctText(tabId, correctId, text);
     }
 
-    it("sends correctText message to sandbox", (done) => {
+    it("sends correctText message to sandbox", done => {
       callCorrectText((sendingTabId, sendingCorrectId, sendingText) => {
         assert(sendingTabId === tabId);
         assert(sendingCorrectId === correctId);
@@ -197,18 +201,22 @@ describe("linters", () => {
     const correctId = "correct1";
     const correctResult = { foo: "bar" };
 
-    it("sends correct result to content script", (done) => {
-      sinonsb.stub(backgroundMessages, "sendCorrectResult",
+    it("sends correct result to content script", done => {
+      sinonsb.stub(
+        backgroundMessages,
+        "sendCorrectResult",
         (aTabId, aCorrectId, aResult) => {
           assert(aTabId === tabId);
           assert(aCorrectId === correctId);
           assert.deepEqual(aResult, correctResult);
           done();
-        }
+        },
       );
       window.postMessage({
         type: sandboxMessage.RETURN_CORRECT_TEXT,
-        tabId, correctId, correctResult,
+        tabId,
+        correctId,
+        correctResult,
       }, "*");
     });
   });

@@ -52,7 +52,7 @@ class TextareaLinterTooltip {
     if (this.$tooltip.data("markId") !== combinedMarkId) {
       this.$tooltip.data("markId", combinedMarkId);
       this.$tooltip.html(
-        _.map(marks, (mark) => this._buildItemByMark(mark))
+        _.map(marks, (mark) => this._buildItemByMark(mark)),
       );
       this.$tooltip.fadeIn("fast");
     }
@@ -68,13 +68,13 @@ class TextareaLinterTooltip {
           .text(mark.message)
           .prepend(
             $("<span />")
-              .addClass(`${CLASS_PREFIX}icon-${mark.severity}`)
-          )
+              .addClass(`${CLASS_PREFIX}icon-${mark.severity}`),
+          ),
       )
       .append(
         $("<span />")
           .addClass(`${CLASS_PREFIX}tooltip-rule`)
-          .text(mark.ruleId)
+          .text(mark.ruleId),
       );
   }
 }
@@ -135,11 +135,11 @@ export class TextareaLinter {
       _.debounce(function () {
         self.clearUndos(this);
         self.lintTextArea(this);
-      }, LINT_DELAY)
+      }, LINT_DELAY),
     );
     $(document).on(
       "focusin.textareaLinter", "textarea",
-      function () { self.lintTextArea(this); }
+      function () { self.lintTextArea(this); },
     );
   }
 
@@ -201,7 +201,11 @@ export class TextareaLinter {
         });
     }
 
-    const severities = _(markers).reject("data.dismissed").map("data.severity").uniq().value();
+    const severities = _(markers)
+      .reject("data.dismissed")
+      .map("data.severity")
+      .uniq()
+      .value();
     const cls = `${CLASS_PREFIX}textarea`;
     $textarea
       .addClass(cls)

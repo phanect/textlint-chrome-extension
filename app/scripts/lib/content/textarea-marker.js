@@ -180,7 +180,7 @@ export default class TextareaMarker {
     this.$textarea
       .on(`scroll.${PLUGIN_NAME}`, _.throttle(
         () => { this._syncScrollPositions(); },
-        this.options.throttle
+        this.options.throttle,
       ))
       .on(`input.${PLUGIN_NAME}`, _.throttle(
         () => {
@@ -190,11 +190,11 @@ export default class TextareaMarker {
             this._syncContents();
           }
         },
-        this.options.throttle
+        this.options.throttle,
       ))
       .on(`mousemove.${PLUGIN_NAME}`, _.throttle(
         (ev) => { this._detectMouseMoveOnMarker(ev); },
-        this.options.throttle
+        this.options.throttle,
       ))
       .on(`focus.${PLUGIN_NAME} blur.${PLUGIN_NAME}`, () => this._syncAll());
 

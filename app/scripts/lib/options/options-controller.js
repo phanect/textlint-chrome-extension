@@ -30,7 +30,7 @@ export default class OptionsController {
         rules={this.getRules()}
         appOptions={this.appOptions}
       />,
-      this.container
+      this.container,
     );
   }
 
