@@ -34,7 +34,7 @@ const releasePack = series(build, () => {
     });
 });
 
-const pack = releasePack;
+export const pack = releasePack;
 
 const releaseUpload = (done) => {
   if (args.vendor !== "chrome") {
